@@ -29,16 +29,20 @@ puts "\tf.lastAccessTime\t#{f.lastAccessTime}"
 
 puts
 puts "directories:"
-Recls::FileSearch::new('../../..', '*.rb', Recls::DIRECTORIES).each do |fe|
+numDirectories = 0
+Recls::FileSearch::new('.', '*.rb', Recls::DIRECTORIES).each do |fe|
 
-	puts fe.searchRelativePath
-
+	numDirectories += 1
+	puts "[#{fe.searchRelativePath}]"
 end
+puts "  #{numDirectories} directories"
+
 puts
 puts "files:"
-Recls::FileSearch::new('../../..', '*.rb', Recls::FILES).each do |fe|
+numFiles = 0
+Recls::FileSearch::new('.', '*.rb', Recls::FILES).each do |fe|
 
-	puts fe.searchRelativePath
-
+	numFiles += 1
+	puts "<#{fe.searchRelativePath}>"
 end
-
+puts "  #{numFiles} file(s)"

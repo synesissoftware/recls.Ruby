@@ -23,10 +23,11 @@ module Recls
 
 		include Enumerable
 
-		private
-
-		public
 		def initialize(dir, patterns, flags)
+
+			if(0 == (Recls::TYPEMASK & flags))
+				flags |= Recls::FILES
+			end
 
 			@dir		=	dir
 			@patterns	=	patterns ? patterns.split(/[#{Recls::Ximpl::OS::PATH_SEPARATORS}]/) : []
@@ -39,7 +40,26 @@ module Recls
 			searchDir = @dir.to_s
 			searchDir = File::absolute_path searchDir
 
-			FileSearch::search_dir(searchDir, searchDir, @patterns, @flags, &blk)
+			# set the (type part of the) flags to zero if we want
+			# everything, to facilitate later optimisation
+
+			flags = @flags
+
+			if(Recls::Ximpl::OS::OS_IS_WINDOWS)
+				mask = (Recls::FILES | Recls::DIRECTORIES)
+			else
+				mask = (Recls::FILES | Recls::DIRECTORIES | Recls::LINKS | Recls::DEVICES)
+			end
+
+			if(mask == (mask & flags))
+				flags = flags & ~Recls::TYPEMASK
+			end
+
+			patterns = @patterns
+
+			patterns = [ Recls::wildcardsAll ] if patterns.empty?
+
+			FileSearch::search_dir(searchDir, searchDir, patterns, flags, &blk)
 
 		end # def each
 
@@ -65,37 +85,54 @@ module Recls
 
 		end # stat_or_nil_()
 
-		def FileSearch::search_dir(searchDir, dir, patterns, flags, &blk)
+		# searches all entries - files, directories, links, devices
+		# - that match the given (patterns) in the given directory
+		# (dir) according to the given (flags), invoking the given
+		# block (blk). The search directory (searchDir) is passed in
+		# order to allow calculation of searchRelativePath in the
+		# entry.
 
-			# matching entries
+		def FileSearch::search_dir(searchDir, dir, patterns, flags, &blk)
 
 			entries = []
 
+			patterns.each do |pattern|
 
-			if patterns.empty?
+				pattern = File::join(dir, pattern)
 
-				pattern = File::join(dir, '*')
-
-				entries = Dir::glob(pattern)
-
-			else
-
-				patterns.each do |pattern|
-
-					pattern = File::join(dir, pattern)
-
-					entries = entries + Dir::glob(pattern)
-
-				end
-
+				entries.concat Dir::glob(pattern)
 			end
+
+			subdirectories = []
+
+			Dir::new(dir).each do |subdir|
+
+				subdirPath = File::join(dir, subdir)
+
+				if(FileTest::directory?(subdirPath) and not is_dots(subdir))
+					subdirectories << subdirPath
+				end
+			end
+
+			entries.concat subdirectories
 
 			entries.each do |entry|
 
 				fs = File::Stat::new(entry)
 
-				blk.call Recls::Entry::new(entry, fs, searchDir)
+				if(0 == (Recls::TYPEMASK & flags))
+				elsif ((0 != (Recls::FILES & flags)) && !fs.file?)
+					next
+				elsif ((0 != (Recls::DIRECTORIES & flags)) && !fs.directory?)
+					next
+				elsif ((0 != (Recls::LINKS & flags)) && !fs.symlink?)
+					next
+				elsif ((0 != (Recls::DEVICES & flags)) && !fs.blockdev?)
+					next
+				end
 
+#puts "[#{flags}\t#{entry}]"
+				blk.call Recls::Entry::new(entry, fs, searchDir)
 			end
 
 			# sub-directories

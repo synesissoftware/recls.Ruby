@@ -19,7 +19,7 @@ module Recls
 
 		module OS
 
-			private
+			public
 			OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
 
 			public
