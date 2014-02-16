@@ -12,7 +12,7 @@
 #
 # ######################################################################### #
 
-#require File.dirname(__FILE__) + '/ximpl/os'
+require File.dirname(__FILE__) + '/os'
 
 module Recls
 

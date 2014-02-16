@@ -15,20 +15,19 @@
 
 require File.dirname(__FILE__) + '/entry'
 require File.dirname(__FILE__) + '/flags'
+require File.dirname(__FILE__) + '/ximpl/os'
 
 module Recls
 
 	class FileSearch
 
 		private
-		OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
-		PATH_SEPARATORS = OS_IS_WINDOWS ? '|;' : '|:'
 
 		public
 		def initialize(dir, patterns, flags)
 
 			@dir		=	dir
-			@patterns	=	patterns ? patterns.split(/[#{PATH_SEPARATORS}]/) : []
+			@patterns	=	patterns ? patterns.split(/[#{Ximpl::OS::PATH_SEPARATORS}]/) : []
 			@flags		=	flags
 
 		end # def initialize()
