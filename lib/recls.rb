@@ -1,10 +1,10 @@
 # ######################################################################### #
-# File:		recls.rb
+# File:         recls.rb
 #
-# Purpose:	Top-level include for recls.ruby
+# Purpose:	Top-level include for recls.ruby library
 #
 # Created:	13th January 2012
-# Updated:	13th January 2012
+# Updated:	16th February 2014
 #
 # Author:	Matthew Wilson
 #
@@ -12,5 +12,7 @@
 #
 # ######################################################################### #
 
-require File.dirname(__FILE__) + '/recls/internal/common'
+
+# recls.rb -> recls/recls.rb
+require File.dirname(__FILE__) + '/recls/recls'
 
