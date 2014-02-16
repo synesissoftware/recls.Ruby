@@ -31,4 +31,3 @@ module Recls
 	DETAILS_LATER	=	0x00080000
 
 end # module Recls
-

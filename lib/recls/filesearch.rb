@@ -71,7 +71,6 @@ module Recls
 
 			entries = []
 
-			#puts patterns
 
 			if patterns.empty?
 
@@ -101,8 +100,6 @@ module Recls
 
 			# sub-directories
 
-			#puts "subdirs of #{dir}:"
-
 			d = Dir::new(dir)
 
 			d.each do |subdir|
@@ -116,10 +113,7 @@ module Recls
 				next if not fs
 				next if not fs.directory?
 
-				if not fs
-				else
-					FileSearch::search_dir(searchDir, subdirPath, patterns, flags, &blk)
-				end
+				FileSearch::search_dir(searchDir, subdirPath, patterns, flags, &blk)
 			end
 
 		end # def each
