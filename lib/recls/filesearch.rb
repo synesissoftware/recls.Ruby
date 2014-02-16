@@ -21,6 +21,8 @@ module Recls
 
 	class FileSearch
 
+		include Enumerable
+
 		private
 
 		public
