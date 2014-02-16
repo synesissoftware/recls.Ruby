@@ -131,19 +131,12 @@ module Recls
 					next
 				end
 
-#puts "[#{flags}\t#{entry}]"
 				blk.call Recls::Entry::new(entry, fs, searchDir)
 			end
 
 			# sub-directories
 
-			d = Dir::new(dir)
-
-			d.each do |subdir|
-
-				next if is_dots subdir
-
-				subdirPath = File::join(dir, subdir)
+			subdirectories.each do |subdirPath|
 
 				fs = stat_or_nil_(subdirPath)
 
