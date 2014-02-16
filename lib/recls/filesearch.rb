@@ -136,6 +136,8 @@ module Recls
 
 			# sub-directories
 
+			return unless (0 != (Recls::RECURSIVE & flags))
+
 			subdirectories.each do |subdirPath|
 
 				fs = stat_or_nil_(subdirPath)

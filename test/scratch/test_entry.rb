@@ -40,7 +40,7 @@ puts "  #{numDirectories} directories"
 puts
 puts "files:"
 numFiles = 0
-Recls::FileSearch::new('.', '*.rb', Recls::FILES).each do |fe|
+Recls::FileSearch::new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe|
 
 	numFiles += 1
 	puts "<#{fe.searchRelativePath}>"
