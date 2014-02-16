@@ -18,6 +18,12 @@ module Recls
 
 	module Ximpl
 
+		def Ximpl.absolutePath(p)
+
+			File::absolute_path p
+
+		end # def Ximpl.absolutePath
+
 		# obtains the basename of a path, e.g.
 		# the basename of
 		#  abc/def/ghi.jkl

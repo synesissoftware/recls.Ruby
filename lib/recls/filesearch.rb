@@ -38,7 +38,7 @@ module Recls
 		def each(&blk)
 
 			searchDir = @dir.to_s
-			searchDir = File::absolute_path searchDir
+			searchDir = Recls::Ximpl::absolutePath searchDir
 
 			# set the (type part of the) flags to zero if we want
 			# everything, to facilitate later optimisation

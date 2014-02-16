@@ -26,7 +26,7 @@ module Recls
 
 			@fileStat = fileStat
 
-			@path = File::absolute_path path
+			@path = Recls::Ximpl::absolutePath path
 			@directoryPath = File::dirname @path
 			@directory = Recls::Ximpl::directoryFromDirectoryPath @directoryPath
 			@directoryParts = Recls::Ximpl::directoryPartsFromDirectory directory
