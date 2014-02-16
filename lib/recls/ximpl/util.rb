@@ -1,5 +1,5 @@
 # ######################################################################### #
-# File:        recls/ximpl/
+# File:        recls/ximpl/util.rb
 #
 # Purpose:     Internal implementation constructs for the recls library.
 #
@@ -18,6 +18,14 @@ module Recls
 
 	module Ximpl
 
+		# obtains the basename of a path, e.g.
+		# the basename of
+		#  abc/def/ghi.jkl
+		# or (on Windows)
+		#  C:\abc\def\ghi.jkl
+		# is
+		#  ghi.jkl
+		#
 		def Ximpl.basename(path)
 
 			if not path.is_a? String
@@ -32,6 +40,11 @@ module Recls
 
 		end # Ximpl.basename
 
+		# obtains the file extension of a basename, e.g.
+		# the fileExt of
+		#  ghi.jkl
+		# is
+		#  .jkl
 		def Ximpl.fileExt(fileBasename)
 
 			if fileBasename =~ /^.*(\.[^.]*)$/
@@ -42,6 +55,8 @@ module Recls
 
 		end # Ximpl.fileExt
 
+		# obtains the directory from the directory path
+		#
 		def Ximpl.directoryFromDirectoryPath(directoryPath)
 
 			if directoryPath =~ /^[a-zA-Z]:([\\\/].*)/
@@ -56,6 +71,7 @@ module Recls
 
 		end # Ximpl.directoryFromDirectoryPath
 
+		# obtains the directory parts from a directory
 		def Ximpl.directoryPartsFromDirectory(directory)
 
 			directoryParts = []
@@ -72,6 +88,8 @@ module Recls
 
 		end # Ximpl.directoryPartsFromDirectory
 
+		# obtains the searchRelativePath from a path and
+		# a searchDirectory
 		def Ximpl.searchRelativePath(path, searchDirectory)
 
 			if searchDirectory and not searchDirectory.empty?
@@ -90,4 +108,3 @@ module Recls
 	end # module Ximpl
 
 end # module Recls
-

@@ -20,6 +20,8 @@ module Recls
 
 	class Entry
 
+		# initialises an entry instance from the given path,
+		# fileStat, and searchDir
 		def initialize(path, fileStat, searchDir)
 
 			@fileStat = fileStat
@@ -48,60 +50,70 @@ module Recls
 		attr_reader :searchDirectory
 		attr_reader :searchRelativePath
 
+		# indicates whether the given entry represents a directory
 		def directory?
 
 			@fileStat.directory?
 
 		end # directory?
 
+		# indicates whether the given entry represents a file
 		def file?
 
 			@fileStat.file?
 
 		end # file?
 
+		# indicates whether the given entry is readonly
 		def readonly?
 
 			not @fileStat.writable?
 
 		end # readonly?
 
+		# indicates whether the given entry represents a socket
 		def socket?
 
 			@fileStat.socket?
 
 		end # socket?
 
+		# indicates the size of the given entry
 		def size
 
 			@fileStat.size
 
 		end # size
 
+		# indicates the last access time of the entry
 		def lastAccessTime
 
 			@fileStat.atime
 
 		end # lastAccessTime
 
+		# indicates the modification time of the entry
 		def modificationTime
 
 			@fileStat.mtime
 
 		end # modificationTime
 
+		# represents the entry as a string (in the form of
+		# the full path)
 		def to_s
 
 			path
 
 		end # def to_s
 
+		# represents the entry as a string (in the form of
+		# the full path)
 		def to_str
 
 			path
 
 		end # def to_s
-
 
 	end # class Entry
 

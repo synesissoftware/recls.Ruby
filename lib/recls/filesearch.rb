@@ -66,8 +66,6 @@ module Recls
 
 		def FileSearch::search_dir(searchDir, dir, patterns, flags, &blk)
 
-#puts "Processing '#{dir}'"
-
 			# matching entries
 
 			entries = []
@@ -78,8 +76,6 @@ module Recls
 
 				pattern = File::join(dir, '*')
 
-#puts "glob#1: pattern=#{pattern}"
-
 				entries = Dir::glob(pattern)
 
 			else
@@ -87,8 +83,6 @@ module Recls
 				patterns.each do |pattern|
 
 					pattern = File::join(dir, pattern)
-
-#puts "glob#2: pattern=#{pattern}"
 
 					entries = entries + Dir::glob(pattern)
 
