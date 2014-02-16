@@ -1,6 +1,8 @@
 
 require 'recls'
 
+puts "wildcardsAll:\t[#{Recls::wildcardsAll}]"
+
 f = Recls::stat('.')
 
 puts "entry:"

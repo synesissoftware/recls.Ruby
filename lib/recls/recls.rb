@@ -1,5 +1,5 @@
 # ######################################################################### #
-# File:         recls/recls.rb
+# File:     recls/recls.rb
 #
 # Purpose:	Main source file for recls library
 #
@@ -14,13 +14,18 @@
 
 #require File.dirname(__FILE__) + '/recls/internal/common'
 
-
-
 require File.dirname(__FILE__) + '/filesearch'
 require File.dirname(__FILE__) + '/stat'
-
+require File.dirname(__FILE__) + '/ximpl/os'
 
 module Recls
 
-end # module Recls
+	# obtains the "all" wildcards string for the ambient operating
+	# system
+	def Recls.wildcardsAll()
 
+		Ximpl::OS::WILDCARDS_ALL
+
+	end # def wildcardsAll
+
+end # module Recls
