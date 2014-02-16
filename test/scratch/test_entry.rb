@@ -28,6 +28,14 @@ puts "\tf.modificationTime\t#{f.modificationTime}"
 puts "\tf.lastAccessTime\t#{f.lastAccessTime}"
 
 puts
+puts "directories:"
+Recls::FileSearch::new('../../..', '*.rb', Recls::DIRECTORIES).each do |fe|
+
+	puts fe.searchRelativePath
+
+end
+puts
+puts "files:"
 Recls::FileSearch::new('../../..', '*.rb', Recls::FILES).each do |fe|
 
 	puts fe.searchRelativePath

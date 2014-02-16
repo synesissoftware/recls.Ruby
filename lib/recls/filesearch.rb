@@ -29,7 +29,7 @@ module Recls
 		def initialize(dir, patterns, flags)
 
 			@dir		=	dir
-			@patterns	=	patterns ? patterns.split(/[#{Ximpl::OS::PATH_SEPARATORS}]/) : []
+			@patterns	=	patterns ? patterns.split(/[#{Recls::Ximpl::OS::PATH_SEPARATORS}]/) : []
 			@flags		=	flags
 
 		end # def initialize()

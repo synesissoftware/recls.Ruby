@@ -33,6 +33,4 @@ module Recls
 
 	end # def stat()
 
-
 end # module Recls
-

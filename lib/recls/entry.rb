@@ -28,14 +28,14 @@ module Recls
 
 			@path = File::absolute_path path
 			@directoryPath = File::dirname @path
-			@directory = Ximpl::directoryFromDirectoryPath @directoryPath
-			@directoryParts = Ximpl.directoryPartsFromDirectory directory
+			@directory = Recls::Ximpl::directoryFromDirectoryPath @directoryPath
+			@directoryParts = Recls::Ximpl::directoryPartsFromDirectory directory
 
 			@fileBasename = Recls::Ximpl::basename @path
 			@fileExt = Recls::Ximpl::fileExt @fileBasename
 
 			@searchDirectory = searchDir
-			@searchRelativePath = Ximpl::searchRelativePath @path, searchDir
+			@searchRelativePath = Recls::Ximpl::searchRelativePath @path, searchDir
 
 		end # def initialize
 
@@ -118,4 +118,3 @@ module Recls
 	end # class Entry
 
 end # module Recls
-

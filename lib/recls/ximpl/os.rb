@@ -29,5 +29,7 @@ module Recls
 			WILDCARDS_ALL = OS_IS_WINDOWS ? '*.*' : '*'
 
 		end # module OS
+
 	end # module Ximpl
+
 end # module Recls

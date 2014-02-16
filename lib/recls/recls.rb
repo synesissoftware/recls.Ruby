@@ -24,7 +24,7 @@ module Recls
 	# system
 	def Recls.wildcardsAll()
 
-		Ximpl::OS::WILDCARDS_ALL
+		Recls::Ximpl::OS::WILDCARDS_ALL
 
 	end # def wildcardsAll
 
