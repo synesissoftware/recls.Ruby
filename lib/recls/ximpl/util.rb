@@ -53,6 +53,58 @@ module Recls
 
 			end # def Util.get_windows_root
 
+			# Returns a tuple consisting of the following
+			# elements (or nil, for any element that is not)
+			# present
+			#
+			# f1. Windows root, or nil
+			# f2. Directory, or nil
+			# f3. basename, or nil
+			# f4. basename-minus-extension, or nil
+			# f5. extension, or nil
+			def Util.split_path(p)
+
+				f1_windows_root, remainder = get_windows_root p
+				f1_windows_root = nil if not f1_windows_root or f1_windows_root.empty?
+				remainder = nil if not remainder or remainder.empty?
+
+				if not remainder or remainder.empty?
+					f2_directory = nil
+					f3_basename = nil
+					f4_nameonly = nil
+					f5_extension = nil
+				else
+					if remainder =~ /^(.*[\\\/])([^\\\/]*)$/
+						f2_directory = $1
+						f3_basename = $2
+					else
+						f2_directory = nil
+						f3_basename = remainder
+						f4_nameonly = nil
+						f5_extension = nil
+					end
+					f2_directory = nil if not f2_directory or f2_directory.empty?
+					f3_basename = nil if not f3_basename or f3_basename.empty?
+					if f3_basename
+						if f3_basename =~ /^(.*)(\.[^.]*)$/
+							f4_nameonly = $1
+							f5_extension = $2
+						else
+							f4_nameonly = f3_basename
+							f5_extension = nil
+						end
+					else
+						f4_nameonly = nil
+						f5_extension = nil
+					end
+				end
+				f4_nameonly = nil if not f4_nameonly or f4_nameonly.empty?
+				f5_extension = nil if not f5_extension or f5_extension.empty?
+
+				return [ f1_windows_root, f2_directory, f3_basename, f4_nameonly, f5_extension ]
+
+			end # def split_path(p)
+
 		end # module Util
 
 		def Ximpl.absolute_path(p)
