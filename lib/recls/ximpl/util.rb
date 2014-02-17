@@ -38,13 +38,21 @@ module Recls
 
 					# UNC network drive
 					#
-					# NOTE: this works for rooted paths only
-					if p =~ /^(\\\\[^\\\/:*?<>|]+)(\\.*)$/
+					# NOTE: there are several permutations ...
+					if p =~ /^(\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+)([\\\/].*)$/
+						# \\server\share{\{... rest of path}}
 						return [ $1, $2 ]
 					end
-
-					# UNC network drive without directory
+					if p =~ /^(\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+)$/
+						# \\server\share
+						return [ $1, nil ]
+					end
+					if p =~ /^(\\\\[^\\\/:*?<>|]+\\)$/
+						# \\server\
+						return [ $1, nil ]
+					end
 					if p =~ /^(\\\\[^\\\/:*?<>|]+)$/
+						# \\server
 						return [ $1, nil ]
 					end
 				end
@@ -122,6 +130,20 @@ module Recls
 		#  ghi.jkl
 		#
 		def Ximpl.basename(path)
+
+			# NOTE: we don't implement in terms of split_path
+			# because all but the UNC case work with just
+			# detecting the last (back)slash
+
+			if Recls::Ximpl::OS::OS_IS_WINDOWS
+				wr, rem = Util.get_windows_root(path)
+
+				if not rem
+					return ''
+				else
+					path = rem
+				end
+			end
 
 			if not path.is_a? String
 				path = path.to_s
