@@ -18,6 +18,35 @@ module Recls
 
 	module Ximpl
 
+		module Util
+
+			# From path p, returns a tuple containing either:
+			#
+			#  [ nil, p ] if p does not contain a Windows root, or
+			#
+			#  [ wroot, remainder ] if p does contain a Windows root
+			def Util.get_windows_root(p)
+
+				if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+					# Windows local drive (e.g. 'H:')
+					if p =~ /^([a-zA-Z]:)/
+						return [ $1, $' ]
+					end
+
+					# UNC network drive
+					if p =~ /^(\\\\[^\\\/:*?<>|]+)(\\.*)$/
+						return [ $1, $2 ]
+					end
+
+				end
+
+				return [ nil, p ]
+
+			end # def Util.get_windows_root
+
+		end # module Util
+
 		def Ximpl.absolute_path(p)
 
 			File::absolute_path p
