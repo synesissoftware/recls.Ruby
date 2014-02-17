@@ -31,16 +31,25 @@ module Recls
 					if ?. == p[0]
 						return 1 if 1 == p.size
 						return 1 if ?/ == p[1]
-						return 1 if ?\\ == p[1]
+						return 1 if OS_IS_WINDOWS and ?\\ == p[1]
 						if ?. == p[1]
 							return 2 if 2 == p.size
 							return 2 if ?/ == p[2]
-							return 2 if ?\\ == p[2]
+							return 2 if OS_IS_WINDOWS and ?\\ == p[2]
 						end
 					end
 				end
 
 				return 0
+			end
+
+			def OS.is_root_dir_(p)
+
+				return nil if not p
+				return true if '/' == p
+				return true if '\\' == p
+
+				return false
 			end
 
 		end # module OS
