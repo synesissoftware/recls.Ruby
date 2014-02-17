@@ -456,6 +456,62 @@ class Test_Recls_Ximpl_file_ext < Test::Unit::TestCase
 
 end
 
+class Test_Recls_Ximpl_directory_from_directory_path < Test::Unit::TestCase
+
+	def test_nil
+
+		assert_nil(Recls::Ximpl::directory_from_directory_path(nil))
+
+	end
+
+	def test_empty
+
+		assert_equal('', Recls::Ximpl::directory_from_directory_path(''))
+
+	end
+
+	def test_dots
+
+		assert_equal('.', Recls::Ximpl::directory_from_directory_path('.'))
+
+	end
+
+	def test_leaf_dir_only
+
+		assert_equal('file', Recls::Ximpl::directory_from_directory_path('file'))
+		assert_equal('file.ext', Recls::Ximpl::directory_from_directory_path('file.ext'))
+		assert_equal('file.', Recls::Ximpl::directory_from_directory_path('file.'))
+
+	end
+
+	def test_roots_only
+
+		assert_equal('/', Recls::Ximpl::directory_from_directory_path('/'))
+
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+			assert_equal('\\', Recls::Ximpl::directory_from_directory_path('H:\\'))
+			assert_equal('\\', Recls::Ximpl::directory_from_directory_path('\\\\server\\share\\'))
+			assert_equal('/', Recls::Ximpl::directory_from_directory_path('H:/'))
+			assert_equal('/', Recls::Ximpl::directory_from_directory_path('\\\\server\\share/'))
+
+		end
+
+	end
+
+	def test_rooted_paths
+
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+			assert_equal('\\dir.1\\dir.2', Recls::Ximpl::directory_from_directory_path('H:\\dir.1\\dir.2'))
+			assert_equal('\\dir.1\\dir.2\\', Recls::Ximpl::directory_from_directory_path('H:\\dir.1\\dir.2\\'))
+
+		end
+
+	end
+
+end
+
 class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 
 	def test_nil
