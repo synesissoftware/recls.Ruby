@@ -291,6 +291,8 @@ module Recls
 		#  .jkl
 		def Ximpl.file_ext(path)
 
+			return nil if not path
+
 			use_split_path = false
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS
