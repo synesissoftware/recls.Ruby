@@ -73,6 +73,7 @@ module Recls
 			# f3. basename, or nil
 			# f4. basename-minus-extension, or nil
 			# f5. extension, or nil
+			#
 			def Util.split_path(p)
 
 				f1_windows_root, remainder = get_windows_root p
@@ -125,7 +126,6 @@ module Recls
 				newParts = []
 
 				lastSingleDots = nil
-				doubleDotsCount = 0
 
 				index = 0
 				parts.each do |part|
@@ -146,13 +146,9 @@ module Recls
 							if ?/ == part[2] || (Recls::Ximpl::OS::OS_IS_WINDOWS && ?\\ == part[2])
 								# double dots, so ...
 
-								if 0 != doubleDotsCount
-									doubleDotsCount += 1
-								else
+								if not newParts.empty? and newParts[-1] != '../'
 									if newParts.pop
 										next
-									else
-										doubleDotsCount += 1
 									end
 								end
 							else
@@ -182,12 +178,12 @@ module Recls
 						elsif ?. == basename[1] and 2 == basename.size
 							# double dots, so ...
 							#
-							# ... pop unless we already have some outstanding doubleDots
+							# ... pop unless we already have some outstanding double dots
 							if newParts.empty?
 								newParts << '..'
 								consume_basename = true
 							else
-								newParts.pop if 0 == doubleDotsCount
+								newParts.pop if not newParts.empty? and newParts[-1] != '../'
 							end
 						end
 					end
@@ -344,6 +340,7 @@ module Recls
 
 			directory_parts = []
 			until directory.empty?
+				#if directory =~ /^([\\\/][^\\\/]+)/
 				if directory =~ /^([^\\\/]*[\\\/])/
 					directory_parts << $1
 					directory = $'

@@ -509,6 +509,19 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 		assert_equal('dir.1/dir.2/', Recls::Ximpl::canonicalise_path('dir.1/dir.3/../dir.2/'))
 		assert_equal('dir.1/dir.2/', Recls::Ximpl::canonicalise_path('dir.3/../dir.1/dir.2/'))
 
+		assert_equal('../dir.1/dir.2/', Recls::Ximpl::canonicalise_path('../dir.1/dir.2/'))
+		assert_equal('../dir.4/', Recls::Ximpl::canonicalise_path('../dir.1/../dir.4/'))
+
+	end
+
+	def test_complex_examples
+
+		assert_equal('dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('/abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
+
+	end
+
+end
+
 	end
 
 end
