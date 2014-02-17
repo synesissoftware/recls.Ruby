@@ -273,7 +273,7 @@ class Test_Recls_Ximpl_Util_split_path < Test::Unit::TestCase
 
 end
 
-class Test_Recls_Ximpl_module_functions < Test::Unit::TestCase
+class Test_Recls_Ximpl_basename < Test::Unit::TestCase
 
 	def test_basename_with_paths_without_directories
 
