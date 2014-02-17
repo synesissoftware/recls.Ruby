@@ -478,9 +478,9 @@ class Test_Recls_Ximpl_directory_from_directory_path < Test::Unit::TestCase
 
 	def test_leaf_dir_only
 
-		assert_equal('file', Recls::Ximpl::directory_from_directory_path('file'))
-		assert_equal('file.ext', Recls::Ximpl::directory_from_directory_path('file.ext'))
-		assert_equal('file.', Recls::Ximpl::directory_from_directory_path('file.'))
+		assert_equal('dir', Recls::Ximpl::directory_from_directory_path('dir'))
+		assert_equal('dir.ext', Recls::Ximpl::directory_from_directory_path('dir.ext'))
+		assert_equal('dir.', Recls::Ximpl::directory_from_directory_path('dir.'))
 
 	end
 

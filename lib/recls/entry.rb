@@ -27,10 +27,10 @@ module Recls
 			@file_stat = file_stat
 
 			@path = Recls::Ximpl::absolute_path path
+
 			@directory_path = File::dirname @path
 			@directory = Recls::Ximpl::directory_from_directory_path @directory_path
 			@directory_parts = Recls::Ximpl::directory_parts_from_directory directory
-
 			@file_basename = Recls::Ximpl::basename @path
 			@file_ext = Recls::Ximpl::file_ext @file_basename
 

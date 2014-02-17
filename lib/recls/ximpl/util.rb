@@ -31,6 +31,8 @@ module Recls
 			#
 			def Util.get_windows_root(p)
 
+				return [ nil, nil ] if not p
+
 				if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 					# Windows local drive (e.g. 'H:')
@@ -333,17 +335,9 @@ module Recls
 		#
 		def Ximpl.directory_from_directory_path(directory_path)
 
-			return nil if not directory_path
+			wr, rem =  Util.get_windows_root(directory_path)
 
-			if directory_path =~ /^[a-zA-Z]:([\\\/].*)/
-				directory = $1
-			elsif directory_path =~ /^\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+/
-				directory = $'
-			else
-				directory = directory_path
-			end
-
-			directory
+			rem
 
 		end # Ximpl.directory_from_directory_path
 
