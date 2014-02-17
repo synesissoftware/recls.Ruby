@@ -131,8 +131,10 @@ module Recls
 
 				lastSingleDots = nil
 
-				index = 0
+				index = -1
 				parts.each do |part|
+
+					index += 1
 
 					next if not part
 					next if part.empty?
@@ -149,10 +151,20 @@ module Recls
 						elsif ?. == part[1]
 							if ?/ == part[2] || (Recls::Ximpl::OS::OS_IS_WINDOWS && ?\\ == part[2])
 								# double dots, so ...
-
-								if not newParts.empty? and 2 != OS.get_number_of_dots_dir_(newParts[-1])
-									if newParts.pop
-										next
+								# ... skip this and pop prior from the new list iff:
+								#
+								# 1. there is a prior elements in the new list (size > 1); AND
+								# 2. the last element in the new list is not the root directory; AND
+								# 3. the last element in the list is not a dots directory
+								if not newParts.empty? # 1.
+									priorPart = newParts[-1]
+									if not OS.is_root_dir_(priorPart) # 2.
+										dirtype = OS.get_number_of_dots_dir_(priorPart) # 3.
+										if 0 == dirtype #1.
+											if newParts.pop
+												next
+											end
+										end
 									end
 								end
 							else
@@ -187,7 +199,7 @@ module Recls
 								newParts << '..'
 								consume_basename = true
 							else
-								newParts.pop if not newParts.empty? and 2 == OS.get_number_of_dots_dir_(newParts[-1])
+								newParts.pop if not newParts.empty? and 2 != OS.get_number_of_dots_dir_(newParts[-1])
 							end
 						end
 					end
