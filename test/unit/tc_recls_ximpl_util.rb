@@ -62,6 +62,12 @@ class Test_Recls_Ximpl_Util_get_windows_root < Test::Unit::TestCase
 			assert_not_nil(rem)
 			assert_equal('dir1', rem)
 
+			# UNC drive only
+			wr, rem = Recls::Ximpl::Util.get_windows_root('\\\\server')
+			assert_not_nil(wr)
+			assert_equal('\\\\server', wr)
+			assert_nil(rem)
+
 			# UNC and root directory
 			wr, rem = Recls::Ximpl::Util.get_windows_root('\\\\server\\')
 			assert_not_nil(wr)

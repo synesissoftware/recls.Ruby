@@ -30,15 +30,23 @@ module Recls
 				if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 					# Windows local drive (e.g. 'H:')
+					#
+					# NOTE: this works for both rooted and unrooted paths
 					if p =~ /^([a-zA-Z]:)/
 						return [ $1, $' ]
 					end
 
 					# UNC network drive
+					#
+					# NOTE: this works for rooted paths only
 					if p =~ /^(\\\\[^\\\/:*?<>|]+)(\\.*)$/
 						return [ $1, $2 ]
 					end
 
+					# UNC network drive without directory
+					if p =~ /^(\\\\[^\\\/:*?<>|]+)$/
+						return [ $1, nil ]
+					end
 				end
 
 				return [ nil, p ]
