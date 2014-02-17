@@ -24,7 +24,10 @@ module Recls
 			#
 			#  [ nil, p ] if p does not contain a Windows root, or
 			#
-			#  [ wroot, remainder ] if p does contain a Windows root
+			#  [ wroot, remainder ] if p does contain a Windows root, or
+			#
+			#  [ nil, nil ] if p is nil
+			#
 			def Util.get_windows_root(p)
 
 				if Recls::Ximpl::OS::OS_IS_WINDOWS
@@ -113,11 +116,133 @@ module Recls
 
 			end # def split_path(p)
 
+			# Returns a tuple consisting of:
+			#
+			# f1. The canonicalised array of parts
+			# f2. A boolean indicating whether to 'consume' the basename
+			def Util.canonicalise_parts(parts, basename = nil)
+
+				newParts = []
+
+				lastSingleDots = nil
+				doubleDotsCount = 0
+
+				index = 0
+				parts.each do |part|
+
+					next if not part
+					next if part.empty?
+
+					if ?. == part[0]
+						if ?/ == part[1] || (Recls::Ximpl::OS::OS_IS_WINDOWS && ?\\ == part[1])
+							# single dots, so ...
+
+							# ... remember the last instance, and ...
+							lastSingleDots = part
+
+							# ... skip to leave this out of the result
+							next
+						elsif ?. == part[1]
+							if ?/ == part[2] || (Recls::Ximpl::OS::OS_IS_WINDOWS && ?\\ == part[2])
+								# double dots, so ...
+
+								if 0 != doubleDotsCount
+									doubleDotsCount += 1
+								else
+									if newParts.pop
+										next
+									else
+										doubleDotsCount += 1
+									end
+								end
+							else
+								# it's a ..X part
+							end
+						else
+							# it's a .X part
+						end
+					else
+						# it's a non-dots part
+					end
+
+					newParts << part
+				end
+
+				consume_basename = false
+
+				if basename
+					if ?. == basename[0]
+						if 1 == basename.size
+							# single dots
+							if newParts.empty?
+								lastSingleDots = false
+							else
+								consume_basename = true
+							end
+						elsif ?. == basename[1] and 2 == basename.size
+							# double dots, so ...
+							#
+							# ... pop unless we already have some outstanding doubleDots
+							if newParts.empty?
+								newParts << '..'
+								consume_basename = true
+							else
+								newParts.pop if 0 == doubleDotsCount
+							end
+						end
+					end
+				end
+
+				newParts << '.' if lastSingleDots and newParts.empty?
+
+				if not newParts.empty?
+					if newParts[-1] == '../'
+						if not basename or basename.empty? or consume_basename
+							newParts[-1] = '..'
+						end
+					end
+				end
+
+				[ newParts, consume_basename ]
+
+			end # def canonicalise_parts(parts, basename)
+
 		end # module Util
 
-		def Ximpl.absolute_path(p)
+		def Ximpl.canonicalise_path(path)
 
-			File::absolute_path p
+			return nil if not path
+			return '' if path.empty?
+
+			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2 = Util.split_path(path)
+
+			if not f2_directory
+				canonicalised_directory = nil
+			else
+				parts = directory_parts_from_directory f2_directory
+				canonicalised_directory, consume_basename = Util.canonicalise_parts(parts, f3_basename)
+				f3_basename = nil if consume_basename
+			end
+
+			return "#{f1_windows_root}#{canonicalised_directory}#{f3_basename}"
+
+		end # Ximpl.canonicalise_path(path)
+
+		def Ximpl.absolute_path(path)
+
+			return nil if not path
+			return '' if path.empty?
+
+			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2 = Util.split_path(path)
+
+
+			if f2_directory =~ /^[\\\/]/
+
+				return path
+
+			end
+
+			File::absolute_path path
 
 		end # def Ximpl.absolute_path
 
@@ -130,6 +255,8 @@ module Recls
 		#  ghi.jkl
 		#
 		def Ximpl.basename(path)
+
+			return nil if not path
 
 			# NOTE: we don't implement in terms of split_path
 			# because all but the UNC case work with just
@@ -194,6 +321,8 @@ module Recls
 		#
 		def Ximpl.directory_from_directory_path(directory_path)
 
+			return nil if not directory_path
+
 			if directory_path =~ /^[a-zA-Z]:([\\\/].*)/
 				directory = $1
 			elsif directory_path =~ /^\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+/
@@ -209,9 +338,11 @@ module Recls
 		# obtains the directory parts from a directory
 		def Ximpl.directory_parts_from_directory(directory)
 
+			return nil if not directory
+
 			directory_parts = []
 			until directory.empty?
-				if directory =~ /^([\\\/][^\\\/]+)/
+				if directory =~ /^([^\\\/]*[\\\/])/
 					directory_parts << $1
 					directory = $'
 				else
@@ -219,6 +350,7 @@ module Recls
 					directory = ''
 				end
 			end
+
 			directory_parts
 
 		end # Ximpl.directory_parts_from_directory
@@ -243,3 +375,4 @@ module Recls
 	end # module Ximpl
 
 end # module Recls
+
