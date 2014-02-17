@@ -162,13 +162,31 @@ module Recls
 		#  ghi.jkl
 		# is
 		#  .jkl
-		def Ximpl.file_ext(file_basename)
+		def Ximpl.file_ext(path)
 
-			if file_basename =~ /^.*(\.[^.]*)$/
-				$1
-			else
-				''
+			use_split_path = false
+
+			if Recls::Ximpl::OS::OS_IS_WINDOWS
+				if path.include? ?\\
+					use_split_path = true
+				end
 			end
+
+			if path.include? ?/
+				use_split_path = true
+			end
+
+			if use_split_path
+				ext = Util.split_path(path)[4]
+			else
+				if path =~ /^.*(\.[^.]*)$/
+					ext = $1
+				else
+					ext = nil
+				end
+			end
+
+			return ext ? ext : ''
 
 		end # Ximpl.file_ext
 

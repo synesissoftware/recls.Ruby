@@ -348,3 +348,73 @@ class Test_Recls_Ximpl_basename < Test::Unit::TestCase
 
 end
 
+class Test_Recls_Ximpl_file_ext < Test::Unit::TestCase
+
+	def test_paths_without_files
+
+		assert_equal('', Recls::Ximpl::file_ext(''))
+		assert_equal('', Recls::Ximpl::file_ext('/'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir1/'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir.1/'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir1/dir2/'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir.1/dir2/'))
+
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+			assert_equal('', Recls::Ximpl::file_ext('H:'))
+			assert_equal('', Recls::Ximpl::file_ext('H:/'))
+			assert_equal('', Recls::Ximpl::file_ext('H:\\'))
+
+			assert_equal('', Recls::Ximpl::file_ext('\\\\server\\share\\dir1/dir2\\'))
+			assert_equal('', Recls::Ximpl::file_ext('\\\\server\\share/dir1\\dir2/'))
+
+		end
+
+	end
+
+	def test_paths_with_files_but_no_extensions
+
+		assert_equal('', Recls::Ximpl::file_ext('file3'))
+		assert_equal('', Recls::Ximpl::file_ext('/file3'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir1/file3'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir.1/file3'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir1/dir2/file3'))
+		assert_equal('', Recls::Ximpl::file_ext('/dir.1/dir2/file3'))
+
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+			assert_equal('', Recls::Ximpl::file_ext('H:file3'))
+			assert_equal('', Recls::Ximpl::file_ext('H:/file3'))
+			assert_equal('', Recls::Ximpl::file_ext('H:\\file3'))
+
+			assert_equal('', Recls::Ximpl::file_ext('\\\\server\\share\\dir1/dir2\\file3'))
+			assert_equal('', Recls::Ximpl::file_ext('\\\\server\\share/dir1\\dir2/file3'))
+
+		end
+
+	end
+
+	def test_paths_with_files_with_extensions
+
+		assert_equal('.ext', Recls::Ximpl::file_ext('file3.ext'))
+		assert_equal('.ext', Recls::Ximpl::file_ext('/file3.ext'))
+		assert_equal('.ext', Recls::Ximpl::file_ext('/dir1/file3.ext'))
+		assert_equal('.ext', Recls::Ximpl::file_ext('/dir.1/file3.ext'))
+		assert_equal('.ext', Recls::Ximpl::file_ext('/dir1/dir2/file3.ext'))
+		assert_equal('.ext', Recls::Ximpl::file_ext('/dir.1/dir2/file3.ext'))
+
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+			assert_equal('.ext', Recls::Ximpl::file_ext('H:file3.ext'))
+			assert_equal('.ext', Recls::Ximpl::file_ext('H:/file3.ext'))
+			assert_equal('.ext', Recls::Ximpl::file_ext('H:\\file3.ext'))
+
+			assert_equal('.ext', Recls::Ximpl::file_ext('\\\\server\\share\\dir1/dir2\\file3.ext'))
+			assert_equal('.ext', Recls::Ximpl::file_ext('\\\\server\\share/dir1\\dir2/file3.ext'))
+
+		end
+
+	end
+
+end
+
