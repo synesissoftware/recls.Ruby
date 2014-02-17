@@ -5,7 +5,7 @@
 #              recls library.
 #
 # Created:     16th February 2014
-# Updated:     16th February 2014
+# Updated:     17th February 2014
 #
 # Author:      Matthew Wilson
 #
@@ -19,14 +19,29 @@ module Recls
 
 		module OS
 
-			public
 			OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
 
-			public
 			PATH_SEPARATORS = OS_IS_WINDOWS ? '|;' : '|:'
 
-			public
 			WILDCARDS_ALL = OS_IS_WINDOWS ? '*.*' : '*'
+
+			def OS.get_number_of_dots_dir_(p)
+
+				if p
+					if ?. == p[0]
+						return 1 if 1 == p.size
+						return 1 if ?/ == p[1]
+						return 1 if ?\\ == p[1]
+						if ?. == p[1]
+							return 2 if 2 == p.size
+							return 2 if ?/ == p[2]
+							return 2 if ?\\ == p[2]
+						end
+					end
+				end
+
+				return 0
+			end
 
 		end # module OS
 

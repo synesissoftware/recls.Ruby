@@ -4,13 +4,14 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     16th February 2014
+# Updated:     17th February 2014
 #
 # Author:      Matthew Wilson
 #
 # Copyright:   <<TBD>>
 #
 # ######################################################################### #
+
 
 require File.dirname(__FILE__) + '/os'
 
@@ -95,8 +96,10 @@ module Recls
 						f4_nameonly = nil
 						f5_extension = nil
 					end
+
 					f2_directory = nil if not f2_directory or f2_directory.empty?
 					f3_basename = nil if not f3_basename or f3_basename.empty?
+
 					if f3_basename
 						if f3_basename =~ /^(.*)(\.[^.]*)$/
 							f4_nameonly = $1
@@ -110,6 +113,7 @@ module Recls
 						f5_extension = nil
 					end
 				end
+
 				f4_nameonly = nil if not f4_nameonly or f4_nameonly.empty?
 				f5_extension = nil if not f5_extension or f5_extension.empty?
 
@@ -146,7 +150,7 @@ module Recls
 							if ?/ == part[2] || (Recls::Ximpl::OS::OS_IS_WINDOWS && ?\\ == part[2])
 								# double dots, so ...
 
-								if not newParts.empty? and newParts[-1] != '../'
+								if not newParts.empty? and 2 != OS.get_number_of_dots_dir_(newParts[-1])
 									if newParts.pop
 										next
 									end
@@ -183,7 +187,7 @@ module Recls
 								newParts << '..'
 								consume_basename = true
 							else
-								newParts.pop if not newParts.empty? and newParts[-1] != '../'
+								newParts.pop if not newParts.empty? and 2 == OS.get_number_of_dots_dir_(newParts[-1])
 							end
 						end
 					end
@@ -192,7 +196,7 @@ module Recls
 				newParts << '.' if lastSingleDots and newParts.empty?
 
 				if not newParts.empty?
-					if newParts[-1] == '../'
+					if 2 == OS.get_number_of_dots_dir_(newParts[-1])
 						if not basename or basename.empty? or consume_basename
 							newParts[-1] = '..'
 						end
@@ -231,11 +235,9 @@ module Recls
 
 			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2 = Util.split_path(path)
 
-
 			if f2_directory =~ /^[\\\/]/
 
 				return path
-
 			end
 
 			File::absolute_path path
@@ -339,8 +341,8 @@ module Recls
 			return nil if not directory
 
 			directory_parts = []
+
 			until directory.empty?
-				#if directory =~ /^([\\\/][^\\\/]+)/
 				if directory =~ /^([^\\\/]*[\\\/])/
 					directory_parts << $1
 					directory = $'

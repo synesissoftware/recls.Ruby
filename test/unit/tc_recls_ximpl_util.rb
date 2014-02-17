@@ -277,6 +277,20 @@ class Test_Recls_Ximpl_Util_split_path < Test::Unit::TestCase
 			assert_nil(no)
 			assert_nil(ex)
 
+			wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('H:/file.3')
+			assert_equal('H:', wr)
+			assert_equal('/', dir)
+			assert_equal('file.3', bn)
+			assert_equal('file', no)
+			assert_equal('.3', ex)
+
+			wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('H:file.3')
+			assert_equal('H:', wr)
+			assert_nil(dir)
+			assert_equal('file.3', bn)
+			assert_equal('file', no)
+			assert_equal('.3', ex)
+
 			wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('H:/dir.1\\dir.2/file.3')
 			assert_equal('H:', wr)
 			assert_equal('/dir.1\\dir.2/', dir)
@@ -512,11 +526,28 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 		assert_equal('../dir.1/dir.2/', Recls::Ximpl::canonicalise_path('../dir.1/dir.2/'))
 		assert_equal('../dir.4/', Recls::Ximpl::canonicalise_path('../dir.1/../dir.4/'))
 
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+			assert_equal('H:\\dir.1\\dir.2\\', Recls::Ximpl::canonicalise_path('H:\\dir.1\\dir.2\\'))
+			assert_equal('H:\\dir.1\\dir.2\\', Recls::Ximpl::canonicalise_path('H:\\dir.1\\dir.2\\dir.3\\..\\'))
+			assert_equal('H:\\dir.1\\dir.2\\', Recls::Ximpl::canonicalise_path('H:\\dir.1\\dir.2\\dir.3\\..\\'))
+			assert_equal('H:\\dir.1\\dir.2\\', Recls::Ximpl::canonicalise_path('H:\\dir.1\\dir.3\\..\\dir.2\\'))
+			assert_equal('H:\\dir.1\\dir.2\\', Recls::Ximpl::canonicalise_path('H:\\dir.3\\..\\dir.1\\dir.2\\'))
+
+#			assert_equal('H:\\..\\dir.4\\dir.5\\', Recls::Ximpl::canonicalise_path('H:\\..\\dir.4\\dir.5\\'))
+#			assert_equal('H:\\..\\dir.4\\', Recls::Ximpl::canonicalise_path('H:\\..\\dir.1\\..\\dir.4\\'))
+
+		end
+
 	end
 
 	def test_complex_examples
 
 		assert_equal('dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('/abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
+
+		if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+		end
 
 	end
 
