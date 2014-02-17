@@ -201,7 +201,10 @@ module Recls
 								newParts << '..'
 								consume_basename = true
 							else
-								newParts.pop if not newParts.empty? and 2 != OS.get_number_of_dots_dir_(newParts[-1])
+								if 2 != OS.get_number_of_dots_dir_(newParts[-1])
+									newParts.pop
+									consume_basename = true
+								end
 							end
 						end
 					end
@@ -220,6 +223,46 @@ module Recls
 				[ newParts, consume_basename ]
 
 			end # def canonicalise_parts(parts, basename)
+
+			# appends trailing slash to a path if not already
+			# present
+			def Util.append_trailing_slash(p, slash = nil)
+
+				return p if not p or p.empty?
+
+				case	p[-1]
+				when	?/
+					return p
+				when	?\\
+					if Recls::Ximpl::OS::OS_IS_WINDOWS
+						return p
+					end
+				end
+
+				slash = '/' if not slash
+
+				"#{p}#{slash}"
+
+			end # def Util.append_trailing_slash(p)
+
+			# trims trailing slash from a path, unless it is the
+			# root
+			def Util.trim_trailing_slash(p)
+
+				return p if not p or p.empty?
+
+				case	p[-1]
+				when	?/
+					p = p[0 ... -1]
+				when	?\\
+					if Recls::Ximpl::OS::OS_IS_WINDOWS
+						p = p[0 ... -1]
+					end
+				end
+
+				return p
+
+			end # def Util.trim_trailing_slash(p)
 
 		end # module Util
 
@@ -242,7 +285,7 @@ module Recls
 
 		end # Ximpl.canonicalise_path(path)
 
-		def Ximpl.absolute_path(path)
+		def Ximpl.absolute_path(path, refdir = nil)
 
 			return nil if not path
 			return '' if path.empty?
@@ -254,7 +297,36 @@ module Recls
 				return path
 			end
 
-			File::absolute_path path
+			cwd = refdir ? refdir : Dir.getwd
+
+			slash = path[-1]
+			path_has_trailing_slash = ?/ == slash or (Recls::Ximpl::OS::OS_IS_WINDOWS && ?\\ == slash)
+
+			if '.' == path
+
+				return Util.trim_trailing_slash cwd
+
+			elsif 2 == path.size and path_has_trailing_slash
+
+				return Util.append_trailing_slash(cwd, path[1..1])
+
+			end
+
+			cwd = Util.append_trailing_slash(cwd)
+
+			path = "#{cwd}#{path}"
+
+			path = canonicalise_path path
+
+			if path_has_trailing_slash
+				path = Util.append_trailing_slash path, slash
+			else
+				path = Util.trim_trailing_slash path
+			end
+
+			return path
+
+			#File::absolute_path path
 
 		end # def Ximpl.absolute_path
 

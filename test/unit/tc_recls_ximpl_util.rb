@@ -591,6 +591,8 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 		assert_equal('/../dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/../dir.1/dir.2/'))
 		assert_equal('/../dir.4/', Recls::Ximpl::canonicalise_path('/../dir.1/../dir.4/'))
 
+		assert_equal('/dir.14/', Recls::Ximpl::canonicalise_path('/dir.14/dir.2/..'))
+
 		if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 			assert_equal('H:\\dir.1\\dir.2\\', Recls::Ximpl::canonicalise_path('H:\\dir.1\\dir.2\\'))
@@ -620,7 +622,70 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 
 end
 
+class Test_Recls_Ximpl_absolute_path < Test::Unit::TestCase
+
+	private
+		attr_reader :cwd
+	public
+
+	def setup
+
+		@cwd = Dir.getwd
+
 	end
 
+	def test_nil
+
+		assert_nil(Recls::Ximpl::absolute_path(nil))
+
+		assert_nil(Recls::Ximpl::absolute_path(nil, cwd))
+
+	end
+
+	def test_empty_path
+
+		assert_equal('', Recls::Ximpl::absolute_path(''))
+
+		assert_equal('', Recls::Ximpl::absolute_path('', cwd))
+
+	end
+
+	def test_rooted_paths
+
+		assert_equal('/', Recls::Ximpl::absolute_path('/'))
+		assert_equal('/abc', Recls::Ximpl::absolute_path('/abc'))
+		assert_equal('/abc/def', Recls::Ximpl::absolute_path('/abc/def'))
+		assert_equal('/abc/def/', Recls::Ximpl::absolute_path('/abc/def/'))
+		assert_equal('/abc/def/file.ext', Recls::Ximpl::absolute_path('/abc/def/file.ext'))
+
+		assert_equal('/', Recls::Ximpl::absolute_path('/', cwd))
+		assert_equal('/abc', Recls::Ximpl::absolute_path('/abc', cwd))
+		assert_equal('/abc/def', Recls::Ximpl::absolute_path('/abc/def', cwd))
+		assert_equal('/abc/def/', Recls::Ximpl::absolute_path('/abc/def/', cwd))
+		assert_equal('/abc/def/file.ext', Recls::Ximpl::absolute_path('/abc/def/file.ext', cwd))
+
+	end
+
+	def test_single_dot
+
+		assert_equal("#{cwd}", Recls::Ximpl::absolute_path('.'))
+		assert_equal("#{cwd}/", Recls::Ximpl::absolute_path('./'))
+
+		assert_equal("/dir.1/dir.2", Recls::Ximpl::absolute_path('.', "/dir.1/dir.2"))
+		assert_equal("/dir.1/dir.2/", Recls::Ximpl::absolute_path('./', "/dir.1/dir.2"))
+
+		assert_equal("/dir.1/dir.2", Recls::Ximpl::absolute_path('.', "/dir.1/dir.2/"))
+		assert_equal("/dir.1/dir.2/", Recls::Ximpl::absolute_path('./', "/dir.1/dir.2/"))
+
+	end
+
+	def test_double_dots
+
+		assert_equal("/dir.13", Recls::Ximpl::absolute_path('..', "/dir.13/dir.2"))
+		assert_equal("/dir.13/", Recls::Ximpl::absolute_path('../', "/dir.13/dir.2"))
+
+		assert_equal("/dir.1/", Recls::Ximpl::absolute_path('../', "/dir.1/dir.2"))
+
+	end
 end
 
