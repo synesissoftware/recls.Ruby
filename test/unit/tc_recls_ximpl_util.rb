@@ -112,7 +112,7 @@ class Test_Recls_Ximpl_Util_split_path < Test::Unit::TestCase
 
 	end
 
-	def test_names_only
+	def test_name_only
 
 		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('a')
 		assert_nil(wr)
@@ -146,7 +146,80 @@ class Test_Recls_Ximpl_Util_split_path < Test::Unit::TestCase
 		assert_equal('a', no)
 		assert_equal('.b', ex)
 
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('a.b.c')
+		assert_nil(wr)
+		assert_nil(dir)
+		assert_equal('a.b.c', bn)
+		assert_equal('a.b', no)
+		assert_equal('.c', ex)
+
 	end
+
+	def test_directory_only
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('a.b/')
+		assert_nil(wr)
+		assert_equal('a.b/', dir)
+		assert_nil(bn)
+		assert_nil(no)
+		assert_nil(ex)
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('a.b.c/')
+		assert_nil(wr)
+		assert_equal('a.b.c/', dir)
+		assert_nil(bn)
+		assert_nil(no)
+		assert_nil(ex)
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('dir1/dir2/a.b/')
+		assert_nil(wr)
+		assert_equal('dir1/dir2/a.b/', dir)
+		assert_nil(bn)
+		assert_nil(no)
+		assert_nil(ex)
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('/dir1/dir2/a.b/')
+		assert_nil(wr)
+		assert_equal('/dir1/dir2/a.b/', dir)
+		assert_nil(bn)
+		assert_nil(no)
+		assert_nil(ex)
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('/')
+		assert_nil(wr)
+		assert_equal('/', dir)
+		assert_nil(bn)
+		assert_nil(no)
+		assert_nil(ex)
+
+	end
+
+	def test_directory_and_name_only
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('dir1/dir2/file3')
+		assert_nil(wr)
+		assert_equal('dir1/dir2/', dir)
+		assert_equal('file3', bn)
+		assert_equal('file3', no)
+		assert_nil(ex)
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('/dir1/dir2/file3')
+		assert_nil(wr)
+		assert_equal('/dir1/dir2/', dir)
+		assert_equal('file3', bn)
+		assert_equal('file3', no)
+		assert_nil(ex)
+
+		wr, dir, bn, no, ex = Recls::Ximpl::Util::split_path('/dir.1/dir.2/file.3')
+		assert_nil(wr)
+		assert_equal('/dir.1/dir.2/', dir)
+		assert_equal('file.3', bn)
+		assert_equal('file', no)
+		assert_equal('.3', ex)
+
+	end
+
+end
 
 end
 
