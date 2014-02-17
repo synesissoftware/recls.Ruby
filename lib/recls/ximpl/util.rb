@@ -18,11 +18,11 @@ module Recls
 
 	module Ximpl
 
-		def Ximpl.absolutePath(p)
+		def Ximpl.absolute_path(p)
 
 			File::absolute_path p
 
-		end # def Ximpl.absolutePath
+		end # def Ximpl.absolute_path
 
 		# obtains the basename of a path, e.g.
 		# the basename of
@@ -47,60 +47,60 @@ module Recls
 		end # Ximpl.basename
 
 		# obtains the file extension of a basename, e.g.
-		# the fileExt of
+		# the file_ext of
 		#  ghi.jkl
 		# is
 		#  .jkl
-		def Ximpl.fileExt(fileBasename)
+		def Ximpl.file_ext(file_basename)
 
-			if fileBasename =~ /^.*(\.[^.]*)$/
+			if file_basename =~ /^.*(\.[^.]*)$/
 				$1
 			else
 				''
 			end
 
-		end # Ximpl.fileExt
+		end # Ximpl.file_ext
 
 		# obtains the directory from the directory path
 		#
-		def Ximpl.directoryFromDirectoryPath(directoryPath)
+		def Ximpl.directory_from_directory_path(directory_path)
 
-			if directoryPath =~ /^[a-zA-Z]:([\\\/].*)/
+			if directory_path =~ /^[a-zA-Z]:([\\\/].*)/
 				directory = $1
-			elsif directoryPath =~ /^\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+/
+			elsif directory_path =~ /^\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+/
 				directory = $'
 			else
-				directory = directoryPath
+				directory = directory_path
 			end
 
 			directory
 
-		end # Ximpl.directoryFromDirectoryPath
+		end # Ximpl.directory_from_directory_path
 
 		# obtains the directory parts from a directory
-		def Ximpl.directoryPartsFromDirectory(directory)
+		def Ximpl.directory_parts_from_directory(directory)
 
-			directoryParts = []
+			directory_parts = []
 			until directory.empty?
 				if directory =~ /^([\\\/][^\\\/]+)/
-					directoryParts << $1
+					directory_parts << $1
 					directory = $'
 				else
-					directoryParts << directory
+					directory_parts << directory
 					directory = ''
 				end
 			end
-			directoryParts
+			directory_parts
 
-		end # Ximpl.directoryPartsFromDirectory
+		end # Ximpl.directory_parts_from_directory
 
-		# obtains the searchRelativePath from a path and
-		# a searchDirectory
-		def Ximpl.searchRelativePath(path, searchDirectory)
+		# obtains the search_relative_path from a path and
+		# a search_directory
+		def Ximpl.search_relative_path(path, search_directory)
 
-			if searchDirectory and not searchDirectory.empty?
+			if search_directory and not search_directory.empty?
 
-				if path =~ /^#{searchDirectory}[\\\/]/
+				if path =~ /^#{search_directory}[\\\/]/
 					$'
 				else
 					path
@@ -109,7 +109,7 @@ module Recls
 				path
 			end
 
-		end # Ximpl.searchRelativePath
+		end # Ximpl.search_relative_path
 
 	end # module Ximpl
 

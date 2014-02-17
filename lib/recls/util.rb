@@ -19,11 +19,11 @@ module Recls
 
 	# Canonicalises the given path, by removing dots ('.' and '..')
 	# directories
-	def Recls.canonicalisePath(path)
+	def Recls.canonicalise_path(path)
 
 		return path
 
-	end # def wildcardsAll
+	end # def Recls.canonicalise_path
 
 end # module Recls
 

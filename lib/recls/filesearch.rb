@@ -37,8 +37,8 @@ module Recls
 
 		def each(&blk)
 
-			searchDir = @dir.to_s
-			searchDir = Recls::Ximpl::absolutePath searchDir
+			search_dir = @dir.to_s
+			search_dir = Recls::Ximpl::absolute_path search_dir
 
 			# set the (type part of the) flags to zero if we want
 			# everything, to facilitate later optimisation
@@ -57,9 +57,9 @@ module Recls
 
 			patterns = @patterns
 
-			patterns = [ Recls::wildcardsAll ] if patterns.empty?
+			patterns = [ Recls::wildcards_all ] if patterns.empty?
 
-			FileSearch::search_dir(searchDir, searchDir, patterns, flags, &blk)
+			FileSearch::search_dir(search_dir, search_dir, patterns, flags, &blk)
 
 		end # def each
 
@@ -88,11 +88,11 @@ module Recls
 		# searches all entries - files, directories, links, devices
 		# - that match the given (patterns) in the given directory
 		# (dir) according to the given (flags), invoking the given
-		# block (blk). The search directory (searchDir) is passed in
-		# order to allow calculation of searchRelativePath in the
+		# block (blk). The search directory (search_dir) is passed in
+		# order to allow calculation of search_relative_path in the
 		# entry.
 
-		def FileSearch::search_dir(searchDir, dir, patterns, flags, &blk)
+		def FileSearch::search_dir(search_dir, dir, patterns, flags, &blk)
 
 			entries = []
 
@@ -107,10 +107,10 @@ module Recls
 
 			Dir::new(dir).each do |subdir|
 
-				subdirPath = File::join(dir, subdir)
+				subdir_path = File::join(dir, subdir)
 
-				if(FileTest::directory?(subdirPath) and not is_dots(subdir))
-					subdirectories << subdirPath
+				if(FileTest::directory?(subdir_path) and not is_dots(subdir))
+					subdirectories << subdir_path
 				end
 			end
 
@@ -131,21 +131,21 @@ module Recls
 					next
 				end
 
-				blk.call Recls::Entry::new(entry, fs, searchDir)
+				blk.call Recls::Entry::new(entry, fs, search_dir)
 			end
 
 			# sub-directories
 
 			return unless (0 != (Recls::RECURSIVE & flags))
 
-			subdirectories.each do |subdirPath|
+			subdirectories.each do |subdir_path|
 
-				fs = stat_or_nil_(subdirPath)
+				fs = stat_or_nil_(subdir_path)
 
 				next if not fs
 				next if not fs.directory?
 
-				FileSearch::search_dir(searchDir, subdirPath, patterns, flags, &blk)
+				FileSearch::search_dir(search_dir, subdir_path, patterns, flags, &blk)
 			end
 
 		end # def each

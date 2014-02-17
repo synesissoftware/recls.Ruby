@@ -22,10 +22,11 @@ module Recls
 
 	# obtains the "all" wildcards string for the ambient operating
 	# system
-	def Recls.wildcardsAll()
+	def Recls.wildcards_all()
 
 		Recls::Ximpl::OS::WILDCARDS_ALL
 
-	end # def wildcardsAll
+	end # def wildcards_all
 
 end # module Recls
+
