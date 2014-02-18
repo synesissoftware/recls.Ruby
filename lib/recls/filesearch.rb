@@ -59,7 +59,7 @@ module Recls
 
 			patterns = [ Recls::wildcards_all ] if patterns.empty?
 
-			FileSearch::search_dir(search_dir, search_dir, patterns, flags, &blk)
+			FileSearch::search_dir_(search_dir, search_dir, patterns, flags, &blk)
 
 		end # def each
 
@@ -92,11 +92,13 @@ module Recls
 		# order to allow calculation of search_relative_path in the
 		# entry.
 
-		def FileSearch::search_dir(search_dir, dir, patterns, flags, &blk)
+		def FileSearch::search_dir_(search_dir, dir, patterns, flags, &blk)
 
 			entries = []
 
 			patterns.each do |pattern|
+
+				dir = dir.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 				pattern = File::join(dir, pattern)
 
@@ -145,7 +147,7 @@ module Recls
 				next if not fs
 				next if not fs.directory?
 
-				FileSearch::search_dir(search_dir, subdir_path, patterns, flags, &blk)
+				FileSearch::search_dir_(search_dir, subdir_path, patterns, flags, &blk)
 			end
 
 		end # def each
