@@ -689,3 +689,4 @@ class Test_Recls_Ximpl_absolute_path < Test::Unit::TestCase
 	end
 end
 
+
