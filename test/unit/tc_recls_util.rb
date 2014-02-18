@@ -46,4 +46,3 @@ class Test_canonicalise_path < Test::Unit::TestCase
 	end # def test_uncanonicalised_directories_one_level
 
 end
-

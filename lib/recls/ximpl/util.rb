@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     17th February 2014
+# Updated:     18th February 2014
 #
 # Author:      Matthew Wilson
 #
@@ -454,4 +454,3 @@ module Recls
 	end # module Ximpl
 
 end # module Recls
-
