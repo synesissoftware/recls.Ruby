@@ -1,6 +1,9 @@
 
 # directories (by name)
 
+.bzr/
+.git/
+
 # directories (by pattern)
 
 # files (by name)
@@ -8,6 +11,7 @@
 # files (by pattern)
 
 *.*~
+*.gem
 *.scc
 *.suo
 *.swp
