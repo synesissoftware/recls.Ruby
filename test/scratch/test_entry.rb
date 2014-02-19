@@ -52,4 +52,3 @@ Recls::FileSearch::new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe
 	puts "\t<#{fe.search_relative_path}>"
 end
 puts "  #{num_files} file(s)"
-

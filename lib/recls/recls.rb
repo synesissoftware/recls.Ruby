@@ -48,6 +48,13 @@ if not defined? RECLS_NO_OBSOLETE
 			WILDCARDS_ALL
 		end
 
+		class FileSearch
+
+			alias_method :searchRoot, :search_root
+			alias_method :pattern, :patterns
+
+		end
+
 		class Entry
 
 			alias_method :uncDrive, :drive
