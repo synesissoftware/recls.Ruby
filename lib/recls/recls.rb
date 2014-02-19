@@ -19,25 +19,13 @@ require File.dirname(__FILE__) + '/ximpl/os'
 
 module Recls
 
-	# obtains the "all" wildcards string for the ambient operating
+	# Represents the "all" wildcards string for the ambient operating
 	# system
-	def Recls.wildcards_all()
+	WILDCARDS_ALL = Recls::Ximpl::OS::WILDCARDS_ALL
 
-		Recls::Ximpl::OS::WILDCARDS_ALL
+	PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
-	end # def wildcards_all
-
-	def Recls.path_name_separator
-
-		Recls::Ximpl::OS::PATH_NAME_SEPARATOR
-
-	end # def Recls.path_name_separator
-
-	def Recls.path_separator
-
-		Recls::Ximpl::OS::PATH_SEPARATOR
-
-	end # def Recls.path_separator
+	PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
 
 end # module Recls
 
@@ -48,8 +36,16 @@ if not defined? RECLS_NO_OBSOLETE
 
 	module Recls
 
+		def Recls.pathNameSeparator
+			PATH_NAME_SEPARATOR
+		end
+
+		def Recls.pathSeparator
+			PATH_SEPARATOR
+		end
+
 		def Recls.wildcardsAll
-			wildcards_all
+			WILDCARDS_ALL
 		end
 
 		class Entry
