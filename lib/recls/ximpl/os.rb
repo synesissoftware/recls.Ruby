@@ -21,7 +21,9 @@ module Recls
 
 			OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
 
-			PATH_SEPARATORS = OS_IS_WINDOWS ? '|;' : '|:'
+			PATH_NAME_SEPARATOR = OS_IS_WINDOWS ? '\\' : '/'
+
+			PATH_SEPARATOR = OS_IS_WINDOWS ? ';' : ':'
 
 			WILDCARDS_ALL = OS_IS_WINDOWS ? '*.*' : '*'
 

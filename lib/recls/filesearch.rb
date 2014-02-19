@@ -30,7 +30,7 @@ module Recls
 			end
 
 			@dir		=	dir
-			@patterns	=	patterns ? patterns.split(/[#{Recls::Ximpl::OS::PATH_SEPARATORS}]/) : []
+			@patterns	=	patterns ? patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/) : []
 			@flags		=	flags
 
 		end # def initialize()

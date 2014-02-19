@@ -27,6 +27,18 @@ module Recls
 
 	end # def wildcards_all
 
+	def Recls.path_name_separator
+
+		Recls::Ximpl::OS::PATH_NAME_SEPARATOR
+
+	end # def Recls.path_name_separator
+
+	def Recls.path_separator
+
+		Recls::Ximpl::OS::PATH_SEPARATOR
+
+	end # def Recls.path_separator
+
 end # module Recls
 
 # ######################################################################### #

@@ -12,7 +12,7 @@ class Test_Recls_constants < Test::Unit::TestCase
 
 	def test_wildcards_all
 
-		expected = @@OS_IS_WINDOWS ? "*.*" : "*"
+		expected = @@OS_IS_WINDOWS ? '*.*' : '*'
 
 		assert_equal(expected, Recls::wildcards_all)
 
@@ -27,6 +27,23 @@ class Test_Recls_constants < Test::Unit::TestCase
 	end # def test_wildcardsAll
 
   end
+
+
+	def test_path_name_separator
+
+		expected = @@OS_IS_WINDOWS ? '\\' : '/'
+
+		assert_equal(expected, Recls::path_name_separator)
+
+	end # def test_path_name_separator
+
+	def test_path_separator
+
+		expected = @@OS_IS_WINDOWS ? ';' : ':'
+
+		assert_equal(expected, Recls::path_separator)
+
+	end # def test_path_separator
 
 end
 
