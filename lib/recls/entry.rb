@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     16th February 2014
+# Updated:     18th February 2014
 #
 # Author:      Matthew Wilson
 #
@@ -13,7 +13,6 @@
 # ######################################################################### #
 
 
-require File.dirname(__FILE__) + '/flags'
 require File.dirname(__FILE__) + '/ximpl/util'
 
 module Recls
@@ -21,83 +20,143 @@ module Recls
 	class Entry
 
 		# initialises an entry instance from the given path,
-		# fileStat, and searchDir
-		def initialize(path, fileStat, searchDir)
+		# file_stat, and search_dir
+		def initialize(path, file_stat, search_dir)
 
-			@fileStat = fileStat
+			@file_stat = file_stat
 
-			@path = Recls::Ximpl::absolutePath path
-			@directoryPath = File::dirname @path
-			@directory = Recls::Ximpl::directoryFromDirectoryPath @directoryPath
-			@directoryParts = Recls::Ximpl::directoryPartsFromDirectory directory
+			@path = Recls::Ximpl::absolute_path path
 
-			@fileBasename = Recls::Ximpl::basename @path
-			@fileExt = Recls::Ximpl::fileExt @fileBasename
+			windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
 
-			@searchDirectory = searchDir
-			@searchRelativePath = Recls::Ximpl::searchRelativePath @path, searchDir
+			@drive = windows_drive
+			@directory_path = "#{windows_drive}#{directory}"
+			@directory = directory ? directory : ''
+			@directory_parts = Recls::Ximpl::directory_parts_from_directory directory
+			@file_full_name = basename ? basename : ''
+			@file_short_name = nil
+			@file_name_only = file_name ? file_name : ''
+			@file_extension = file_ext ? file_ext : ''
+
+			@search_directory = search_dir
+			@search_relative_path = Recls::Ximpl::search_relative_path @path, search_dir
 
 		end # def initialize
 
+		# ##########################
+		# Name-related attributes
+
 		attr_reader :path
-		attr_reader :directoryPath
+		attr_reader :drive
+		attr_reader :directory_path
+		alias_method :dirname, :directory_path
 		attr_reader :directory
-		attr_reader :directoryParts
-		attr_reader :fileBasename
-		alias_method :file, :fileBasename
-		alias_method :fileName, :fileBasename
-		attr_reader :fileExt
-		attr_reader :searchDirectory
-		attr_reader :searchRelativePath
+		attr_reader :directory_parts
+		attr_reader :file_full_name
+		attr_reader :file_short_name
+		alias_method :basename, :file_full_name
+		attr_reader :file_name_only
+		attr_reader :file_extension
+		alias_method :extension, :file_extension
+		attr_reader :search_directory
+		attr_reader :search_relative_path
+
+		# ##########################
+		# Nature attributes
+
+		# indicates whether the given entry exists
+		def exist?
+
+			true
+
+		end
+
+		# indicates whether the given entry is readonly
+		def readonly?
+
+			not @file_stat.writable?
+
+		end # readonly?
+
 
 		# indicates whether the given entry represents a directory
 		def directory?
 
-			@fileStat.directory?
+			@file_stat.directory?
 
 		end # directory?
 
 		# indicates whether the given entry represents a file
 		def file?
 
-			@fileStat.file?
+			@file_stat.file?
 
 		end # file?
 
-		# indicates whether the given entry is readonly
-		def readonly?
+		# indicates whether the given entry represents a link
+		def link?
 
-			not @fileStat.writable?
+			@file_stat.link?
 
-		end # readonly?
+		end # link?
 
 		# indicates whether the given entry represents a socket
 		def socket?
 
-			@fileStat.socket?
+			@file_stat.socket?
 
 		end # socket?
+
+		# ##########################
+		# Size attributes
 
 		# indicates the size of the given entry
 		def size
 
-			@fileStat.size
+			@file_stat.size
 
 		end # size
 
+		# ##########################
+		# Time attributes
+
 		# indicates the last access time of the entry
-		def lastAccessTime
+		def last_access_time
 
-			@fileStat.atime
+			@file_stat.atime
 
-		end # lastAccessTime
+		end # last_access_time
 
 		# indicates the modification time of the entry
-		def modificationTime
+		def modification_time
 
-			@fileStat.mtime
+			@file_stat.mtime
 
-		end # modificationTime
+		end # modification_time
+
+		# ##########################
+		# Comparison
+
+	if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+		def <=>(rhs)
+
+			path.upcase <=> rhs.path.upcase
+
+		end
+
+	else
+
+		def <=>(rhs)
+
+			path <=> rhs.path
+
+		end
+
+	end
+
+		# ##########################
+		# Conversion
 
 		# represents the entry as a string (in the form of
 		# the full path)

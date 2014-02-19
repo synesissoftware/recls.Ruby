@@ -1,48 +1,54 @@
 
 require 'recls'
 
-puts "wildcardsAll:\t[#{Recls::wildcardsAll}]"
+puts "wildcards_all:\t[#{Recls::wildcards_all}]"
 
 f = Recls::stat('.')
 
 puts "entry:"
-puts "\t(entry)\t#{f}"
-puts "\tf.path\t#{f.path}"
-puts "\tf.directoryPath\t#{f.directoryPath}"
-puts "\tf.directory\t#{f.directory}"
-puts "\tf.file\t#{f.file}"
-puts "\tf.fileBasename\t#{f.fileBasename}"
-puts "\tf.fileName\t#{f.fileName}"
-puts "\tf.fileName\t#{f.fileName}"
-puts "\tf.fileExt\t#{f.fileExt}"
-puts "\tf.size\t#{f.size}"
-puts "\tf.directory?\t#{f.directory?}"
-puts "\tf.file?\t#{f.file?}"
-puts "\tf.socket?\t#{f.socket?}"
-directoryParts = f.directoryParts
-puts "\tf.directoryParts [#{directoryParts.size}]"
-directoryParts.each do |part|
-	puts "\t\t#{part}"
+puts "\t#{'(entry)'.ljust(20)}\t#{f}"
+puts "\t#{'f.path'.ljust(20)}\t#{f.path}"
+puts "\t#{'f.drive'.ljust(20)}\t#{f.drive}"
+puts "\t#{'f.directory_path'.ljust(20)}\t#{f.directory_path}"
+puts "\t#{'f.directory'.ljust(20)}\t#{f.directory}"
+directory_parts = f.directory_parts
+puts "\t#{'f.directory_parts'.ljust(20)}\t[#{directory_parts.size}]"
+directory_parts.each do |part|
+	puts "\t#{''.ljust(20)}\t\t#{part}"
 end
-puts "\tf.modificationTime\t#{f.modificationTime}"
-puts "\tf.lastAccessTime\t#{f.lastAccessTime}"
+puts "\t#{'f.file_full_name'.ljust(20)}\t#{f.file_full_name}"
+puts "\t#{'f.file_short_name'.ljust(20)}\t#{f.file_short_name}"
+puts "\t#{'f.file_name_only'.ljust(20)}\t#{f.file_name_only}"
+puts "\t#{'f.file_extension'.ljust(20)}\t#{f.file_extension}"
+puts "\t#{'f.search_directory'.ljust(20)}\t#{f.search_directory}"
+puts "\t#{'f.search_relative_path'.ljust(20)}\t#{f.search_relative_path}"
+
+puts "\t#{'f.size'.ljust(20)}\t#{f.size}"
+
+puts "\t#{'f.exist?'.ljust(20)}\t#{f.exist?}"
+puts "\t#{'f.directory?'.ljust(20)}\t#{f.directory?}"
+puts "\t#{'f.file?'.ljust(20)}\t#{f.file?}"
+puts "\t#{'f.socket?'.ljust(20)}\t#{f.socket?}"
+
+puts "\t#{'f.modification_time'.ljust(20)}\t#{f.modification_time}"
+puts "\t#{'f.last_access_time'.ljust(20)}\t#{f.last_access_time}"
 
 puts
 puts "directories:"
-numDirectories = 0
+num_directories = 0
 Recls::FileSearch::new('.', '*.rb', Recls::DIRECTORIES).each do |fe|
 
-	numDirectories += 1
-	puts "[#{fe.searchRelativePath}]"
+	num_directories += 1
+	puts "\t[#{fe.search_relative_path}]"
 end
-puts "  #{numDirectories} directories"
+puts "  #{num_directories} directories"
 
 puts
 puts "files:"
-numFiles = 0
+num_files = 0
 Recls::FileSearch::new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe|
 
-	numFiles += 1
-	puts "<#{fe.searchRelativePath}>"
+	num_files += 1
+	puts "\t<#{fe.search_relative_path}>"
 end
-puts "  #{numFiles} file(s)"
+puts "  #{num_files} file(s)"
