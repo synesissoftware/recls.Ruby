@@ -36,6 +36,10 @@ if not defined? RECLS_NO_OBSOLETE
 
 	module Recls
 
+		def Recls.wildcardsAll
+			wildcards_all
+		end
+
 		class Entry
 
 			alias_method :uncDrive, :drive
