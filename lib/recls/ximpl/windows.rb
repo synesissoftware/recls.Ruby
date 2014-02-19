@@ -19,7 +19,8 @@ module Recls
 
 				@path = path
 
-				attributes = GetFileAttributes.call(path)
+				# for some reason not forcing this new string cause 'can't modify frozen string (TypeError)'
+				attributes = GetFileAttributes.call("#{path}")
 
 				if 0xffffffff == attributes
 					@attributes = 0
