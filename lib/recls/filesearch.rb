@@ -89,7 +89,7 @@ module Recls
 		def FileSearch::stat_or_nil_(path)
 
 			begin
-				File::Stat::new path
+				Recls::Ximpl::FileStat.stat path
 			rescue Errno::ENOENT => x
 				nil
 			end
@@ -105,6 +105,7 @@ module Recls
 
 		def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
 
+			# array of FileStat instances
 			entries = []
 
 			patterns.each do |pattern|
@@ -113,9 +114,10 @@ module Recls
 
 				pattern = File::join(dir, pattern)
 
-				entries.concat Dir::glob(pattern)
+				entries.concat Dir::glob(pattern).map { |path| stat_or_nil_(path) }
 			end
 
+			# array of FileStat instances
 			subdirectories = []
 
 			Dir::new(dir).each do |subdir|
@@ -124,16 +126,19 @@ module Recls
 
 				subdir_path = File::join(dir, subdir)
 
-				if FileTest::directory?(subdir_path)
-					subdirectories << subdir_path
-				end
+				fs = stat_or_nil_(subdir_path)
+
+				next if not fs
+				next unless fs.directory?
+
+				subdirectories << fs
 			end
 
 			entries.concat subdirectories
 
-			entries.each do |entry|
+			entries.each do |fs|
 
-				fs = File::Stat::new(entry)
+				next if not fs
 
 				if(0 == (Recls::TYPEMASK & flags))
 				elsif ((0 != (Recls::FILES & flags)) && !fs.file?)
@@ -146,21 +151,16 @@ module Recls
 					next
 				end
 
-				blk.call Recls::Entry::new(entry, fs, search_root)
+				blk.call Recls::Entry::new(fs.path, fs, search_root)
 			end
 
 			# sub-directories
 
 			return unless (0 != (Recls::RECURSIVE & flags))
 
-			subdirectories.each do |subdir_path|
+			subdirectories.each do |fs|
 
-				fs = stat_or_nil_(subdir_path)
-
-				next if not fs
-				next if not fs.directory?
-
-				FileSearch::search_directory_(search_root, subdir_path, patterns, flags, &blk)
+				FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
 			end
 
 		end # def each

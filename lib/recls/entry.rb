@@ -13,6 +13,10 @@
 # ######################################################################### #
 
 
+require File.dirname(__FILE__) + '/ximpl/os'
+
+require File.dirname(__FILE__) + '/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows.rb' : 'unix.rb')
+
 require File.dirname(__FILE__) + '/ximpl/util'
 
 module Recls
@@ -71,12 +75,20 @@ module Recls
 
 		end # def exist?
 
+		# indicates whether the given entry is hidden
+		def hidden?
+
+			@file_stat.hidden?
+
+		end # def hidden?
+
 		# indicates whether the given entry is readonly
 		def readonly?
 
 			not @file_stat.writable?
 
 		end # readonly?
+
 
 
 		# indicates whether the given entry represents a directory

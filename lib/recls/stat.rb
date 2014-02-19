@@ -21,7 +21,7 @@ module Recls
 	def Recls.stat(path, flags = 0)
 
 		begin
-			Recls::Entry::new(path, File::Stat::new(path), path)
+			Recls::Entry::new(path, Recls::Ximpl::FileStat.stat(path), path)
 		rescue Errno::ENOENT => x
 
 			if 0 != (flags & Recls::DETAILS_LATER)
