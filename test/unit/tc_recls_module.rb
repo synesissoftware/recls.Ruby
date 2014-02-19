@@ -51,9 +51,9 @@ class Test_Recls_constants < Test::Unit::TestCase
 
 	def test_WILDCARDS_ALL
 
-		expected = @@OS_IS_WINDOWS ? '*.*' : '*'
+		#expected = @@OS_IS_WINDOWS ? '*.*' : '*'
 
-		assert_equal(expected, Recls::WILDCARDS_ALL)
+		assert_equal('*', Recls::WILDCARDS_ALL)
 
 	end # def test_WILDCARDS_ALL
 
