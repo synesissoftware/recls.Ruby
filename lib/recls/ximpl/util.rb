@@ -440,6 +440,10 @@ module Recls
 
 			if search_directory and not search_directory.empty?
 
+				# TODO: need to do same here, or change following code
+				# to eschew regex
+				search_directory = search_directory.gsub(/\+/, '\+')
+
 				if path =~ /^#{search_directory}[\\\/]/
 					$'
 				else

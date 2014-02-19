@@ -32,12 +32,15 @@ module Recls
 			end
 			search_root = '.' if search_root.empty?
 
+			patterns = patterns ? patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/) : []
+			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
+
 			if(0 == (Recls::TYPEMASK & flags))
 				flags |= Recls::FILES
 			end
 
 			@search_root	=	search_root
-			@patterns	=	patterns ? patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/) : []
+			@patterns	=	patterns
 			@flags		=	flags
 
 		end # def initialize()
@@ -68,7 +71,13 @@ module Recls
 
 			patterns = @patterns
 
-			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
+			patterns = patterns.map do |pattern|
+
+				pattern = pattern.gsub(/\./, '\\.')
+				pattern = pattern.gsub(/\?/, '.')
+				pattern = pattern.gsub(/\*/, '.*')
+				pattern
+			end
 
 			FileSearch::search_directory_(search_root, search_root, patterns, flags, &blk)
 
@@ -112,9 +121,20 @@ module Recls
 
 				dir = dir.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
 
-				pattern = File::join(dir, pattern)
+				Dir::new(dir).each do |name|
 
-				entries.concat Dir::glob(pattern).map { |path| stat_or_nil_(path) }
+					next if is_dots(name)
+
+					if not /^#{pattern}$/ =~ name
+						next
+					end
+
+					entry_path = File::join(dir, name)
+
+					fs = stat_or_nil_ entry_path
+
+					entries << fs
+				end
 			end
 
 			# array of FileStat instances
@@ -134,13 +154,18 @@ module Recls
 				subdirectories << fs
 			end
 
-			entries.concat subdirectories
 
 			# now filter the file-stat instances and send each
 			# remaining to the block in Entry instance
 			entries.each do |fs|
 
 				next if not fs
+
+				if(0 == (Recls::SHOW_HIDDEN & flags))
+					if fs.hidden?
+						next
+					end
+				end
 
 				if(0 == (Recls::TYPEMASK & flags))
 				elsif (0 != (Recls::FILES & flags))

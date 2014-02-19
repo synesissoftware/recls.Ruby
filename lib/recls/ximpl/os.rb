@@ -25,7 +25,7 @@ module Recls
 
 			PATH_SEPARATOR = OS_IS_WINDOWS ? ';' : ':'
 
-			WILDCARDS_ALL = OS_IS_WINDOWS ? '*.*' : '*'
+			WILDCARDS_ALL = OS_IS_WINDOWS ? '*' : '*'
 
 			def OS.get_number_of_dots_dir_(p)
 
