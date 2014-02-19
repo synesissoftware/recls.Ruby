@@ -39,6 +39,9 @@ module Recls
 
 		end # def initialize
 
+		# ##########################
+		# Name-related attributes
+
 		attr_reader :path
 		attr_reader :directory_path
 		attr_reader :directory
@@ -49,6 +52,9 @@ module Recls
 		attr_reader :file_ext
 		attr_reader :search_directory
 		attr_reader :search_relative_path
+
+		# ##########################
+		# Nature attributes
 
 		# indicates whether the given entry represents a directory
 		def directory?
@@ -78,12 +84,18 @@ module Recls
 
 		end # socket?
 
+		# ##########################
+		# Size attributes
+
 		# indicates the size of the given entry
 		def size
 
 			@file_stat.size
 
 		end # size
+
+		# ##########################
+		# Time attributes
 
 		# indicates the last access time of the entry
 		def last_access_time
@@ -98,6 +110,13 @@ module Recls
 			@file_stat.mtime
 
 		end # modification_time
+
+		# ##########################
+		# Comparison
+
+
+		# ##########################
+		# Conversion
 
 		# represents the entry as a string (in the form of
 		# the full path)
