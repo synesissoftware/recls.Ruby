@@ -136,19 +136,29 @@ module Recls
 
 			entries.concat subdirectories
 
+			# now filter the file-stat instances and send each
+			# remaining to the block in Entry instance
 			entries.each do |fs|
 
 				next if not fs
 
 				if(0 == (Recls::TYPEMASK & flags))
-				elsif ((0 != (Recls::FILES & flags)) && !fs.file?)
-					next
-				elsif ((0 != (Recls::DIRECTORIES & flags)) && !fs.directory?)
-					next
-				elsif ((0 != (Recls::LINKS & flags)) && !fs.symlink?)
-					next
-				elsif ((0 != (Recls::DEVICES & flags)) && !fs.blockdev?)
-					next
+				elsif (0 != (Recls::FILES & flags))
+				       if !fs.file?
+						next
+				       end
+				elsif (0 != (Recls::DIRECTORIES & flags))
+					if !fs.directory?
+						next
+					end
+				elsif (0 != (Recls::LINKS & flags))
+				       if !fs.symlink?
+						next
+				       end
+				elsif (0 != (Recls::DEVICES & flags))
+					if !fs.blockdev?
+						next
+					end
 				end
 
 				blk.call Recls::Entry::new(fs.path, fs, search_root)
