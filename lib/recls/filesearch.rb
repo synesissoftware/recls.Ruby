@@ -23,22 +23,26 @@ module Recls
 
 		include Enumerable
 
-		def initialize(dir, patterns, flags)
+		def initialize(search_root, patterns, flags)
 
 			if(0 == (Recls::TYPEMASK & flags))
 				flags |= Recls::FILES
 			end
 
-			@dir		=	dir
+			@search_root	=	search_root
 			@patterns	=	patterns ? patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/) : []
 			@flags		=	flags
 
 		end # def initialize()
 
+		attr_reader :search_root
+		attr_reader :patterns
+		attr_reader :flags
+
 		def each(&blk)
 
-			search_dir = @dir.to_s
-			search_dir = Recls::Ximpl::absolute_path search_dir
+			search_root = @search_root.to_s
+			search_root = Recls::Ximpl::absolute_path search_root
 
 			# set the (type part of the) flags to zero if we want
 			# everything, to facilitate later optimisation
@@ -59,7 +63,7 @@ module Recls
 
 			patterns = [ Recls::wildcards_all ] if patterns.empty?
 
-			FileSearch::search_dir_(search_dir, search_dir, patterns, flags, &blk)
+			FileSearch::search_directory_(search_root, search_root, patterns, flags, &blk)
 
 		end # def each
 
@@ -88,11 +92,11 @@ module Recls
 		# searches all entries - files, directories, links, devices
 		# - that match the given (patterns) in the given directory
 		# (dir) according to the given (flags), invoking the given
-		# block (blk). The search directory (search_dir) is passed in
+		# block (blk). The search directory (search_root) is passed in
 		# order to allow calculation of search_relative_path in the
 		# entry.
 
-		def FileSearch::search_dir_(search_dir, dir, patterns, flags, &blk)
+		def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
 
 			entries = []
 
@@ -133,7 +137,7 @@ module Recls
 					next
 				end
 
-				blk.call Recls::Entry::new(entry, fs, search_dir)
+				blk.call Recls::Entry::new(entry, fs, search_root)
 			end
 
 			# sub-directories
@@ -147,7 +151,7 @@ module Recls
 				next if not fs
 				next if not fs.directory?
 
-				FileSearch::search_dir_(search_dir, subdir_path, patterns, flags, &blk)
+				FileSearch::search_directory_(search_root, subdir_path, patterns, flags, &blk)
 			end
 
 		end # def each
