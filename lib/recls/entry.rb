@@ -13,7 +13,6 @@
 # ######################################################################### #
 
 
-require File.dirname(__FILE__) + '/flags'
 require File.dirname(__FILE__) + '/ximpl/util'
 
 module Recls
@@ -28,11 +27,16 @@ module Recls
 
 			@path = Recls::Ximpl::absolute_path path
 
-			@directory_path = File::dirname @path
-			@directory = Recls::Ximpl::directory_from_directory_path @directory_path
+			windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
+
+			@drive = windows_drive
+			@directory_path = "#{windows_drive}#{directory}"
+			@directory = directory ? directory : ''
 			@directory_parts = Recls::Ximpl::directory_parts_from_directory directory
-			@file_basename = Recls::Ximpl::basename @path
-			@file_ext = Recls::Ximpl::file_ext @file_basename
+			@file_full_name = basename ? basename : ''
+			@file_short_name = nil
+			@file_name_only = file_name ? file_name : ''
+			@file_extension = file_ext ? file_ext : ''
 
 			@search_directory = search_dir
 			@search_relative_path = Recls::Ximpl::search_relative_path @path, search_dir
@@ -43,18 +47,37 @@ module Recls
 		# Name-related attributes
 
 		attr_reader :path
+		attr_reader :drive
 		attr_reader :directory_path
+		alias_method :dirname, :directory_path
 		attr_reader :directory
 		attr_reader :directory_parts
-		attr_reader :file_basename
-		alias_method :file, :file_basename
-		alias_method :file_name, :file_basename
-		attr_reader :file_ext
+		attr_reader :file_full_name
+		attr_reader :file_short_name
+		alias_method :basename, :file_full_name
+		attr_reader :file_name_only
+		attr_reader :file_extension
+		alias_method :extension, :file_extension
 		attr_reader :search_directory
 		attr_reader :search_relative_path
 
 		# ##########################
 		# Nature attributes
+
+		# indicates whether the given entry exists
+		def exist?
+
+			true
+
+		end
+
+		# indicates whether the given entry is readonly
+		def readonly?
+
+			not @file_stat.writable?
+
+		end # readonly?
+
 
 		# indicates whether the given entry represents a directory
 		def directory?
@@ -70,12 +93,12 @@ module Recls
 
 		end # file?
 
-		# indicates whether the given entry is readonly
-		def readonly?
+		# indicates whether the given entry represents a link
+		def link?
 
-			not @file_stat.writable?
+			@file_stat.link?
 
-		end # readonly?
+		end # link?
 
 		# indicates whether the given entry represents a socket
 		def socket?
@@ -114,6 +137,23 @@ module Recls
 		# ##########################
 		# Comparison
 
+	if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+		def <=>(rhs)
+
+			path.upcase <=> rhs.path.upcase
+
+		end
+
+	else
+
+		def <=>(rhs)
+
+			path <=> rhs.path
+
+		end
+
+	end
 
 		# ##########################
 		# Conversion
