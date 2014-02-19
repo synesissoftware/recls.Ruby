@@ -25,9 +25,12 @@ module Recls
 
 		def initialize(search_root, patterns, flags)
 
-			if not search_root or search_root.empty?
+			if not search_root
 				search_root = '.'
+			else
+				search_root = search_root.to_s
 			end
+			search_root = '.' if search_root.empty?
 
 			if(0 == (Recls::TYPEMASK & flags))
 				flags |= Recls::FILES
@@ -45,7 +48,7 @@ module Recls
 
 		def each(&blk)
 
-			search_root = @search_root.to_s
+			search_root = @search_root
 			search_root = Recls::Ximpl::absolute_path search_root
 
 			# set the (type part of the) flags to zero if we want
