@@ -69,7 +69,7 @@ module Recls
 
 			true
 
-		end
+		end # def exist?
 
 		# indicates whether the given entry is readonly
 		def readonly?
@@ -143,7 +143,7 @@ module Recls
 
 			path.upcase <=> rhs.path.upcase
 
-		end
+		end # def <=>(rhs)
 
 	else
 
@@ -151,7 +151,7 @@ module Recls
 
 			path <=> rhs.path
 
-		end
+		end # def <=>(rhs)
 
 	end
 

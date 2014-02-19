@@ -4,7 +4,7 @@
 # Purpose:	Main source file for recls library
 #
 # Created:	19th July 2012
-# Updated:	18th February 2014
+# Updated:	19th February 2014
 #
 # Author:	Matthew Wilson
 #
@@ -81,7 +81,6 @@ if not defined? RECLS_NO_OBSOLETE
 			end
 
 			alias_method :creationTime, :modification_time
-
 
 		end
 

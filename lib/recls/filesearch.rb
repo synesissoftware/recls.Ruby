@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::FileSearch class for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     16th February 2014
+# Updated:     19th February 2014
 #
 # Author:      Matthew Wilson
 #
@@ -24,6 +24,10 @@ module Recls
 		include Enumerable
 
 		def initialize(search_root, patterns, flags)
+
+			if not search_root or search_root.empty?
+				search_root = '.'
+			end
 
 			if(0 == (Recls::TYPEMASK & flags))
 				flags |= Recls::FILES
@@ -61,7 +65,7 @@ module Recls
 
 			patterns = @patterns
 
-			patterns = [ Recls::wildcards_all ] if patterns.empty?
+			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
 
 			FileSearch::search_directory_(search_root, search_root, patterns, flags, &blk)
 
@@ -113,9 +117,11 @@ module Recls
 
 			Dir::new(dir).each do |subdir|
 
+				next if is_dots(subdir)
+
 				subdir_path = File::join(dir, subdir)
 
-				if(FileTest::directory?(subdir_path) and not is_dots(subdir))
+				if FileTest::directory?(subdir_path)
 					subdirectories << subdir_path
 				end
 			end
