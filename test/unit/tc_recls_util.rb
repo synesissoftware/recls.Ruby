@@ -1,3 +1,9 @@
+#! /usr/bin/ruby
+#
+# test Recls canonicalise_path() method
+
+$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
+
 
 require 'recls/util'
 

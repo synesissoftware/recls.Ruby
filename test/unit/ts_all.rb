@@ -1,3 +1,8 @@
+#! /usr/bin/ruby
+#
+# executes all other tests
+
+$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
 ThisDir = File.dirname(__FILE__)
 

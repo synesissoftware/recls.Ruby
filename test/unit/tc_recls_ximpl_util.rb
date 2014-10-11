@@ -1,3 +1,9 @@
+#! /usr/bin/ruby
+#
+# test Recls::Ximpl::Util namespace
+
+$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
+
 
 require 'recls'
 
