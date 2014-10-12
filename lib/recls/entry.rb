@@ -14,9 +14,7 @@
 
 
 require File.dirname(__FILE__) + '/ximpl/os'
-
 require File.dirname(__FILE__) + '/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows.rb' : 'unix.rb')
-
 require File.dirname(__FILE__) + '/ximpl/util'
 
 module Recls
