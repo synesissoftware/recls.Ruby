@@ -89,6 +89,55 @@ module Recls
 
 		end # readonly?
 
+		# ##########################
+		# Comparison
+
+	if Recls::Ximpl::OS::OS_IS_WINDOWS
+
+		def system?
+
+			@file_stat.system?
+
+		end # system?
+
+		def archive?
+
+			@file_stat.archive?
+
+		end # archive?
+
+		def device?
+
+			@file_stat.device?
+
+		end # device?
+
+		def normal?
+
+			@file_stat.normal?
+
+		end # normal?
+
+		def temporary?
+
+			@file_stat.temporary?
+
+		end # temporary?
+
+		def compressed?
+
+			@file_stat.compressed?
+
+		end # compressed?
+
+		def encrypted?
+
+			@file_stat.encrypted?
+
+		end # encrypted?
+
+	end
+
 
 
 		# indicates whether the given entry represents a directory

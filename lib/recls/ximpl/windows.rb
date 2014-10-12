@@ -23,10 +23,23 @@ module Recls
 
 			private
 			GetFileAttributes = Win32API.new("kernel32", "GetFileAttributes", "P", "I")
-			FILE_ATTRIBUTE_READONLY_ = 0x00000001
-			FILE_ATTRIBUTE_HIDDEN_ = 0x00000002
-			FILE_ATTRIBUTE_SYSTEM_ = 0x00000004
-			FILE_ATTRIBUTE_DIRECTORY_ = 0x00000010
+			FILE_ATTRIBUTE_READONLY_	=	0x00000001
+			FILE_ATTRIBUTE_HIDDEN_		=	0x00000002
+			FILE_ATTRIBUTE_SYSTEM_		=	0x00000004
+			FILE_ATTRIBUTE_DIRECTORY_	=	0x00000010
+			FILE_ATTRIBUTE_ARCHIVE_		=	0x00000020
+			FILE_ATTRIBUTE_DEVICE_		=	0x00000040
+			FILE_ATTRIBUTE_NORMAL_		=	0x00000080
+			FILE_ATTRIBUTE_TEMPORARY_	=	0x00000100
+			FILE_ATTRIBUTE_COMPRESSED_	=	0x00000800
+			FILE_ATTRIBUTE_ENCRYPTED_	=	0x00004000
+
+			private
+			def has_attribute_? (attr)
+
+				0 != (attr & @attributes)
+
+			end # def has_attribute_? (attr)
 
 			private
 			def initialize(path)
@@ -55,6 +68,51 @@ module Recls
 				0 != (FILE_ATTRIBUTE_HIDDEN_ & @attributes)
 
 			end # hidden?
+
+			# Windows-specific attributes
+
+			def system?
+
+				has_attribute_? FILE_ATTRIBUTE_SYSTEM_
+
+			end # system?
+
+			def archive?
+
+				has_attribute_? FILE_ATTRIBUTE_ARCHIVE_
+
+			end # archive?
+
+			def device?
+
+				has_attribute_? FILE_ATTRIBUTE_DEVICE_
+
+			end # device?
+
+			def normal?
+
+				has_attribute_? FILE_ATTRIBUTE_NORMAL_
+
+			end # normal?
+
+			def temporary?
+
+				has_attribute_? FILE_ATTRIBUTE_TEMPORARY_
+
+			end # temporary?
+
+			def compressed?
+
+				has_attribute_? FILE_ATTRIBUTE_COMPRESSED_
+
+			end # compressed?
+
+			def encrypted?
+
+				has_attribute_? FILE_ATTRIBUTE_ENCRYPTED_
+
+			end # encrypted?
+
 
 			public
 			def FileStat.stat(path)
