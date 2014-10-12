@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      18th February 2014
+# Updated:      12th October 2014
 #
 # Author:       Matthew Wilson
 #
@@ -26,3 +26,5 @@ module Recls
 	end # def Recls.canonicalise_path
 
 end # module Recls
+
+# ############################## end of file ############################# #

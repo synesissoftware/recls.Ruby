@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls.stat() method for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     16th February 2014
+# Updated:     12th October 2014
 #
 # Author:      Matthew Wilson
 #
@@ -34,3 +34,5 @@ module Recls
 	end # def stat()
 
 end # module Recls
+
+# ############################## end of file ############################# #

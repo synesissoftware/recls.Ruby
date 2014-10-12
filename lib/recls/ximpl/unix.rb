@@ -1,3 +1,17 @@
+# ######################################################################### #
+# File:        recls/ximpl/unix.rb
+#
+# Purpose:     UNIX-specific constructs for the recls library.
+#
+# Created:     19th February 2014
+# Updated:     12th October 2014
+#
+# Author:      Matthew Wilson
+#
+# Copyright:   <<TBD>>
+#
+# ######################################################################### #
+
 
 require File.dirname(__FILE__) + '/util'
 
@@ -45,3 +59,4 @@ module Recls
 
 end # module Recls
 
+# ############################## end of file ############################# #

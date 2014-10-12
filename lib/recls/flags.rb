@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::Flags module for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     16th February 2014
+# Updated:     12th October 2014
 #
 # Author:      Matthew Wilson
 #
@@ -34,3 +34,5 @@ module Recls
 	DETAILS_LATER	=	0x00080000
 
 end # module Recls
+
+# ############################## end of file ############################# #

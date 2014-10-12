@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     18th February 2014
+# Updated:     12th October 2014
 #
 # Author:      Matthew Wilson
 #
@@ -189,3 +189,5 @@ module Recls
 	end # class Entry
 
 end # module Recls
+
+# ############################## end of file ############################# #
