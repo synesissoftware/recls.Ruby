@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::FileSearch class for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     19th February 2014
+# Updated:     12th October 2014
 #
 # Author:      Matthew Wilson
 #
@@ -194,6 +194,12 @@ module Recls
 			return unless (0 != (Recls::RECURSIVE & flags))
 
 			subdirectories.each do |fs|
+
+				if(0 == (Recls::SHOW_HIDDEN & flags))
+					if fs.hidden?
+						next
+					end
+				end
 
 				FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
 			end
