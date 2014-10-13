@@ -56,6 +56,8 @@ module Recls
 			search_root = @search_root
 			search_root = Recls::Ximpl::absolute_path search_root
 
+			search_root = search_root.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
+
 			# set the (type part of the) flags to zero if we want
 			# everything, to facilitate later optimisation
 
@@ -123,8 +125,6 @@ module Recls
 		# entry.
 
 		def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
-
-			dir = dir.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 			# array of FileStat instances
 			entries = []
