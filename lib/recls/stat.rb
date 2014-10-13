@@ -13,8 +13,8 @@
 # ######################################################################### #
 
 
-require File.dirname(__FILE__) + '/entry'
-require File.dirname(__FILE__) + '/flags'
+require File.join(File.dirname(__FILE__), 'entry')
+require File.join(File.dirname(__FILE__), 'flags')
 
 module Recls
 

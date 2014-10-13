@@ -14,5 +14,5 @@
 
 
 # recls.rb -> recls/recls.rb
-require File.dirname(__FILE__) + '/recls/recls'
+require File.join(File.dirname(__FILE__), 'recls/recls')
 

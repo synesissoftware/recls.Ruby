@@ -13,9 +13,9 @@
 # ######################################################################### #
 
 
-require File.dirname(__FILE__) + '/filesearch'
-require File.dirname(__FILE__) + '/stat'
-require File.dirname(__FILE__) + '/ximpl/os'
+require File.join(File.dirname(__FILE__), 'filesearch')
+require File.join(File.dirname(__FILE__), 'stat')
+require File.join(File.dirname(__FILE__), 'ximpl/os')
 
 module Recls
 

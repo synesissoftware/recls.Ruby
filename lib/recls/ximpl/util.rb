@@ -13,7 +13,8 @@
 # ######################################################################### #
 
 
-require File.dirname(__FILE__) + '/os'
+require File.join(File.dirname(__FILE__), 'os')
+require File.join(File.dirname(__FILE__), '..', 'flags')
 
 module Recls
 
