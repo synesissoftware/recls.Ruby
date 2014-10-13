@@ -456,8 +456,40 @@ module Recls
 
 		end # Ximpl.search_relative_path
 
+		# Elicits the contents of the given directory, or, if the flag
+		# STOP_ON_ACCESS_FAILURE is specified throws an exception if the
+		# directory does not exist
+		#
+		# Some known conditions:
+		#
+		# * (Mac OSX) /dev/fd/<N> - some of these stat() as directories but
+		#    Dir::new fails with ENOTDIR
+		#
+		def Ximpl.dir_entries_maybe(dir, flags)
+
+			begin
+
+				Dir.new(dir).to_a
+
+			rescue SystemCallError => x
+
+				# TODO this should be filtered up and/or logged
+
+				if(0 != (STOP_ON_ACCESS_FAILURE & flags))
+					raise
+				end
+
+				return []
+
+			rescue Exception => x
+
+			end
+
+		end # Ximpl.dir_entries_maybe
+
 	end # module Ximpl
 
 end # module Recls
 
 # ############################## end of file ############################# #
+

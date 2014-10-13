@@ -37,9 +37,15 @@ module Recls
 	NODE_INDEX				=	0x00008000
 
 	RECURSIVE				=	0x00010000
-	NO_FOLLOW_LINKS			=	0x00020000
+private
+	NO_SEARCH_LINKS			=	0x00020000
+public
 	DIRECTORY_PARTS			=	0x00040000
 	DETAILS_LATER			=	0x00080000
+
+	# Causes sub-directories that are links to be searched; default is not
+	# to search through links
+	SEARCH_THROUGH_LINKS	=	0x00100000
 
 end # module Recls
 

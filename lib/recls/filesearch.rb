@@ -121,7 +121,7 @@ module Recls
 
 				dir = dir.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
 
-				Dir::new(dir).each do |name|
+				Recls::Ximpl::dir_entries_maybe(dir, flags).each do |name|
 
 					next if is_dots(name)
 
@@ -140,7 +140,7 @@ module Recls
 			# array of FileStat instances
 			subdirectories = []
 
-			Dir::new(dir).each do |subdir|
+			Recls::Ximpl::dir_entries_maybe(dir, flags).each do |subdir|
 
 				next if is_dots(subdir)
 
@@ -149,6 +149,7 @@ module Recls
 				fs = stat_or_nil_(subdir_path)
 
 				next if not fs
+
 				next unless fs.directory?
 
 				subdirectories << fs
@@ -197,6 +198,12 @@ module Recls
 
 				if(0 == (Recls::SHOW_HIDDEN & flags))
 					if fs.hidden?
+						next
+					end
+				end
+
+				if(0 == (Recls::SEARCH_THROUGH_LINKS & flags))
+					if File.symlink? fs.path
 						next
 					end
 				end
