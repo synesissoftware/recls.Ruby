@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::FileSearch class for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     13th October 2014
+# Updated:     14th October 2014
 #
 # Author:      Matthew Wilson
 #
@@ -124,12 +124,12 @@ module Recls
 
 		def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
 
+			dir = dir.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
+
 			# array of FileStat instances
 			entries = []
 
 			patterns.each do |pattern|
-
-				dir = dir.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 				Recls::Ximpl::dir_entries_maybe(dir, flags).each do |name|
 
@@ -221,7 +221,7 @@ module Recls
 				FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
 			end
 
-		end # def each
+		end # def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
 
 	end # class FileSearch
 
