@@ -95,11 +95,19 @@ module Recls
 
 		end # is_dots()
 
-		def FileSearch::stat_or_nil_(path)
+		def FileSearch::stat_or_nil_(path, flags)
 
 			begin
 				Recls::Ximpl::FileStat.stat path
 			rescue Errno::ENOENT => x
+				nil
+			rescue SystemCallError => x
+				# TODO this should be filtered up and/or logged
+
+				if(0 != (STOP_ON_ACCESS_FAILURE & flags))
+					raise
+				end
+
 				nil
 			end
 
@@ -131,7 +139,7 @@ module Recls
 
 					entry_path = File::join(dir, name)
 
-					fs = stat_or_nil_ entry_path
+					fs = stat_or_nil_(entry_path, flags)
 
 					entries << fs
 				end
@@ -146,7 +154,7 @@ module Recls
 
 				subdir_path = File::join(dir, subdir)
 
-				fs = stat_or_nil_(subdir_path)
+				fs = stat_or_nil_(subdir_path, flags)
 
 				next if not fs
 
