@@ -1,5 +1,5 @@
 # ######################################################################### #
-# File:         recls/version.rb
+# File:         recls/internal/version.rb
 #
 # Purpose:      Version for recls library
 #

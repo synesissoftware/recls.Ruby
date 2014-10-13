@@ -14,7 +14,7 @@
 
 
 require File.join(File.dirname(__FILE__), 'ximpl/common')
-require File.join(File.dirname(__FILE__), 'version')
+require File.join(File.dirname(__FILE__), 'internal/version')
 require File.join(File.dirname(__FILE__), 'filesearch')
 require File.join(File.dirname(__FILE__), 'stat')
 require File.join(File.dirname(__FILE__), 'ximpl/os')

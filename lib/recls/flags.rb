@@ -14,7 +14,7 @@
 
 
 require File.join(File.dirname(__FILE__), 'ximpl/common')
-require File.join(File.dirname(__FILE__), 'version')
+require File.join(File.dirname(__FILE__), 'internal/version')
 
 module Recls
 
