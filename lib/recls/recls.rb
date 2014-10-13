@@ -4,7 +4,7 @@
 # Purpose:	Main source file for recls library
 #
 # Created:	19th July 2012
-# Updated:	12th October 2014
+# Updated:	13th October 2014
 #
 # Author:	Matthew Wilson
 #
@@ -13,6 +13,8 @@
 # ######################################################################### #
 
 
+require File.join(File.dirname(__FILE__), 'ximpl/common')
+require File.join(File.dirname(__FILE__), 'version')
 require File.join(File.dirname(__FILE__), 'filesearch')
 require File.join(File.dirname(__FILE__), 'stat')
 require File.join(File.dirname(__FILE__), 'ximpl/os')

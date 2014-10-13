@@ -13,6 +13,8 @@
 # ######################################################################### #
 
 
+require File.join(File.dirname(__FILE__), 'ximpl/common')
+require File.join(File.dirname(__FILE__), 'version')
 require File.join(File.dirname(__FILE__), 'entry')
 require File.join(File.dirname(__FILE__), 'flags')
 

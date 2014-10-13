@@ -4,7 +4,7 @@
 # Purpose:     Defines the Recls::FileSearch class for the recls.ruby library.
 #
 # Created:     24th July 2012
-# Updated:     12th October 2014
+# Updated:     13th October 2014
 #
 # Author:      Matthew Wilson
 #
@@ -13,6 +13,8 @@
 # ######################################################################### #
 
 
+require File.join(File.dirname(__FILE__), 'ximpl/common')
+require File.join(File.dirname(__FILE__), 'version')
 require File.join(File.dirname(__FILE__), 'entry')
 require File.join(File.dirname(__FILE__), 'flags')
 require File.join(File.dirname(__FILE__), 'ximpl/os')
