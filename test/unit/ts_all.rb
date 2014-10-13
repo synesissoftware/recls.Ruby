@@ -2,12 +2,14 @@
 #
 # executes all other tests
 
+ThisDir = File.expand_path(File.dirname(__FILE__))
 $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
-ThisDir = File.dirname(__FILE__)
 
 require 'recls'
 require 'test/unit'
+
+puts "executing all test cases in directory #{ThisDir}"
 
 require ThisDir + '/' + 'tc_recls_file_search'
 require ThisDir + '/' + 'tc_recls_module'
