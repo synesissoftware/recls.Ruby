@@ -179,6 +179,23 @@ module Recls
 		end # size
 
 		# ##########################
+		# File-system entry attributes
+
+		# indicates the device of the given entry
+		def dev
+
+			@file_stat.dev
+
+		end # dev
+
+		# indicates the ino of the given entry
+		def ino
+
+			@file_stat.ino
+
+		end # ino
+
+		# ##########################
 		# Time attributes
 
 		# indicates the last access time of the entry
