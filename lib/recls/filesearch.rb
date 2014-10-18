@@ -50,6 +50,9 @@ module Recls
 				flags |= Recls::FILES
 			end
 
+			# now de-dup the patterns, to avoid duplicates in search
+			patterns	=	patterns.uniq
+
 			@search_root	=	search_root
 			@patterns	=	patterns
 			@flags		=	flags
