@@ -34,7 +34,16 @@ module Recls
 			end
 			search_root = '.' if search_root.empty?
 
-			patterns = patterns ? patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/) : []
+			case	patterns
+			when	NilClass
+				patterns = []
+			when	String
+				patterns = patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/)
+			when	Array
+			else
+				patterns = patterns.to_a
+			end
+
 			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
 
 			if(0 == (Recls::TYPEMASK & flags))
