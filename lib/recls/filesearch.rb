@@ -51,6 +51,7 @@ module Recls
 			end
 
 			# now de-dup the patterns, to avoid duplicates in search
+			patterns	=	patterns.flatten
 			patterns	=	patterns.uniq
 
 			@search_root	=	search_root
