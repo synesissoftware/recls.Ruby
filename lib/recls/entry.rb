@@ -43,7 +43,7 @@ module Recls
 			@file_extension = file_ext ? file_ext : ''
 
 			@search_directory = search_dir
-			@search_relative_path = Recls::Ximpl::search_relative_path @path, search_dir
+			@search_relative_path = Recls::Ximpl::derive_relative_path @path, search_dir
 
 		end # def initialize
 

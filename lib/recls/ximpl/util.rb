@@ -437,7 +437,7 @@ module Recls
 
 		# obtains the search_relative_path from a path and
 		# a search_directory
-		def Ximpl.search_relative_path(path, search_directory)
+		def Ximpl.derive_relative_path(path, search_directory)
 
 			if search_directory and not search_directory.empty?
 
@@ -454,7 +454,7 @@ module Recls
 				path
 			end
 
-		end # Ximpl.search_relative_path
+		end # def Ximpl.derive_relative_path
 
 		# Elicits the contents of the given directory, or, if the flag
 		# STOP_ON_ACCESS_FAILURE is specified throws an exception if the
