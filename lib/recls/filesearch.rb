@@ -148,7 +148,7 @@ module Recls
 
 					next if is_dots(name)
 
-					if not /^#{pattern}$/ =~ name
+					if not name =~ /^#{pattern}$/
 						next
 					end
 
