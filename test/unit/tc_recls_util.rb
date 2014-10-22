@@ -124,6 +124,11 @@ class Test_canonicalise_path < Test::Unit::TestCase
 		assert_equal('/dir.4/', Recls::canonicalise_path('/../dir.1/../dir.4/'))
 
 		assert_equal('/dir.14/', Recls::canonicalise_path('/dir.14/dir.2/..'))
+		assert_equal('/', Recls::canonicalise_path('/dir.14/dir.2/../..'))
+		assert_equal('/', Recls::canonicalise_path('/dir.14/dir.2/../../..'))
+		assert_equal('dir.14/', Recls::canonicalise_path('dir.14/dir.2/..'))
+		assert_equal('.', Recls::canonicalise_path('dir.14/dir.2/../..'))
+		assert_equal('..', Recls::canonicalise_path('dir.14/dir.2/../../..'))
 
 		if Recls::Ximpl::OS::OS_IS_WINDOWS
 
