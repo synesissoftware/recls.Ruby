@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      12th October 2014
+# Updated:      22nd October 2014
 #
 # Author:       Matthew Wilson
 #
