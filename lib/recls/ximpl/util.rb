@@ -34,6 +34,59 @@ module Recls
 
 			end # def Util.is_path_name_separator
 
+			# Indicates whether a trailing slash is on the given path
+			#
+			# dependencies: none
+			def Util.has_trailing_slash(p)
+
+				return p if p.nil? or p.empty?
+
+				return Util.is_path_name_separator(p[-1])
+
+			end # Util.has_trailing_slash
+
+			# returns the trailing slash, or nil if none present
+			#
+			# dependencies: none
+			def Util.get_trailing_slash(p, args = {})
+
+				return nil if p.nil?
+				return nil if p.empty?
+
+				return Util.is_path_name_separator(p[-1]) ? p[-1] : nil
+
+			end # Util.get_trailing_slash
+
+			# appends trailing slash to a path if not already
+			# present
+			#
+			# dependencies: none
+			def Util.append_trailing_slash(p, slash = nil)
+
+				return p if not p or p.empty?
+
+				return p if Util.is_path_name_separator(p[-1])
+
+				slash = '/' if not slash
+
+				"#{p}#{slash}"
+
+			end # def Util.append_trailing_slash(p)
+
+			# trims trailing slash from a path, unless it is the
+			# root
+			#
+			# dependencies: none
+			def Util.trim_trailing_slash(p)
+
+				return p if not p or p.empty?
+
+				p = p[0 ... -1] if Util.is_path_name_separator(p[-1])
+
+				return p
+
+			end # def Util.trim_trailing_slash(p)
+
 			# From path p, returns a tuple containing either:
 			#
 			#  [ nil, p ] if p does not contain a Windows root, or
@@ -275,59 +328,6 @@ module Recls
 				[ newParts.join(''), consume_basename ]
 
 			end # def canonicalise_parts(parts, basename)
-
-			# Indicates whether a trailing slash is on the given path
-			#
-			# dependencies: none
-			def Util.has_trailing_slash(p)
-
-				return p if p.nil? or p.empty?
-
-				return Util.is_path_name_separator(p[-1])
-
-			end # Util.has_trailing_slash
-
-			# returns the trailing slash, or nil if none present
-			#
-			# dependencies: none
-			def Util.get_trailing_slash(p, args = {})
-
-				return nil if p.nil?
-				return nil if p.empty?
-
-				return Util.is_path_name_separator(p[-1]) ? p[-1] : nil
-
-			end # Util.get_trailing_slash
-
-			# appends trailing slash to a path if not already
-			# present
-			#
-			# dependencies: none
-			def Util.append_trailing_slash(p, slash = nil)
-
-				return p if not p or p.empty?
-
-				return p if Util.is_path_name_separator(p[-1])
-
-				slash = '/' if not slash
-
-				"#{p}#{slash}"
-
-			end # def Util.append_trailing_slash(p)
-
-			# trims trailing slash from a path, unless it is the
-			# root
-			#
-			# dependencies: none
-			def Util.trim_trailing_slash(p)
-
-				return p if not p or p.empty?
-
-				p = p[0 ... -1] if Util.is_path_name_separator(p[-1])
-
-				return p
-
-			end # def Util.trim_trailing_slash(p)
 
 		end # module Util
 
