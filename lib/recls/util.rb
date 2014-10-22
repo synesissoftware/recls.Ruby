@@ -27,6 +27,12 @@ module Recls
 
 	end # def Recls.canonicalise_path
 
+	def Recls.derive_relative_path(origin, path)
+
+		return Recls::Ximpl::derive_relative_path origin path
+
+	end # def Recls.derive_relative_path
+
 end # module Recls
 
 # ############################## end of file ############################# #
