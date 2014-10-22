@@ -535,13 +535,14 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 	def test_dots_directories
 
 		assert_equal('.', Recls::Ximpl::canonicalise_path('.'))
-		assert_equal('.', Recls::Ximpl::canonicalise_path('./'))
+		assert_equal('./', Recls::Ximpl::canonicalise_path('./'))
 		assert_equal('.', Recls::Ximpl::canonicalise_path('././.'))
-		assert_equal('.', Recls::Ximpl::canonicalise_path('./././'))
+		assert_equal('./', Recls::Ximpl::canonicalise_path('./././'))
 
 		assert_equal('..', Recls::Ximpl::canonicalise_path('..'))
-		assert_equal('..', Recls::Ximpl::canonicalise_path('../'))
+		assert_equal('../', Recls::Ximpl::canonicalise_path('../'))
 		assert_equal('..', Recls::Ximpl::canonicalise_path('../.'))
+		assert_equal('../', Recls::Ximpl::canonicalise_path('.././'))
 
 	end
 
@@ -594,10 +595,14 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 		assert_equal('/dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/dir.1/dir.3/../dir.2/'))
 		assert_equal('/dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/dir.3/../dir.1/dir.2/'))
 
-		assert_equal('/../dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/../dir.1/dir.2/'))
-		assert_equal('/../dir.4/', Recls::Ximpl::canonicalise_path('/../dir.1/../dir.4/'))
+		assert_equal('/dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/../dir.1/dir.2/'))
+		assert_equal('/dir.4/', Recls::Ximpl::canonicalise_path('/../dir.1/../dir.4/'))
 
 		assert_equal('/dir.14/', Recls::Ximpl::canonicalise_path('/dir.14/dir.2/..'))
+		assert_equal('dir.14/', Recls::Ximpl::canonicalise_path('dir.14/dir.2/..'))
+
+		assert_equal('/', Recls::Ximpl::canonicalise_path('/dir.14/dir.2/../..'))
+		assert_equal('.', Recls::Ximpl::canonicalise_path('dir.14/dir.2/../..'))
 
 		if Recls::Ximpl::OS::OS_IS_WINDOWS
 
@@ -617,7 +622,7 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 	def test_complex_examples
 
 		assert_equal('../dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
-		assert_equal('/../dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('/abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
+		assert_equal('/dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('/abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
 		assert_equal('../dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('./././abc/.././././.././dir.1/../dir.11/dir.22/././dir.33/././file3.'))
 
 		if Recls::Ximpl::OS::OS_IS_WINDOWS

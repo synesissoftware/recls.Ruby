@@ -23,7 +23,7 @@ module Recls
 	# directories
 	def Recls.canonicalise_path(path)
 
-		return path
+		return Recls::Ximpl::canonicalise_path path
 
 	end # def Recls.canonicalise_path
 

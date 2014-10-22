@@ -50,7 +50,7 @@ module Recls
 
 				return nil if not p
 				return true if '/' == p
-				return true if '\\' == p
+				return true if OS_IS_WINDOWS and '\\' == p
 
 				return false
 			end

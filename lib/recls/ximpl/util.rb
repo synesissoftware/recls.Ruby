@@ -34,6 +34,59 @@ module Recls
 
 			end # def Util.is_path_name_separator
 
+			# Indicates whether a trailing slash is on the given path
+			#
+			# dependencies: none
+			def Util.has_trailing_slash(p)
+
+				return p if p.nil? or p.empty?
+
+				return Util.is_path_name_separator(p[-1])
+
+			end # Util.has_trailing_slash
+
+			# returns the trailing slash, or nil if none present
+			#
+			# dependencies: none
+			def Util.get_trailing_slash(p, args = {})
+
+				return nil if p.nil?
+				return nil if p.empty?
+
+				return Util.is_path_name_separator(p[-1]) ? p[-1] : nil
+
+			end # Util.get_trailing_slash
+
+			# appends trailing slash to a path if not already
+			# present
+			#
+			# dependencies: none
+			def Util.append_trailing_slash(p, slash = nil)
+
+				return p if not p or p.empty?
+
+				return p if Util.is_path_name_separator(p[-1])
+
+				slash = '/' if not slash
+
+				"#{p}#{slash}"
+
+			end # def Util.append_trailing_slash(p)
+
+			# trims trailing slash from a path, unless it is the
+			# root
+			#
+			# dependencies: none
+			def Util.trim_trailing_slash(p)
+
+				return p if not p or p.empty?
+
+				p = p[0 ... -1] if Util.is_path_name_separator(p[-1])
+
+				return p
+
+			end # def Util.trim_trailing_slash(p)
+
 			# From path p, returns a tuple containing either:
 			#
 			#  [ nil, p ] if p does not contain a Windows root, or
@@ -183,7 +236,11 @@ module Recls
 
 				newParts = []
 
+				trailing_slash = parts.empty? ? nil : Util.get_trailing_slash(parts[-1])
+
 				lastSingleDots = nil
+
+				path_is_rooted = nil
 
 				index = -1
 				parts.each do |part|
@@ -192,6 +249,10 @@ module Recls
 
 					next if not part
 					next if part.empty?
+
+					if path_is_rooted.nil?
+						path_is_rooted = Util.is_path_name_separator(part[0])
+					end
 
 					if ?. == part[0]
 						if Util.is_path_name_separator(part[1])
@@ -212,9 +273,12 @@ module Recls
 								# 3. the last element in the list is not a dots directory
 								if not newParts.empty? # 1.
 									priorPart = newParts[-1]
-									if not OS.is_root_dir_(priorPart) # 2.
-										dirtype = OS.get_number_of_dots_dir_(priorPart) # 3.
-										if 0 == dirtype # 1.
+									if 1 == newParts.size and OS.is_root_dir_(priorPart)
+										# 2.
+										next
+									else
+										dirtype = OS.get_number_of_dots_dir_(priorPart)
+										if 0 == dirtype # 3.
 											if newParts.pop
 												next
 											end
@@ -252,6 +316,8 @@ module Recls
 							if newParts.empty?
 								newParts << '..'
 								consume_basename = true
+							elsif 1 == newParts.size && 1 == newParts[0].size && Util.is_path_name_separator(newParts[0][0])
+								consume_basename = true
 							else
 								if 2 != OS.get_number_of_dots_dir_(newParts[-1])
 									newParts.pop
@@ -262,13 +328,29 @@ module Recls
 					end
 				end
 
-				newParts << '.' if lastSingleDots and newParts.empty?
+				# push lastSingleDots (which may contain a trailing slash) if
+				# exists and newParts is empty
+				newParts << lastSingleDots if lastSingleDots and newParts.empty?
 
 				if not newParts.empty?
 					if 2 == OS.get_number_of_dots_dir_(newParts[-1])
-						if not basename or basename.empty? or consume_basename
-							newParts[-1] = '..'
+						# the last element is the double-dots directory, but
+						# need to determine whether to ensure/remote a
+						# trailing slash
+						if basename and not basename.empty?
+							if not consume_basename
+								# leave as is
+							else
+								# 
+								newParts[-1] = '..'
+							end
 						end
+					end
+				else
+					# handle case where all (double)-dots have eliminated
+					# all regular directories
+					if not basename or basename.empty? or consume_basename
+						newParts << '.'
 					end
 				end
 
@@ -276,61 +358,13 @@ module Recls
 
 			end # def canonicalise_parts(parts, basename)
 
-			# Indicates whether a trailing slash is on the given path
-			#
-			# dependencies: none
-			def Util.has_trailing_slash(p)
-
-				return p if p.nil? or p.empty?
-
-				return Util.is_path_name_separator(p[-1])
-
-			end # Util.has_trailing_slash
-
-			# returns the trailing slash, or nil if none present
-			#
-			# dependencies: none
-			def Util.get_trailing_slash(p, args = {})
-
-				return nil if p.nil?
-				return nil if p.empty?
-
-				return Util.is_path_name_separator(p[-1]) ? p[-1] : nil
-
-			end # Util.get_trailing_slash
-
-			# appends trailing slash to a path if not already
-			# present
-			#
-			# dependencies: none
-			def Util.append_trailing_slash(p, slash = nil)
-
-				return p if not p or p.empty?
-
-				return p if Util.is_path_name_separator(p[-1])
-
-				slash = '/' if not slash
-
-				"#{p}#{slash}"
-
-			end # def Util.append_trailing_slash(p)
-
-			# trims trailing slash from a path, unless it is the
-			# root
-			#
-			# dependencies: none
-			def Util.trim_trailing_slash(p)
-
-				return p if not p or p.empty?
-
-				p = p[0 ... -1] if Util.is_path_name_separator(p[-1])
-
-				return p
-
-			end # def Util.trim_trailing_slash(p)
-
 		end # module Util
 
+		# Canonicalises a path
+		#
+		# Note: contains a trailing slash if, in the context of the given
+		# path, the last element of the canonicalised path is a directory
+		# unequivocally
 		def Ximpl.canonicalise_path(path)
 
 			return nil if not path
