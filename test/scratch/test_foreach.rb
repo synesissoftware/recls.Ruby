@@ -12,7 +12,7 @@ require 'recls/foreach'
 puts
 puts "with given block:"
 count_1 = 0
-Recls.foreach(Recls::FileSearch.new(nil, '*.rb', Recls::RECURSIVE)).each do |fe, line_number, line|
+Recls.foreach(Recls::FileSearch.new(nil, '*.rb', Recls::RECURSIVE)).each do |line, line_number, fe|
 
 	line		=	line.chomp
 	line_number	=	1 + line_number
@@ -27,7 +27,7 @@ puts
 puts "as returned enumerator:"
 e = Recls.foreach(Recls::FileSearch.new(nil, '*.rb', Recls::RECURSIVE))
 count_2 = 0
-e.each do |fe, line_number, line|
+e.each do |line, line_number, fe|
 
 	line		=	line.chomp
 	line_number	=	1 + line_number

@@ -36,11 +36,11 @@ module Recls
 					when	1
 						yield line
 					when	2
-						yield index, line
+						yield line, index
 					when	3
-						yield fe, index, line
+						yield line, index, fe
 					else
-						raise ArgumentError "block must take 1, 2, or 3 parameters"
+						raise ArgumentError, "block must take 1, 2, or 3 parameters - #{block.arity} given. (Perhaps you have applied each_with_index, which cannot be done to Recls.foreach)"
 					end
 				end
 			end
