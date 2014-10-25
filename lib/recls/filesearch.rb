@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/filesearch.rb
+# File:         recls/filesearch.rb
 #
-# Purpose:     Defines the Recls::FileSearch class for the recls.ruby library.
+# Purpose:      Defines the Recls::FileSearch class for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     14th October 2014
+# Created:      24th July 2012
+# Updated:      22nd October 2014
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -34,12 +34,25 @@ module Recls
 			end
 			search_root = '.' if search_root.empty?
 
-			patterns = patterns ? patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/) : []
+			case	patterns
+			when	NilClass
+				patterns = []
+			when	String
+				patterns = patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/)
+			when	Array
+			else
+				patterns = patterns.to_a
+			end
+
 			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
 
 			if(0 == (Recls::TYPEMASK & flags))
 				flags |= Recls::FILES
 			end
+
+			# now de-dup the patterns, to avoid duplicates in search
+			patterns	=	patterns.flatten
+			patterns	=	patterns.uniq
 
 			@search_root	=	search_root
 			@patterns	=	patterns
@@ -135,7 +148,7 @@ module Recls
 
 					next if is_dots(name)
 
-					if not /^#{pattern}$/ =~ name
+					if not name =~ /^#{pattern}$/
 						next
 					end
 
@@ -228,3 +241,4 @@ module Recls
 end # module Recls
 
 # ############################## end of file ############################# #
+

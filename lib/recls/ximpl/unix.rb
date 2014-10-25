@@ -27,7 +27,6 @@ module Recls
 				@path = path
 
 				super(path)
-
 			end
 
 			public
@@ -60,3 +59,4 @@ module Recls
 end # module Recls
 
 # ############################## end of file ############################# #
+

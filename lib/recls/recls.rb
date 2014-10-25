@@ -1,12 +1,12 @@
 # ######################################################################### #
-# File:     recls/recls.rb
+# File:         recls/recls.rb
 #
-# Purpose:	Main source file for recls library
+# Purpose:      Main source file for recls library
 #
-# Created:	19th July 2012
-# Updated:	13th October 2014
+# Created:      19th July 2012
+# Updated:      22nd October 2014
 #
-# Author:	Matthew Wilson
+# Author:       Matthew Wilson
 #
 # Copyright:	<<TBD>>
 #
@@ -16,7 +16,9 @@
 require File.join(File.dirname(__FILE__), 'internal/common')
 require File.join(File.dirname(__FILE__), 'internal/version')
 require File.join(File.dirname(__FILE__), 'filesearch')
+require File.join(File.dirname(__FILE__), 'foreach')
 require File.join(File.dirname(__FILE__), 'stat')
+require File.join(File.dirname(__FILE__), 'util')
 require File.join(File.dirname(__FILE__), 'ximpl/os')
 
 module Recls
@@ -91,3 +93,4 @@ if not defined? RECLS_NO_OBSOLETE
 end
 
 # ############################## end of file ############################# #
+

@@ -535,13 +535,14 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 	def test_dots_directories
 
 		assert_equal('.', Recls::Ximpl::canonicalise_path('.'))
-		assert_equal('.', Recls::Ximpl::canonicalise_path('./'))
+		assert_equal('./', Recls::Ximpl::canonicalise_path('./'))
 		assert_equal('.', Recls::Ximpl::canonicalise_path('././.'))
-		assert_equal('.', Recls::Ximpl::canonicalise_path('./././'))
+		assert_equal('./', Recls::Ximpl::canonicalise_path('./././'))
 
 		assert_equal('..', Recls::Ximpl::canonicalise_path('..'))
-		assert_equal('..', Recls::Ximpl::canonicalise_path('../'))
+		assert_equal('../', Recls::Ximpl::canonicalise_path('../'))
 		assert_equal('..', Recls::Ximpl::canonicalise_path('../.'))
+		assert_equal('../', Recls::Ximpl::canonicalise_path('.././'))
 
 	end
 
@@ -594,10 +595,14 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 		assert_equal('/dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/dir.1/dir.3/../dir.2/'))
 		assert_equal('/dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/dir.3/../dir.1/dir.2/'))
 
-		assert_equal('/../dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/../dir.1/dir.2/'))
-		assert_equal('/../dir.4/', Recls::Ximpl::canonicalise_path('/../dir.1/../dir.4/'))
+		assert_equal('/dir.1/dir.2/', Recls::Ximpl::canonicalise_path('/../dir.1/dir.2/'))
+		assert_equal('/dir.4/', Recls::Ximpl::canonicalise_path('/../dir.1/../dir.4/'))
 
 		assert_equal('/dir.14/', Recls::Ximpl::canonicalise_path('/dir.14/dir.2/..'))
+		assert_equal('dir.14/', Recls::Ximpl::canonicalise_path('dir.14/dir.2/..'))
+
+		assert_equal('/', Recls::Ximpl::canonicalise_path('/dir.14/dir.2/../..'))
+		assert_equal('.', Recls::Ximpl::canonicalise_path('dir.14/dir.2/../..'))
 
 		if Recls::Ximpl::OS::OS_IS_WINDOWS
 
@@ -617,7 +622,7 @@ class Test_Recls_Ximpl_canonicalise_path < Test::Unit::TestCase
 	def test_complex_examples
 
 		assert_equal('../dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
-		assert_equal('/../dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('/abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
+		assert_equal('/dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('/abc/.././././.././dir.1/../dir.11/dir.22/dir.33/file3.'))
 		assert_equal('../dir.11/dir.22/dir.33/file3.', Recls::Ximpl::canonicalise_path('./././abc/.././././.././dir.1/../dir.11/dir.22/././dir.33/././file3.'))
 
 		if Recls::Ximpl::OS::OS_IS_WINDOWS
@@ -694,3 +699,210 @@ class Test_Recls_Ximpl_absolute_path < Test::Unit::TestCase
 
 	end
 end
+
+class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
+
+	private
+		attr_reader :cwd
+	public
+
+	def setup
+
+		@cwd = Dir.getwd
+
+	end
+
+	def test_absolute_proper_subset
+
+		assert_equal('abc', Recls::Ximpl::derive_relative_path('/dir1/dir2', '/dir1/dir2/abc'))
+		assert_equal('abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/', '/dir1/dir2/abc'))
+		assert_equal('abc/', Recls::Ximpl::derive_relative_path('/dir1/dir2', '/dir1/dir2/abc/'))
+		assert_equal('abc/', Recls::Ximpl::derive_relative_path('/dir1/dir2/', '/dir1/dir2/abc/'))
+
+		assert_equal('abc', Recls::Ximpl::derive_relative_path('dir1/dir2', 'dir1/dir2/abc'))
+		assert_equal('abc', Recls::Ximpl::derive_relative_path('dir1/dir2/', 'dir1/dir2/abc'))
+		assert_equal('abc/', Recls::Ximpl::derive_relative_path('dir1/dir2', 'dir1/dir2/abc/'))
+		assert_equal('abc/', Recls::Ximpl::derive_relative_path('dir1/dir2/', 'dir1/dir2/abc/'))
+
+#		assert_equal('/dir/dir2/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', 'dir1/dir2'))
+#		assert_equal('/dir/dir2/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', 'dir1/dir2/'))
+
+	end
+
+	def test_absolute_proper_subset_2
+
+		assert_equal('c++', Recls::Ximpl::derive_relative_path('/dir1/dir2', '/dir1/dir2/c++'))
+		assert_equal('c++', Recls::Ximpl::derive_relative_path('/dir1/dir2/', '/dir1/dir2/c++'))
+
+		assert_equal('c++', Recls::Ximpl::derive_relative_path('dir1/dir2', 'dir1/dir2/c++'))
+		assert_equal('c++', Recls::Ximpl::derive_relative_path('dir1/dir2/', 'dir1/dir2/c++'))
+
+	end
+
+	def test_absolute_same_1
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', '/dir1/dir2/abc'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', '/dir1/dir2/abc/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc/', '/dir1/dir2/abc'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc/', '/dir1/dir2/abc/'))
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/dir2/abc', 'dir1/dir2/abc'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/dir2/abc', 'dir1/dir2/abc/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/dir2/abc/', 'dir1/dir2/abc'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/dir2/abc/', 'dir1/dir2/abc/'))
+
+	end
+
+	def test_absolute_same_2
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('/dir1', '/dir1'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('/dir1/', '/dir1'))
+
+	end
+
+	def test_absolute_same_3
+
+		assert_equal('./', Recls::Ximpl::derive_relative_path('/', '/'))
+
+	end
+
+	def test_different_sub_trees_1
+
+		assert_equal('../abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref', '/dir1/dir2/abc'))
+		assert_equal('../abc/', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref', '/dir1/dir2/abc/'))
+		assert_equal('../abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref/', '/dir1/dir2/abc'))
+		assert_equal('../abc/', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref/', '/dir1/dir2/abc/'))
+
+	end
+
+	def test_different_sub_trees_2
+
+		assert_equal('../abc', Recls::Ximpl::derive_relative_path('/ref', '/abc'))
+		assert_equal('../abc/', Recls::Ximpl::derive_relative_path('/ref', '/abc/'))
+		assert_equal('../abc', Recls::Ximpl::derive_relative_path('/ref/', '/abc'))
+		assert_equal('../abc/', Recls::Ximpl::derive_relative_path('/ref/', '/abc/'))
+
+	end
+
+	def test_different_sub_trees_3
+
+		assert_equal('../../dir3/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref', '/dir1/dir3/abc'))
+		assert_equal('../../dir3/abc/', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref', '/dir1/dir3/abc/'))
+		assert_equal('../../dir3/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref/', '/dir1/dir3/abc'))
+		assert_equal('../../dir3/abc/', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref/', '/dir1/dir3/abc/'))
+
+	end
+
+	def test_different_sub_trees_4
+
+		assert_equal('..', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref', '/dir1/dir2'))
+		assert_equal('..', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref/', '/dir1/dir2'))
+		assert_equal('..', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref', '/dir1/dir2/'))
+		assert_equal('..', Recls::Ximpl::derive_relative_path('/dir1/dir2/ref/', '/dir1/dir2/'))
+
+	end
+
+	def test_different_sub_trees_5
+
+		assert_equal('../..', Recls::Ximpl::derive_relative_path('/dir1/dir2/dir3/dir4', '/dir1/dir2'))
+		assert_equal('../..', Recls::Ximpl::derive_relative_path('/dir1/dir2/dir3/dir4/', '/dir1/dir2'))
+		assert_equal('../..', Recls::Ximpl::derive_relative_path('/dir1/dir2/dir3/dir4', '/dir1/dir2/'))
+		assert_equal('../..', Recls::Ximpl::derive_relative_path('/dir1/dir2/dir3/dir4/', '/dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_1
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/dir2', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/dir2', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/dir2/', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/dir2/', 'dir1/dir2/'))
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/dir2', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/dir2', './dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/dir2/', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/dir2/', './dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_2
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2/', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2/', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2', './dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2/', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2/', './dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_3
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/dir2/.', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/dir2/.', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/dir2/./', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/dir2/./', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/dir2/.', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/dir2/.', './dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/dir2/./', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/dir2/./', './dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_4
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2/.', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2/.', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2/./', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2/./', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2/.', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2/.', './dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('dir1/./dir2/./', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('dir1/./dir2/./', './dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_5
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/./dir2/.', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/./dir2/.', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/./dir2/./', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/./dir2/./', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/./dir2/.', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/./dir2/.', './dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/./dir2/./', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/./dir2/./', './dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_6
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', 'dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', 'dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', './dir1/dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', './dir1/dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', './dir1/dir2/'))
+
+	end
+
+	def test_embedded_dots_7
+
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', 'dir1/././dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', 'dir1/././dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', 'dir1/././dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', 'dir1/././dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', './dir1/././dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/.', './dir1/././dir2/'))
+		assert_equal('.', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', './dir1/././dir2'))
+		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', './dir1/././dir2/'))
+
+	end
+
+end
+
+

@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/flags.rb
+# File:         recls/flags.rb
 #
-# Purpose:     Defines the Recls::Flags module for the recls.ruby library.
+# Purpose:      Defines the Recls::Flags module for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     13th October 2014
+# Created:      24th July 2012
+# Updated:      22nd October 2014
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -53,3 +53,4 @@ public
 end # module Recls
 
 # ############################## end of file ############################# #
+

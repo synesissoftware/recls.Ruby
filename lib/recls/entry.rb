@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/entry.rb
+# File:         recls/entry.rb
 #
-# Purpose:     Defines the Recls::Entry class for the recls.ruby library.
+# Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     13th October 2014
+# Created:      24th July 2012
+# Updated:      22nd October 2014
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -16,7 +16,7 @@
 require File.join(File.dirname(__FILE__), 'internal/common')
 require File.join(File.dirname(__FILE__), 'internal/version')
 require File.join(File.dirname(__FILE__), 'ximpl/os')
-require File.join(File.dirname(__FILE__), 'ximpl', (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows.rb' : 'unix.rb'))
+require File.join(File.dirname(__FILE__), 'ximpl', (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix'))
 require File.join(File.dirname(__FILE__), 'ximpl/util')
 
 module Recls
@@ -43,7 +43,7 @@ module Recls
 			@file_extension = file_ext ? file_ext : ''
 
 			@search_directory = search_dir
-			@search_relative_path = Recls::Ximpl::search_relative_path @path, search_dir
+			@search_relative_path = Recls::Ximpl::derive_relative_path search_dir, @path
 
 		end # def initialize
 
@@ -257,3 +257,4 @@ module Recls
 end # module Recls
 
 # ############################## end of file ############################# #
+
