@@ -4,7 +4,7 @@
 # Purpose:      Definition of Recls::foreach() utility function
 #
 # Created:      22nd October 2014
-# Updated:      22nd October 2014
+# Updated:      11th November 2014
 #
 # Author:       Matthew Wilson
 #
@@ -49,7 +49,7 @@ module Recls
 	end # class FileSearchLineEnumerator
 	public
 
-	def Recls.foreach(*args, &block)
+	def self.foreach(*args, &block)
 
 		fs = nil
 
@@ -75,7 +75,7 @@ module Recls
 			return FileSearchLineEnumerator.new(fs)
 
 		end
-	end # def Recls.foreach
+	end # def self.foreach
 
 end # module Recls
 

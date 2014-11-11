@@ -4,7 +4,7 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      22nd October 2014
+# Updated:      11th November 2014
 #
 # Author:       Matthew Wilson
 #
@@ -40,15 +40,15 @@ if not defined? RECLS_NO_OBSOLETE
 
 	module Recls
 
-		def Recls.pathNameSeparator
+		def self.pathNameSeparator
 			PATH_NAME_SEPARATOR
 		end
 
-		def Recls.pathSeparator
+		def self.pathSeparator
 			PATH_SEPARATOR
 		end
 
-		def Recls.wildcardsAll
+		def self.wildcardsAll
 			WILDCARDS_ALL
 		end
 

@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls.stat() method for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd October 2014
+# Updated:      11th November 2014
 #
 # Author:       Matthew Wilson
 #
@@ -20,7 +20,7 @@ require File.join(File.dirname(__FILE__), 'flags')
 
 module Recls
 
-	def Recls.stat(path, flags = 0)
+	def self.stat(path, flags = 0)
 
 		begin
 			Recls::Entry::new(path, Recls::Ximpl::FileStat.stat(path), path)
@@ -33,7 +33,7 @@ module Recls
 			end
 		end
 
-	end # def stat()
+	end # def self.stat()
 
 end # module Recls
 

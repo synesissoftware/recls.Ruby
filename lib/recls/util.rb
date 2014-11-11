@@ -22,17 +22,19 @@ module Recls
 
 	# Canonicalises the given path, by removing dots ('.' and '..')
 	# directories
-	def Recls.canonicalise_path(path)
+	def self.canonicalise_path(path)
 
 		return Recls::Ximpl::canonicalise_path path
 
-	end # def Recls.canonicalise_path
+	end # def self.canonicalise_path
 
-	def Recls.derive_relative_path(origin, path)
+	# Derives a given path relative to an origin, unless the path is
+	# absolute
+	def self.derive_relative_path(origin, path)
 
 		return Recls::Ximpl::derive_relative_path origin path
 
-	end # def Recls.derive_relative_path
+	end # def self.derive_relative_path
 
 end # module Recls
 
