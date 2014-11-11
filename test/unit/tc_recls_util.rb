@@ -11,8 +11,6 @@ require 'test/unit'
 
 class Test_canonicalise_path < Test::Unit::TestCase
 
-
-
 	def test_nil
 
 		assert_nil(Recls::canonicalise_path(nil))
