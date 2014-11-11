@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      22nd October 2014
+# Updated:      11th November 2014
 #
 # Author:       Matthew Wilson
 #
@@ -13,6 +13,7 @@
 # ######################################################################### #
 
 
+require File.join(File.dirname(__FILE__), 'ximpl/util')
 require File.join(File.dirname(__FILE__), 'internal/common')
 require File.join(File.dirname(__FILE__), 'internal/version')
 require File.join(File.dirname(__FILE__), 'ximpl/os')
