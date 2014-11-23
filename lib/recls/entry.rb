@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd October 2014
+# Updated:      24th November 2014
 #
 # Author:       Matthew Wilson
 #
@@ -29,21 +29,21 @@ module Recls
 
 			@file_stat = file_stat
 
-			@path = Recls::Ximpl::absolute_path path
+			@path = Recls::Ximpl.absolute_path path
 
 			windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
 
 			@drive = windows_drive
 			@directory_path = "#{windows_drive}#{directory}"
 			@directory = directory ? directory : ''
-			@directory_parts = Recls::Ximpl::directory_parts_from_directory directory
+			@directory_parts = Recls::Ximpl.directory_parts_from_directory directory
 			@file_full_name = basename ? basename : ''
 			@file_short_name = nil
 			@file_name_only = file_name ? file_name : ''
 			@file_extension = file_ext ? file_ext : ''
 
 			@search_directory = search_dir
-			@search_relative_path = Recls::Ximpl::derive_relative_path search_dir, @path
+			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
 
 		end # def initialize
 
@@ -71,7 +71,7 @@ module Recls
 		# indicates whether the given entry exists
 		def exist?
 
-			true
+			not @file_stat.nil?
 
 		end # def exist?
 
