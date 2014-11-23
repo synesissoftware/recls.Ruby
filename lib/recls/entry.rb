@@ -215,6 +215,30 @@ module Recls
 		# ##########################
 		# Comparison
 
+		def eql?(rhs)
+
+			case	rhs
+			when	self.class
+				return @path == rhs.path
+			else
+				return false
+			end
+
+		end # def eql?
+
+		def ==(rhs)
+
+			case	rhs
+			when	String
+				return @path == rhs
+			when	self.class
+				return @path == rhs.path
+			else
+				return false
+			end
+
+		end # def ==(rhs)
+
 	if Recls::Ximpl::OS::OS_IS_WINDOWS
 
 		def <=>(rhs)
@@ -223,6 +247,10 @@ module Recls
 
 		end # def <=>(rhs)
 
+		def hash
+			path.upcase.hash
+		end
+
 	else
 
 		def <=>(rhs)
@@ -230,6 +258,10 @@ module Recls
 			path <=> rhs.path
 
 		end # def <=>(rhs)
+
+		def hash
+			path.hash
+		end
 
 	end
 

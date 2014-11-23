@@ -33,6 +33,7 @@ module Recls
 				search_root = search_root.to_s
 			end
 			search_root = '.' if search_root.empty?
+			search_root = File.expand_path(search_root) if '~' == search_root[0]
 
 			case	patterns
 			when	NilClass

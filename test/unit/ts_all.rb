@@ -1,7 +1,6 @@
 #! /usr/bin/ruby
 #
 # executes all other tests
-#
 
 this_file   =   File.expand_path(__FILE__)
 this_dir    =   File.expand_path(File.dirname(__FILE__))
