@@ -23,13 +23,22 @@ module Recls
 
 	class Entry
 
+		private
+		def self.get_compare_path_(path)
+			return path.upcase if Recls::Ximpl::OS::OS_IS_WINDOWS
+			path
+		end
+		public
+
 		# initialises an entry instance from the given path,
 		# file_stat, and search_dir
 		def initialize(path, file_stat, search_dir)
 
-			@file_stat = file_stat
+			@file_stat		=	file_stat
 
-			@path = Recls::Ximpl.absolute_path path
+			@path			=	Recls::Ximpl.absolute_path path
+			@compare_path	=	Entry.get_compare_path_ @path
+			@hash			=	@compare_path.hash
 
 			windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
 
@@ -49,6 +58,8 @@ module Recls
 
 		# ##########################
 		# Name-related attributes
+
+		attr_reader :compare_path
 
 		attr_reader :path
 		attr_reader :drive
@@ -219,7 +230,7 @@ module Recls
 
 			case	rhs
 			when	self.class
-				return @path == rhs.path
+				return compare_path == rhs.compare_path
 			else
 				return false
 			end
@@ -230,40 +241,24 @@ module Recls
 
 			case	rhs
 			when	String
-				return @path == rhs
+				return compare_path == Entry.get_compare_path_(rhs)
 			when	self.class
-				return @path == rhs.path
+				return compare_path == rhs.compare_path
 			else
 				return false
 			end
 
 		end # def ==(rhs)
 
-	if Recls::Ximpl::OS::OS_IS_WINDOWS
-
 		def <=>(rhs)
 
-			path.upcase <=> rhs.path.upcase
+			compare_path <=> rhs.compare_path
 
 		end # def <=>(rhs)
 
 		def hash
-			path.upcase.hash
+			@hash
 		end
-
-	else
-
-		def <=>(rhs)
-
-			path <=> rhs.path
-
-		end # def <=>(rhs)
-
-		def hash
-			path.hash
-		end
-
-	end
 
 		# ##########################
 		# Conversion
