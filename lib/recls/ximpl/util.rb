@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     11th November 2014
+# Updated:     28th November 2014
 #
 # Author:      Matthew Wilson
 #
@@ -590,7 +590,7 @@ module Recls
 		# Some known conditions:
 		#
 		# * (Mac OSX) /dev/fd/<N> - some of these stat() as directories but
-		#    Dir::new fails with ENOTDIR
+		#    Dir.new fails with ENOTDIR
 		#
 		def self.dir_entries_maybe(dir, flags)
 

@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd October 2014
+# Updated:      28th November 2014
 #
 # Author:       Matthew Wilson
 #
@@ -211,7 +211,7 @@ module Recls
 					end
 				end
 
-				blk.call Recls::Entry::new(fs.path, fs, search_root)
+				blk.call Recls::Entry.new(fs.path, fs, search_root)
 			end
 
 			# sub-directories

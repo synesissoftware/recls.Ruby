@@ -13,7 +13,7 @@ class Test_Recls_FileSearch_class < Test::Unit::TestCase
 
 	def test_construction
 
-		fs = Recls::FileSearch::new(nil, nil, 0)
+		fs = Recls::FileSearch.new(nil, nil, 0)
 
 		assert_not_nil(fs)
 
@@ -21,7 +21,7 @@ class Test_Recls_FileSearch_class < Test::Unit::TestCase
 
 	def test_construction_1
 
-		fs = Recls::FileSearch::new('abc', '*c', Recls::FILES)
+		fs = Recls::FileSearch.new('abc', '*c', Recls::FILES)
 
 		assert_not_nil(fs)
 		assert_equal('abc', fs.search_root)
@@ -36,7 +36,7 @@ class Test_Recls_FileSearch_class < Test::Unit::TestCase
 
 	def test_construction_2
 
-		fs = Recls::FileSearch::new('def', '*c', 0)
+		fs = Recls::FileSearch.new('def', '*c', 0)
 
 		assert_not_nil(fs)
 		assert_equal('def', fs.search_root)
@@ -51,7 +51,7 @@ class Test_Recls_FileSearch_class < Test::Unit::TestCase
 
 	def test_construction_3
 
-		fs = Recls::FileSearch::new('ghi', '*c', Recls::DIRECTORIES)
+		fs = Recls::FileSearch.new('ghi', '*c', Recls::DIRECTORIES)
 
 		assert_not_nil(fs)
 		assert_equal('ghi', fs.search_root)
