@@ -20,6 +20,13 @@ require File.join(File.dirname(__FILE__), 'ximpl/os')
 
 module Recls
 
+	# Obtains the absolute form of the given path
+	def self.absolute_path(path)
+
+		return Recls::Ximpl::absolute_path path
+
+	end # def self.absolute_path
+
 	# Canonicalises the given path, by removing dots ('.' and '..')
 	# directories
 	def self.canonicalise_path(path)
