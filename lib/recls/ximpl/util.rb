@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     11th November 2014
+# Updated:     10th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -544,7 +544,7 @@ module Recls
 
 			# if different windows root, then cannot provide relative
 			if path_splits[0] and origin_splits[0]
-				return path if path_splits[0] != ref_splits[0]
+				return path if path_splits[0] != origin_splits[0]
 			end
 
 			trailing_slash	=	Util.get_trailing_slash(path)
