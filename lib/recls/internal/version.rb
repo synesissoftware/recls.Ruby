@@ -16,7 +16,7 @@
 module Recls
 
 	# Current version of the recls.ruby library
-	VERSION				=	'2.0.2'
+	VERSION				=	'2.0.3'
 
 	private
 	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
@@ -24,7 +24,6 @@ module Recls
 	VERSION_MAJOR		=	VERSION_PARTS_[0] # :nodoc:
 	VERSION_MINOR		=	VERSION_PARTS_[1] # :nodoc:
 	VERSION_REVISION	=	VERSION_PARTS_[2] # :nodoc:
-
 end
 
 # ############################## end of file ############################# #

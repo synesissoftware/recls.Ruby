@@ -4,7 +4,7 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      11th November 2014
+# Updated:      10th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -30,8 +30,7 @@ module Recls
 	PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
 	PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
-
-end # module Recls
+end
 
 # ######################################################################### #
 # Obsolete symbols
@@ -56,7 +55,6 @@ if not defined? RECLS_NO_OBSOLETE
 
 			alias_method :searchRoot, :search_root
 			alias_method :pattern, :patterns
-
 		end
 
 		class Entry
@@ -81,15 +79,11 @@ if not defined? RECLS_NO_OBSOLETE
 				d = drive
 
 				d and d.size > 2
-
 			end
 
 			alias_method :creationTime, :modification_time
-
 		end
-
-	end # module Recls
-
+	end
 end
 
 # ############################## end of file ############################# #

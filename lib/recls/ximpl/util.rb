@@ -31,8 +31,7 @@ module Recls
 				end
 
 				return false
-
-			end # def self.is_path_name_separator
+			end
 
 			# Indicates whether a trailing slash is on the given path
 			#
@@ -42,8 +41,7 @@ module Recls
 				return p if p.nil? or p.empty?
 
 				return self.is_path_name_separator(p[-1])
-
-			end # self.has_trailing_slash
+			end
 
 			# returns the trailing slash, or nil if none present
 			#
@@ -54,8 +52,7 @@ module Recls
 				return nil if p.empty?
 
 				return self.is_path_name_separator(p[-1]) ? p[-1] : nil
-
-			end # self.get_trailing_slash
+			end
 
 			# appends trailing slash to a path if not already
 			# present
@@ -70,8 +67,7 @@ module Recls
 				slash = '/' if not slash
 
 				"#{p}#{slash}"
-
-			end # def self.append_trailing_slash(p)
+			end
 
 			# trims trailing slash from a path, unless it is the
 			# root
@@ -84,8 +80,7 @@ module Recls
 				p = p[0 ... -1] if self.is_path_name_separator(p[-1])
 
 				return p
-
-			end # def self.trim_trailing_slash(p)
+			end
 
 			# From path p, returns a tuple containing either:
 			#
@@ -131,8 +126,7 @@ module Recls
 				end
 
 				return [ nil, p ]
-
-			end # def self.get_windows_root
+			end
 
 			# obtains the parts from a path, including any Windows root and
 			# the file basename
@@ -158,8 +152,7 @@ module Recls
 				end
 
 				parts
-
-			end # self.directory_parts_from_directory
+			end
 
 			# Returns a tuple consisting of the following
 			# elements (or nil, for any element that is not)
@@ -223,8 +216,7 @@ module Recls
 				f7_path_parts = self.path_parts(p)
 
 				return [ f1_windows_root, f2_directory, f3_basename, f4_nameonly, f5_extension, f6_directory_parts, f7_path_parts ]
-
-			end # def split_path(p)
+			end
 
 			# Returns a tuple consisting of:
 			#
@@ -355,10 +347,8 @@ module Recls
 				end
 
 				[ newParts.join(''), consume_basename ]
-
-			end # def canonicalise_parts(parts, basename)
-
-		end # module Util
+			end
+		end
 
 		# Canonicalises a path
 		#
@@ -380,8 +370,7 @@ module Recls
 			end
 
 			return "#{f1_windows_root}#{canonicalised_directory}#{f3_basename}"
-
-		end # self.canonicalise_path(path)
+		end
 
 		# determines the absolute path of a given path
 		def self.absolute_path(path, refdir = nil)
@@ -417,11 +406,8 @@ module Recls
 				path = Util.trim_trailing_slash path
 			end
 
-			return path
-
-			#File::absolute_path path
-
-		end # def self.absolute_path
+			path
+		end
 
 		# obtains the basename of a path, e.g.
 		# the basename of
@@ -458,8 +444,7 @@ module Recls
 			else
 				path
 			end
-
-		end # self.basename
+		end
 
 		# obtains the file extension of a basename, e.g.
 		# the file_ext of
@@ -493,8 +478,7 @@ module Recls
 			end
 
 			return ext ? ext : ''
-
-		end # self.file_ext
+		end
 
 		# obtains the directory from the directory path
 		#
@@ -503,8 +487,7 @@ module Recls
 			wr, rem =  Util.get_windows_root(directory_path)
 
 			rem
-
-		end # self.directory_from_directory_path
+		end
 
 		# obtains the directory parts from a directory
 		def self.directory_parts_from_directory(directory)
@@ -524,8 +507,7 @@ module Recls
 			end
 
 			directory_parts
-
-		end # self.directory_parts_from_directory
+		end
 
 		# obtains the relative path of a given path and
 		# a reference directory
@@ -580,8 +562,7 @@ module Recls
 			return origin_parts.map { |rp| '..' }.join('/') if path_parts.empty?
 
 			return '../' * origin_parts.size + path_parts.join('')
-
-		end # def self.derive_relative_path
+		end
 
 		# Elicits the contents of the given directory, or, if the flag
 		# STOP_ON_ACCESS_FAILURE is specified throws an exception if the
@@ -611,12 +592,9 @@ module Recls
 			rescue Exception => x
 
 			end
-
-		end # self.dir_entries_maybe
-
-	end # module Ximpl
-
-end # module Recls
+		end
+	end
+end
 
 # ############################## end of file ############################# #
 
