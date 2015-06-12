@@ -1,12 +1,12 @@
 # ######################################################################### #
-# File:     recls/recls.rb
+# File:         recls/recls.rb
 #
-# Purpose:	Main source file for recls library
+# Purpose:      Main source file for recls library
 #
-# Created:	19th July 2012
-# Updated:	13th October 2014
+# Created:      19th July 2012
+# Updated:      10th June 2015
 #
-# Author:	Matthew Wilson
+# Author:       Matthew Wilson
 #
 # Copyright:	<<TBD>>
 #
@@ -16,7 +16,9 @@
 require File.join(File.dirname(__FILE__), 'internal/common')
 require File.join(File.dirname(__FILE__), 'internal/version')
 require File.join(File.dirname(__FILE__), 'filesearch')
+require File.join(File.dirname(__FILE__), 'foreach')
 require File.join(File.dirname(__FILE__), 'stat')
+require File.join(File.dirname(__FILE__), 'util')
 require File.join(File.dirname(__FILE__), 'ximpl/os')
 
 module Recls
@@ -28,8 +30,7 @@ module Recls
 	PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
 	PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
-
-end # module Recls
+end
 
 # ######################################################################### #
 # Obsolete symbols
@@ -38,15 +39,15 @@ if not defined? RECLS_NO_OBSOLETE
 
 	module Recls
 
-		def Recls.pathNameSeparator
+		def self.pathNameSeparator
 			PATH_NAME_SEPARATOR
 		end
 
-		def Recls.pathSeparator
+		def self.pathSeparator
 			PATH_SEPARATOR
 		end
 
-		def Recls.wildcardsAll
+		def self.wildcardsAll
 			WILDCARDS_ALL
 		end
 
@@ -54,7 +55,6 @@ if not defined? RECLS_NO_OBSOLETE
 
 			alias_method :searchRoot, :search_root
 			alias_method :pattern, :patterns
-
 		end
 
 		class Entry
@@ -79,15 +79,12 @@ if not defined? RECLS_NO_OBSOLETE
 				d = drive
 
 				d and d.size > 2
-
 			end
 
 			alias_method :creationTime, :modification_time
-
 		end
-
-	end # module Recls
-
+	end
 end
 
 # ############################## end of file ############################# #
+

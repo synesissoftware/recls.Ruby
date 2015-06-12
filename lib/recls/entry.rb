@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/entry.rb
+# File:         recls/entry.rb
 #
-# Purpose:     Defines the Recls::Entry class for the recls.ruby library.
+# Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     13th October 2014
+# Created:      24th July 2012
+# Updated:      10th June 2015
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -16,39 +16,49 @@
 require File.join(File.dirname(__FILE__), 'internal/common')
 require File.join(File.dirname(__FILE__), 'internal/version')
 require File.join(File.dirname(__FILE__), 'ximpl/os')
-require File.join(File.dirname(__FILE__), 'ximpl', (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows.rb' : 'unix.rb'))
+require File.join(File.dirname(__FILE__), 'ximpl', (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix'))
 require File.join(File.dirname(__FILE__), 'ximpl/util')
 
 module Recls
 
 	class Entry
 
+		private
+		def self.get_compare_path_(path)
+			return path.upcase if Recls::Ximpl::OS::OS_IS_WINDOWS
+			path
+		end
+		public
+
 		# initialises an entry instance from the given path,
 		# file_stat, and search_dir
 		def initialize(path, file_stat, search_dir)
 
-			@file_stat = file_stat
+			@file_stat		=	file_stat
 
-			@path = Recls::Ximpl::absolute_path path
+			@path			=	Recls::Ximpl.absolute_path path
+			@compare_path	=	Entry.get_compare_path_ @path
+			@hash			=	@compare_path.hash
 
 			windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
 
 			@drive = windows_drive
 			@directory_path = "#{windows_drive}#{directory}"
 			@directory = directory ? directory : ''
-			@directory_parts = Recls::Ximpl::directory_parts_from_directory directory
+			@directory_parts = Recls::Ximpl.directory_parts_from_directory directory
 			@file_full_name = basename ? basename : ''
 			@file_short_name = nil
 			@file_name_only = file_name ? file_name : ''
 			@file_extension = file_ext ? file_ext : ''
 
 			@search_directory = search_dir
-			@search_relative_path = Recls::Ximpl::derive_relative_path search_dir, @path
-
-		end # def initialize
+			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
+		end
 
 		# ##########################
 		# Name-related attributes
+
+		attr_reader :compare_path
 
 		attr_reader :path
 		attr_reader :drive
@@ -71,23 +81,20 @@ module Recls
 		# indicates whether the given entry exists
 		def exist?
 
-			true
-
-		end # def exist?
+			not @file_stat.nil?
+		end
 
 		# indicates whether the given entry is hidden
 		def hidden?
 
 			@file_stat.hidden?
-
-		end # def hidden?
+		end
 
 		# indicates whether the given entry is readonly
 		def readonly?
 
 			not @file_stat.writable?
-
-		end # readonly?
+		end
 
 		# ##########################
 		# Comparison
@@ -97,76 +104,62 @@ module Recls
 		def system?
 
 			@file_stat.system?
-
-		end # system?
+		end
 
 		def archive?
 
 			@file_stat.archive?
-
-		end # archive?
+		end
 
 		def device?
 
 			@file_stat.device?
-
-		end # device?
+		end
 
 		def normal?
 
 			@file_stat.normal?
-
-		end # normal?
+		end
 
 		def temporary?
 
 			@file_stat.temporary?
-
-		end # temporary?
+		end
 
 		def compressed?
 
 			@file_stat.compressed?
-
-		end # compressed?
+		end
 
 		def encrypted?
 
 			@file_stat.encrypted?
-
-		end # encrypted?
-
+		end
 	end
-
-
 
 		# indicates whether the given entry represents a directory
 		def directory?
 
 			@file_stat.directory?
-
-		end # directory?
+		end
 
 		# indicates whether the given entry represents a file
 		def file?
 
 			@file_stat.file?
-
-		end # file?
+		end
 
 		# indicates whether the given entry represents a link
 		def link?
 
 			@file_stat.link?
-
-		end # link?
+		end
 
 		# indicates whether the given entry represents a socket
 		def socket?
 
 			@file_stat.socket?
-
-		end # socket?
+		end
 
 		# ##########################
 		# Size attributes
@@ -175,8 +168,22 @@ module Recls
 		def size
 
 			@file_stat.size
+		end
 
-		end # size
+		# ##########################
+		# File-system entry attributes
+
+		# indicates the device of the given entry
+		def dev
+
+			@file_stat.dev
+		end
+
+		# indicates the ino of the given entry
+		def ino
+
+			@file_stat.ino
+		end
 
 		# ##########################
 		# Time attributes
@@ -185,36 +192,48 @@ module Recls
 		def last_access_time
 
 			@file_stat.atime
-
-		end # last_access_time
+		end
 
 		# indicates the modification time of the entry
 		def modification_time
 
 			@file_stat.mtime
-
-		end # modification_time
+		end
 
 		# ##########################
 		# Comparison
 
-	if Recls::Ximpl::OS::OS_IS_WINDOWS
+		def eql?(rhs)
+
+			case	rhs
+			when	self.class
+				return compare_path == rhs.compare_path
+			else
+				return false
+			end
+		end
+
+		def ==(rhs)
+
+			case	rhs
+			when	String
+				return compare_path == Entry.get_compare_path_(rhs)
+			when	self.class
+				return compare_path == rhs.compare_path
+			else
+				return false
+			end
+		end
 
 		def <=>(rhs)
 
-			path.upcase <=> rhs.path.upcase
+			compare_path <=> rhs.compare_path
+		end
 
-		end # def <=>(rhs)
+		def hash
 
-	else
-
-		def <=>(rhs)
-
-			path <=> rhs.path
-
-		end # def <=>(rhs)
-
-	end
+			@hash
+		end
 
 		# ##########################
 		# Conversion
@@ -224,19 +243,16 @@ module Recls
 		def to_s
 
 			path
-
-		end # def to_s
+		end
 
 		# represents the entry as a string (in the form of
 		# the full path)
 		def to_str
 
 			path
-
-		end # def to_s
-
-	end # class Entry
-
-end # module Recls
+		end
+	end
+end
 
 # ############################## end of file ############################# #
+

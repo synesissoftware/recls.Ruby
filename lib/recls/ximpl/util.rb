@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     22nd October 2014
+# Updated:     10th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -22,7 +22,7 @@ module Recls
 
 		module Util
 
-			def Util.is_path_name_separator(c)
+			def self.is_path_name_separator(c)
 
 				return true if ?/ == c
 
@@ -31,61 +31,56 @@ module Recls
 				end
 
 				return false
-
-			end # def Util.is_path_name_separator
+			end
 
 			# Indicates whether a trailing slash is on the given path
 			#
 			# dependencies: none
-			def Util.has_trailing_slash(p)
+			def self.has_trailing_slash(p)
 
 				return p if p.nil? or p.empty?
 
-				return Util.is_path_name_separator(p[-1])
-
-			end # Util.has_trailing_slash
+				return self.is_path_name_separator(p[-1])
+			end
 
 			# returns the trailing slash, or nil if none present
 			#
 			# dependencies: none
-			def Util.get_trailing_slash(p, args = {})
+			def self.get_trailing_slash(p, args = {})
 
 				return nil if p.nil?
 				return nil if p.empty?
 
-				return Util.is_path_name_separator(p[-1]) ? p[-1] : nil
-
-			end # Util.get_trailing_slash
+				return self.is_path_name_separator(p[-1]) ? p[-1] : nil
+			end
 
 			# appends trailing slash to a path if not already
 			# present
 			#
 			# dependencies: none
-			def Util.append_trailing_slash(p, slash = nil)
+			def self.append_trailing_slash(p, slash = nil)
 
 				return p if not p or p.empty?
 
-				return p if Util.is_path_name_separator(p[-1])
+				return p if self.is_path_name_separator(p[-1])
 
 				slash = '/' if not slash
 
 				"#{p}#{slash}"
-
-			end # def Util.append_trailing_slash(p)
+			end
 
 			# trims trailing slash from a path, unless it is the
 			# root
 			#
 			# dependencies: none
-			def Util.trim_trailing_slash(p)
+			def self.trim_trailing_slash(p)
 
 				return p if not p or p.empty?
 
-				p = p[0 ... -1] if Util.is_path_name_separator(p[-1])
+				p = p[0 ... -1] if self.is_path_name_separator(p[-1])
 
 				return p
-
-			end # def Util.trim_trailing_slash(p)
+			end
 
 			# From path p, returns a tuple containing either:
 			#
@@ -96,7 +91,7 @@ module Recls
 			#  [ nil, nil ] if p is nil
 			#
 			# dependencies: none
-			def Util.get_windows_root(p)
+			def self.get_windows_root(p)
 
 				return [ nil, nil ] if not p
 
@@ -131,19 +126,18 @@ module Recls
 				end
 
 				return [ nil, p ]
-
-			end # def Util.get_windows_root
+			end
 
 			# obtains the parts from a path, including any Windows root and
 			# the file basename
-			def Util.path_parts(path)
+			def self.path_parts(path)
 
 				return nil if path.nil?
 				return [] if path.empty?
 
 				parts = []
 
-				wr, rem =  Util.get_windows_root(path)
+				wr, rem =  self.get_windows_root(path)
 
 				parts << wr if wr
 
@@ -158,8 +152,7 @@ module Recls
 				end
 
 				parts
-
-			end # Ximpl.directory_parts_from_directory
+			end
 
 			# Returns a tuple consisting of the following
 			# elements (or nil, for any element that is not)
@@ -174,9 +167,9 @@ module Recls
 			# f7. array of all path parts, which may be empty (not nil)
 			#
 			# dependencies: Util.path_parts, Util.get_windows_root
-			def Util.split_path(p)
+			def self.split_path(p)
 
-				f1_windows_root, remainder = Util.get_windows_root p
+				f1_windows_root, remainder = self.get_windows_root p
 				f1_windows_root = nil if not f1_windows_root or f1_windows_root.empty?
 				remainder = nil if not remainder or remainder.empty?
 
@@ -219,12 +212,11 @@ module Recls
 
 				f4_nameonly = nil if not f4_nameonly or f4_nameonly.empty?
 				f5_extension = nil if not f5_extension or f5_extension.empty?
-				f6_directory_parts = Util.path_parts(f2_directory)
-				f7_path_parts = Util.path_parts(p)
+				f6_directory_parts = self.path_parts(f2_directory)
+				f7_path_parts = self.path_parts(p)
 
 				return [ f1_windows_root, f2_directory, f3_basename, f4_nameonly, f5_extension, f6_directory_parts, f7_path_parts ]
-
-			end # def split_path(p)
+			end
 
 			# Returns a tuple consisting of:
 			#
@@ -232,11 +224,11 @@ module Recls
 			# f2. A boolean indicating whether to 'consume' the basename
 			#
 			# dependencies: OS.is_root_dir_, OS.get_number_of_dots_dir_,
-			def Util.canonicalise_parts(parts, basename = nil)
+			def self.canonicalise_parts(parts, basename = nil)
 
 				newParts = []
 
-				trailing_slash = parts.empty? ? nil : Util.get_trailing_slash(parts[-1])
+				trailing_slash = parts.empty? ? nil : self.get_trailing_slash(parts[-1])
 
 				lastSingleDots = nil
 
@@ -251,11 +243,11 @@ module Recls
 					next if part.empty?
 
 					if path_is_rooted.nil?
-						path_is_rooted = Util.is_path_name_separator(part[0])
+						path_is_rooted = self.is_path_name_separator(part[0])
 					end
 
 					if ?. == part[0]
-						if Util.is_path_name_separator(part[1])
+						if self.is_path_name_separator(part[1])
 							# single dots, so ...
 
 							# ... remember the last instance, and ...
@@ -264,7 +256,7 @@ module Recls
 							# ... skip to leave this out of the result
 							next
 						elsif ?. == part[1]
-							if Util.is_path_name_separator(part[2])
+							if self.is_path_name_separator(part[2])
 								# double dots, so ...
 								# ... skip this and pop prior from the new list iff:
 								#
@@ -355,17 +347,15 @@ module Recls
 				end
 
 				[ newParts.join(''), consume_basename ]
-
-			end # def canonicalise_parts(parts, basename)
-
-		end # module Util
+			end
+		end
 
 		# Canonicalises a path
 		#
 		# Note: contains a trailing slash if, in the context of the given
 		# path, the last element of the canonicalised path is a directory
 		# unequivocally
-		def Ximpl.canonicalise_path(path)
+		def self.canonicalise_path(path)
 
 			return nil if not path
 			return '' if path.empty?
@@ -380,11 +370,10 @@ module Recls
 			end
 
 			return "#{f1_windows_root}#{canonicalised_directory}#{f3_basename}"
-
-		end # Ximpl.canonicalise_path(path)
+		end
 
 		# determines the absolute path of a given path
-		def Ximpl.absolute_path(path, refdir = nil)
+		def self.absolute_path(path, refdir = nil)
 
 			return nil if not path
 			return '' if path.empty?
@@ -417,11 +406,8 @@ module Recls
 				path = Util.trim_trailing_slash path
 			end
 
-			return path
-
-			#File::absolute_path path
-
-		end # def Ximpl.absolute_path
+			path
+		end
 
 		# obtains the basename of a path, e.g.
 		# the basename of
@@ -431,7 +417,7 @@ module Recls
 		# is
 		#  ghi.jkl
 		#
-		def Ximpl.basename(path)
+		def self.basename(path)
 
 			return nil if not path
 
@@ -458,15 +444,14 @@ module Recls
 			else
 				path
 			end
-
-		end # Ximpl.basename
+		end
 
 		# obtains the file extension of a basename, e.g.
 		# the file_ext of
 		#  ghi.jkl
 		# is
 		#  .jkl
-		def Ximpl.file_ext(path)
+		def self.file_ext(path)
 
 			return nil if not path
 
@@ -493,21 +478,19 @@ module Recls
 			end
 
 			return ext ? ext : ''
-
-		end # Ximpl.file_ext
+		end
 
 		# obtains the directory from the directory path
 		#
-		def Ximpl.directory_from_directory_path(directory_path)
+		def self.directory_from_directory_path(directory_path)
 
 			wr, rem =  Util.get_windows_root(directory_path)
 
 			rem
-
-		end # Ximpl.directory_from_directory_path
+		end
 
 		# obtains the directory parts from a directory
-		def Ximpl.directory_parts_from_directory(directory)
+		def self.directory_parts_from_directory(directory)
 
 			return nil if not directory
 
@@ -524,27 +507,26 @@ module Recls
 			end
 
 			directory_parts
-
-		end # Ximpl.directory_parts_from_directory
+		end
 
 		# obtains the relative path of a given path and
 		# a reference directory
-		def Ximpl.derive_relative_path(origin, path)
+		def self.derive_relative_path(origin, path)
 
 			return nil if path.nil?
 			return nil if path.empty?
 			return path if origin.nil?
 			return path if origin.empty?
 
-			path			=	Ximpl.canonicalise_path path
-			origin			=	Ximpl.canonicalise_path origin
+			path			=	self.canonicalise_path path
+			origin			=	self.canonicalise_path origin
 
 			path_splits		=	Util.split_path(path)
 			origin_splits	=	Util.split_path(origin)
 
 			# if different windows root, then cannot provide relative
 			if path_splits[0] and origin_splits[0]
-				return path if path_splits[0] != ref_splits[0]
+				return path if path_splits[0] != origin_splits[0]
 			end
 
 			trailing_slash	=	Util.get_trailing_slash(path)
@@ -580,8 +562,7 @@ module Recls
 			return origin_parts.map { |rp| '..' }.join('/') if path_parts.empty?
 
 			return '../' * origin_parts.size + path_parts.join('')
-
-		end # def Ximpl.derive_relative_path
+		end
 
 		# Elicits the contents of the given directory, or, if the flag
 		# STOP_ON_ACCESS_FAILURE is specified throws an exception if the
@@ -592,7 +573,7 @@ module Recls
 		# * (Mac OSX) /dev/fd/<N> - some of these stat() as directories but
 		#    Dir::new fails with ENOTDIR
 		#
-		def Ximpl.dir_entries_maybe(dir, flags)
+		def self.dir_entries_maybe(dir, flags)
 
 			begin
 
@@ -611,12 +592,9 @@ module Recls
 			rescue Exception => x
 
 			end
-
-		end # Ximpl.dir_entries_maybe
-
-	end # module Ximpl
-
-end # module Recls
+		end
+	end
+end
 
 # ############################## end of file ############################# #
 

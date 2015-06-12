@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/filesearch.rb
+# File:         recls/filesearch.rb
 #
-# Purpose:     Defines the Recls::FileSearch class for the recls.ruby library.
+# Purpose:      Defines the Recls::FileSearch class for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     14th October 2014
+# Created:      24th July 2012
+# Updated:      10th June 2015
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -33,6 +33,7 @@ module Recls
 				search_root = search_root.to_s
 			end
 			search_root = '.' if search_root.empty?
+			search_root = File.expand_path(search_root) if '~' == search_root[0]
 
 			case	patterns
 			when	NilClass
@@ -57,8 +58,7 @@ module Recls
 			@search_root	=	search_root
 			@patterns	=	patterns
 			@flags		=	flags
-
-		end # def initialize()
+		end
 
 		attr_reader :search_root
 		attr_reader :patterns
@@ -97,8 +97,7 @@ module Recls
 			end
 
 			FileSearch::search_directory_(search_root, search_root, patterns, flags, &blk)
-
-		end # def each
+		end
 
 		private
 		def FileSearch::is_dots(name)
@@ -109,8 +108,7 @@ module Recls
 			else
 				false
 			end
-
-		end # is_dots()
+		end
 
 		def FileSearch::stat_or_nil_(path, flags)
 
@@ -127,8 +125,7 @@ module Recls
 
 				nil
 			end
-
-		end # stat_or_nil_()
+		end
 
 		# searches all entries - files, directories, links, devices
 		# - that match the given (patterns) in the given directory
@@ -233,11 +230,9 @@ module Recls
 
 				FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
 			end
-
-		end # def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
-
-	end # class FileSearch
-
-end # module Recls
+		end
+	end
+end
 
 # ############################## end of file ############################# #
+

@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/stat.rb
+# File:         recls/stat.rb
 #
-# Purpose:     Defines the Recls.stat() method for the recls.ruby library.
+# Purpose:      Defines the Recls.stat() method for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     12th October 2014
+# Created:      24th July 2012
+# Updated:      10th June 2015
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -20,21 +20,22 @@ require File.join(File.dirname(__FILE__), 'flags')
 
 module Recls
 
-	def Recls.stat(path, flags = 0)
+	def self.stat(path, flags = 0)
 
 		begin
-			Recls::Entry::new(path, Recls::Ximpl::FileStat.stat(path), path)
+			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), path)
 		rescue Errno::ENOENT => x
 
 			if 0 != (flags & Recls::DETAILS_LATER)
-				Recls::Entry::new(path, nil, path)
+
+				Recls::Entry.new(path, nil, path)
 			else
+
 				nil
 			end
 		end
-
-	end # def stat()
-
-end # module Recls
+	end 
+end
 
 # ############################## end of file ############################# #
+

@@ -2,17 +2,19 @@
 #
 # executes all other tests
 
-ThisDir = File.expand_path(File.dirname(__FILE__))
+this_file   =   File.expand_path(__FILE__)
+this_dir    =   File.expand_path(File.dirname(__FILE__))
 $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
+puts "executing all test cases in directory #{this_dir}"
 
-require 'recls'
+Dir["#{this_dir}/*.rb"].each do |file|
+
+    next if this_file == file
+
+	require file
+
+end
+
 require 'test/unit'
-
-puts "executing all test cases in directory #{ThisDir}"
-
-require ThisDir + '/' + 'tc_recls_file_search'
-require ThisDir + '/' + 'tc_recls_module'
-require ThisDir + '/' + 'tc_recls_util'
-require ThisDir + '/' + 'tc_recls_ximpl_util'
 

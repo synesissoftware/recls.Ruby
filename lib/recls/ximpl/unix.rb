@@ -4,7 +4,7 @@
 # Purpose:     UNIX-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     12th October 2014
+# Updated:     10th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -27,7 +27,6 @@ module Recls
 				@path = path
 
 				super(path)
-
 			end
 
 			public
@@ -43,20 +42,16 @@ module Recls
 				return false if ?. != basename[0]
 
 				return true
-
-			end # hidden?
+			end
 
 			public
 			def FileStat.stat(path)
 
 				Recls::Ximpl::FileStat::new(path)
-
-			end # def FileStat.stat
-
+			end
 		end
-
-	end # module Ximpl
-
-end # module Recls
+	end
+end
 
 # ############################## end of file ############################# #
+

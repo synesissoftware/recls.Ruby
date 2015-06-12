@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/flags.rb
+# File:         recls/flags.rb
 #
-# Purpose:     Defines the Recls::Flags module for the recls.ruby library.
+# Purpose:      Defines the Recls::Flags module for the recls.ruby library.
 #
-# Created:     24th July 2012
-# Updated:     13th October 2014
+# Created:      24th July 2012
+# Updated:      10th June 2015
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright:   <<TBD>>
+# Copyright:    <<TBD>>
 #
 # ######################################################################### #
 
@@ -49,7 +49,7 @@ public
 	# Causes sub-directories that are links to be searched; default is not
 	# to search through links
 	SEARCH_THROUGH_LINKS	=	0x00100000
-
-end # module Recls
+end
 
 # ############################## end of file ############################# #
+
