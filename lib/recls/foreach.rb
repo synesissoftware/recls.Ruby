@@ -20,6 +20,8 @@ module Recls
 	private
 	class FileSearchLineEnumerator
 
+		include Enumerable
+
 		def initialize(fs)
 
 			@fs = fs

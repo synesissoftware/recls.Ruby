@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      11th November 2014
+# Updated:      18th February 2015
 #
 # Author:       Matthew Wilson
 #
@@ -32,7 +32,7 @@ module Recls
 	# absolute
 	def self.derive_relative_path(origin, path)
 
-		return Recls::Ximpl::derive_relative_path origin path
+		return Recls::Ximpl::derive_relative_path origin, path
 
 	end # def self.derive_relative_path
 
