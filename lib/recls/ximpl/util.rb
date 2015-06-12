@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     10th June 2015
+# Updated:     12th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -141,7 +141,7 @@ module Recls
 
 				parts << wr if wr
 
-				until rem.empty?
+				until rem.nil? || rem.empty?
 					if rem =~ /^([^\\\/]*[\\\/])/
 						parts << $1
 						rem = $'
