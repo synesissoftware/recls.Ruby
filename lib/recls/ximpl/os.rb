@@ -5,7 +5,7 @@
 #              recls library.
 #
 # Created:     16th February 2014
-# Updated:     12th October 2014
+# Updated:     10th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -54,11 +54,9 @@ module Recls
 
 				return false
 			end
-
-		end # module OS
-
-	end # module Ximpl
-
-end # module Recls
+		end
+	end
+end
 
 # ############################## end of file ############################# #
+

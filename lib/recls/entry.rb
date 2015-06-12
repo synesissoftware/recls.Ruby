@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      24th November 2014
+# Updated:      10th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -53,8 +53,7 @@ module Recls
 
 			@search_directory = search_dir
 			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
-
-		end # def initialize
+		end
 
 		# ##########################
 		# Name-related attributes
@@ -83,22 +82,19 @@ module Recls
 		def exist?
 
 			not @file_stat.nil?
-
-		end # def exist?
+		end
 
 		# indicates whether the given entry is hidden
 		def hidden?
 
 			@file_stat.hidden?
-
-		end # def hidden?
+		end
 
 		# indicates whether the given entry is readonly
 		def readonly?
 
 			not @file_stat.writable?
-
-		end # readonly?
+		end
 
 		# ##########################
 		# Comparison
@@ -108,76 +104,62 @@ module Recls
 		def system?
 
 			@file_stat.system?
-
-		end # system?
+		end
 
 		def archive?
 
 			@file_stat.archive?
-
-		end # archive?
+		end
 
 		def device?
 
 			@file_stat.device?
-
-		end # device?
+		end
 
 		def normal?
 
 			@file_stat.normal?
-
-		end # normal?
+		end
 
 		def temporary?
 
 			@file_stat.temporary?
-
-		end # temporary?
+		end
 
 		def compressed?
 
 			@file_stat.compressed?
-
-		end # compressed?
+		end
 
 		def encrypted?
 
 			@file_stat.encrypted?
-
-		end # encrypted?
-
+		end
 	end
-
-
 
 		# indicates whether the given entry represents a directory
 		def directory?
 
 			@file_stat.directory?
-
-		end # directory?
+		end
 
 		# indicates whether the given entry represents a file
 		def file?
 
 			@file_stat.file?
-
-		end # file?
+		end
 
 		# indicates whether the given entry represents a link
 		def link?
 
 			@file_stat.link?
-
-		end # link?
+		end
 
 		# indicates whether the given entry represents a socket
 		def socket?
 
 			@file_stat.socket?
-
-		end # socket?
+		end
 
 		# ##########################
 		# Size attributes
@@ -186,8 +168,7 @@ module Recls
 		def size
 
 			@file_stat.size
-
-		end # size
+		end
 
 		# ##########################
 		# File-system entry attributes
@@ -196,15 +177,13 @@ module Recls
 		def dev
 
 			@file_stat.dev
-
-		end # dev
+		end
 
 		# indicates the ino of the given entry
 		def ino
 
 			@file_stat.ino
-
-		end # ino
+		end
 
 		# ##########################
 		# Time attributes
@@ -213,15 +192,13 @@ module Recls
 		def last_access_time
 
 			@file_stat.atime
-
-		end # last_access_time
+		end
 
 		# indicates the modification time of the entry
 		def modification_time
 
 			@file_stat.mtime
-
-		end # modification_time
+		end
 
 		# ##########################
 		# Comparison
@@ -234,8 +211,7 @@ module Recls
 			else
 				return false
 			end
-
-		end # def eql?
+		end
 
 		def ==(rhs)
 
@@ -247,16 +223,15 @@ module Recls
 			else
 				return false
 			end
-
-		end # def ==(rhs)
+		end
 
 		def <=>(rhs)
 
 			compare_path <=> rhs.compare_path
-
-		end # def <=>(rhs)
+		end
 
 		def hash
+
 			@hash
 		end
 
@@ -268,20 +243,16 @@ module Recls
 		def to_s
 
 			path
-
-		end # def to_s
+		end
 
 		# represents the entry as a string (in the form of
 		# the full path)
 		def to_str
 
 			path
-
-		end # def to_s
-
-	end # class Entry
-
-end # module Recls
+		end
+	end
+end
 
 # ############################## end of file ############################# #
 

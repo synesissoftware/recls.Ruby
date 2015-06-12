@@ -4,7 +4,7 @@
 # Purpose:     Windows-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     12th October 2014
+# Updated:     10th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -38,8 +38,7 @@ module Recls
 			def has_attribute_? (attr)
 
 				0 != (attr & @attributes)
-
-			end # def has_attribute_? (attr)
+			end
 
 			private
 			def initialize(path)
@@ -56,7 +55,6 @@ module Recls
 				end
 
 				super(path)
-
 			end
 
 			public
@@ -66,66 +64,54 @@ module Recls
 			def hidden?
 
 				0 != (FILE_ATTRIBUTE_HIDDEN_ & @attributes)
-
-			end # hidden?
+			end
 
 			# Windows-specific attributes
 
 			def system?
 
 				has_attribute_? FILE_ATTRIBUTE_SYSTEM_
-
-			end # system?
+			end
 
 			def archive?
 
 				has_attribute_? FILE_ATTRIBUTE_ARCHIVE_
-
-			end # archive?
+			end
 
 			def device?
 
 				has_attribute_? FILE_ATTRIBUTE_DEVICE_
-
-			end # device?
+			end
 
 			def normal?
 
 				has_attribute_? FILE_ATTRIBUTE_NORMAL_
-
-			end # normal?
+			end
 
 			def temporary?
 
 				has_attribute_? FILE_ATTRIBUTE_TEMPORARY_
-
-			end # temporary?
+			end
 
 			def compressed?
 
 				has_attribute_? FILE_ATTRIBUTE_COMPRESSED_
-
-			end # compressed?
+			end
 
 			def encrypted?
 
 				has_attribute_? FILE_ATTRIBUTE_ENCRYPTED_
-
-			end # encrypted?
+			end
 
 
 			public
 			def FileStat.stat(path)
 
 				Recls::Ximpl::FileStat.new(path)
-
-			end # def FileStat.stat(path)
-
+			end
 		end
-
-	end # module Ximpl
-
-end # module Recls
+	end
+end
 
 # ############################## end of file ############################# #
 

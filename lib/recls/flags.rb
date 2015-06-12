@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Flags module for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd October 2014
+# Updated:      10th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -49,8 +49,7 @@ public
 	# Causes sub-directories that are links to be searched; default is not
 	# to search through links
 	SEARCH_THROUGH_LINKS	=	0x00100000
-
-end # module Recls
+end
 
 # ############################## end of file ############################# #
 
