@@ -136,8 +136,8 @@ class Test_canonicalise_path < Test::Unit::TestCase
 			assert_equal('H:\\dir.1\\dir.2\\', Recls::canonicalise_path('H:\\dir.1\\dir.3\\..\\dir.2\\'))
 			assert_equal('H:\\dir.1\\dir.2\\', Recls::canonicalise_path('H:\\dir.3\\..\\dir.1\\dir.2\\'))
 
-			assert_equal('H:\\..\\dir.43\\dir.5\\', Recls::canonicalise_path('H:\\..\\dir.43\\dir.5\\'))
-			assert_equal('H:\\..\\dir.42\\', Recls::canonicalise_path('H:\\..\\dir.1\\..\\dir.42\\'))
+			assert_equal('H:\\dir.43\\dir.5\\', Recls::canonicalise_path('H:\\..\\dir.43\\dir.5\\'))
+			assert_equal('H:\\dir.42\\', Recls::canonicalise_path('H:\\..\\dir.1\\..\\dir.42\\'))
 
 		end
 

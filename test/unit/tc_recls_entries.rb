@@ -13,6 +13,12 @@ class Test_Recls_entries < Test::Unit::TestCase
 
 	def test_entries_in_directory_have_unique_names
 
+		unless defined? assert_false
+			def assert_false arg0, *args
+				assert !arg0, *args
+			end
+		end
+
 		entries			=	Recls::FileSearch.new('~', Recls::WILDCARDS_ALL, Recls::FILES).to_a
 
 		hashed_entries	=	Hash[entries.each_with_index.map { |fe, index| [ fe, index] }]
