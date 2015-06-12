@@ -47,7 +47,8 @@ module Recls
 			public
 			def FileStat.stat(path)
 
-				Recls::Ximpl::FileStat::new(path)
+				Recls::Ximpl::FileStat.new(path)
+
 			end
 		end
 	end

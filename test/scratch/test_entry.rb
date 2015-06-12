@@ -40,7 +40,7 @@ puts "\t#{'f.last_access_time'.ljust(20)}\t#{f.last_access_time}"
 puts
 puts "directories:"
 num_directories = 0
-Recls::FileSearch::new('.', '*', Recls::DIRECTORIES).each do |fe|
+Recls::FileSearch.new('.', '*', Recls::DIRECTORIES).each do |fe|
 
 	num_directories += 1
 	puts "\t[#{fe.search_relative_path}]"
@@ -50,7 +50,7 @@ puts "  #{num_directories} directories"
 puts
 puts "files:"
 num_files = 0
-Recls::FileSearch::new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe|
+Recls::FileSearch.new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe|
 
 	num_files += 1
 	puts "\t<#{fe.search_relative_path}>"
