@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     12th June 2015
+# Updated:     18th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -13,8 +13,8 @@
 # ######################################################################### #
 
 
-require File.join(File.dirname(__FILE__), 'os')
-require File.join(File.dirname(__FILE__), '..', 'flags')
+require 'recls/ximpl/os'
+require 'recls/flags'
 
 module Recls
 

@@ -4,7 +4,7 @@
 # Purpose:     UNIX-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     10th June 2015
+# Updated:     18th June 2015
 #
 # Author:      Matthew Wilson
 #
@@ -13,7 +13,7 @@
 # ######################################################################### #
 
 
-require File.dirname(__FILE__) + '/util'
+require 'recls/ximpl/util'
 
 module Recls
 

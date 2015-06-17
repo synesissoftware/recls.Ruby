@@ -4,7 +4,7 @@
 # Purpose:      Definition of Recls::foreach() utility function
 #
 # Created:      22nd October 2014
-# Updated:      10th June 2015
+# Updated:      18th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -13,7 +13,7 @@
 # ######################################################################### #
 
 
-require File.join(File.dirname(__FILE__), 'filesearch')
+require 'recls/filesearch'
 
 module Recls
 

@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls.stat() method for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      10th June 2015
+# Updated:      18th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -13,10 +13,10 @@
 # ######################################################################### #
 
 
-require File.join(File.dirname(__FILE__), 'internal/common')
-require File.join(File.dirname(__FILE__), 'internal/version')
-require File.join(File.dirname(__FILE__), 'entry')
-require File.join(File.dirname(__FILE__), 'flags')
+require 'recls/internal/common'
+require 'recls/internal/version'
+require 'recls/entry'
+require 'recls/flags'
 
 module Recls
 

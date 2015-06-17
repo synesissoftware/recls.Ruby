@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      10th June 2015
+# Updated:      18th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -13,11 +13,11 @@
 # ######################################################################### #
 
 
-require File.join(File.dirname(__FILE__), 'internal/common')
-require File.join(File.dirname(__FILE__), 'internal/version')
-require File.join(File.dirname(__FILE__), 'ximpl/os')
-require File.join(File.dirname(__FILE__), 'ximpl', (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix'))
-require File.join(File.dirname(__FILE__), 'ximpl/util')
+require 'recls/internal/common'
+require 'recls/internal/version'
+require 'recls/ximpl/os'
+require 'recls/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix')
+require 'recls/ximpl/util'
 
 module Recls
 

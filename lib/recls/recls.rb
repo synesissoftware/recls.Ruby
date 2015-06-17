@@ -4,7 +4,7 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      10th June 2015
+# Updated:      18th June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -13,13 +13,13 @@
 # ######################################################################### #
 
 
-require File.join(File.dirname(__FILE__), 'internal/common')
-require File.join(File.dirname(__FILE__), 'internal/version')
-require File.join(File.dirname(__FILE__), 'filesearch')
-require File.join(File.dirname(__FILE__), 'foreach')
-require File.join(File.dirname(__FILE__), 'stat')
-require File.join(File.dirname(__FILE__), 'util')
-require File.join(File.dirname(__FILE__), 'ximpl/os')
+require 'recls/internal/common'
+require 'recls/internal/version'
+require 'recls/filesearch'
+require 'recls/foreach'
+require 'recls/stat'
+require 'recls/util'
+require 'recls/ximpl/os'
 
 module Recls
 
