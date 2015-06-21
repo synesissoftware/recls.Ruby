@@ -1,6 +1,6 @@
 #! /usr/bin/ruby
 #
-# test Recls canonicalise_path() method
+# test Recls search methods
 
 $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
