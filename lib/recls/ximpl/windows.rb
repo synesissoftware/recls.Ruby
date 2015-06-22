@@ -4,7 +4,7 @@
 # Purpose:     Windows-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     10th June 2015
+# Updated:     23rd June 2015
 #
 # Author:      Matthew Wilson
 #
