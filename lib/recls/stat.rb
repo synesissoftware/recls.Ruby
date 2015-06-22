@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls.stat() method for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      18th June 2015
+# Updated:      22nd June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -23,12 +23,12 @@ module Recls
 	def self.stat(path, flags = 0)
 
 		begin
-			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), path)
+			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), path, flags)
 		rescue Errno::ENOENT => x
 
 			if 0 != (flags & Recls::DETAILS_LATER)
 
-				Recls::Entry.new(path, nil, path)
+				Recls::Entry.new(path, nil, path, flags)
 			else
 
 				nil

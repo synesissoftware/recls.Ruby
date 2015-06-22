@@ -21,7 +21,7 @@ end
 
 puts
 puts "Hidden directories & files:"
-Recls::FileSearch.new(nil, nil, Recls::RECURSIVE | Recls::DIRECTORIES | Recls::FILES | Recls::SHOW_HIDDEN).each do |fe|
+Recls::FileSearch.new(nil, nil, Recls::RECURSIVE | Recls::DIRECTORIES | Recls::FILES | Recls::MARK_DIRECTORIES | Recls::SHOW_HIDDEN).each do |fe|
 
 	puts "\t#{fe.searchRelativePath}" if fe.hidden?
 end

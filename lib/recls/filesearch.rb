@@ -196,7 +196,7 @@ module Recls
 
 				next unless match
 
-				blk.call Recls::Entry.new(fs.path, fs, search_root)
+				blk.call Recls::Entry.new(fs.path, fs, search_root, flags)
 			end
 
 			# sub-directories

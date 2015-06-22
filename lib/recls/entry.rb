@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      18th June 2015
+# Updated:      22nd June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -18,6 +18,7 @@ require 'recls/internal/version'
 require 'recls/ximpl/os'
 require 'recls/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix')
 require 'recls/ximpl/util'
+require 'recls/flags'
 
 module Recls
 
@@ -32,7 +33,7 @@ module Recls
 
 		# initialises an entry instance from the given path,
 		# file_stat, and search_dir
-		def initialize(path, file_stat, search_dir)
+		def initialize(path, file_stat, search_dir, flags)
 
 			@file_stat		=	file_stat
 
@@ -53,6 +54,11 @@ module Recls
 
 			@search_directory = search_dir
 			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
+
+			if 0 != (Recls::MARK_DIRECTORIES & flags) && directory?
+				@path					=	Recls::Ximpl::Util.append_trailing_slash @path
+				@search_relative_path	=	Recls::Ximpl::Util.append_trailing_slash @search_relative_path
+			end
 		end
 
 		# ##########################
