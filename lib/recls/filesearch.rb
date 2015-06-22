@@ -188,24 +188,13 @@ module Recls
 					end
 				end
 
-				if(0 == (Recls::TYPEMASK & flags))
-				elsif (0 != (Recls::FILES & flags))
-					if !fs.file?
-						next
-					end
-				elsif (0 != (Recls::DIRECTORIES & flags))
-					if !fs.directory?
-						next
-					end
-				elsif (0 != (Recls::LINKS & flags))
-					if !fs.symlink?
-						next
-					end
-				elsif (0 != (Recls::DEVICES & flags))
-					if !fs.blockdev?
-						next
-					end
-				end
+				match	=	false
+
+				match	||=	(0 != (Recls::FILES & flags) && fs.file?)
+				match	||=	(0 != (Recls::DIRECTORIES & flags) && fs.directory?)
+				match	||=	(0 != (Recls::DEVICES & flags) && fs.blockdev?)
+
+				next unless match
 
 				blk.call Recls::Entry.new(fs.path, fs, search_root)
 			end
