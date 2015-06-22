@@ -34,6 +34,18 @@ module Recls
 			FILE_ATTRIBUTE_COMPRESSED_	=	0x00000800
 			FILE_ATTRIBUTE_ENCRYPTED_	=	0x00004000
 
+			class ByHandleInformation
+
+				def initialize(path)
+
+					@volume_id	=	0
+					@file_index	=	0
+				end
+
+				attr_reader :volume_id
+				attr_reader :file_index
+			end
+
 			private
 			def has_attribute_? (attr)
 
@@ -55,11 +67,14 @@ module Recls
 				end
 
 				super(path)
+
+				@by_handle_information = ByHandleInformation.new(path)
 			end
 
 			public
 			attr_reader :attributes
 			attr_reader :path
+			attr_reader :by_handle_information
 
 			def hidden?
 

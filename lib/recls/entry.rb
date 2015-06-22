@@ -62,6 +62,12 @@ module Recls
 
 			@dev	=	@file_stat.dev if @file_stat
 			@ino	=	@file_stat.ino if @file_stat
+
+			if Recls::Ximpl::OS::OS_IS_WINDOWS && @file_stat
+				@dev	=	@file_stat.by_handle_information.volume_id
+				@ino	=	@file_stat.by_handle_information.file_index
+			else
+			end
 		end
 
 		# ##########################
