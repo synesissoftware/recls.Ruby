@@ -60,8 +60,8 @@ module Recls
 				@search_relative_path	=	Recls::Ximpl::Util.append_trailing_slash @search_relative_path
 			end
 
-			@dev	=	@filestat.dev if @filestat
-			@ino	=	@filestat.ino if @filestat
+			@dev	=	@file_stat.dev if @file_stat
+			@ino	=	@file_stat.ino if @file_stat
 		end
 
 		# ##########################
