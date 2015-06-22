@@ -1,3 +1,6 @@
+#! /usr/bin/ruby
+#
+# test Recls entry methods
 
 require 'recls'
 
