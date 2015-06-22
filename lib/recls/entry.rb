@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd June 2015
+# Updated:      23rd June 2015
 #
 # Author:       Matthew Wilson
 #
@@ -59,6 +59,9 @@ module Recls
 				@path					=	Recls::Ximpl::Util.append_trailing_slash @path
 				@search_relative_path	=	Recls::Ximpl::Util.append_trailing_slash @search_relative_path
 			end
+
+			@dev	=	@filestat.dev if @filestat
+			@ino	=	@filestat.ino if @filestat
 		end
 
 		# ##########################
@@ -182,13 +185,13 @@ module Recls
 		# indicates the device of the given entry
 		def dev
 
-			@file_stat.dev
+			@dev
 		end
 
 		# indicates the ino of the given entry
 		def ino
 
-			@file_stat.ino
+			@ino
 		end
 
 		# ##########################
