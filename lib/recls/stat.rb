@@ -23,12 +23,43 @@ module Recls
 	#
 	#  - stat(path)
 	#  - stat(path, flags)
-	#
-	def self.stat(path, flags = 0)
+	#  - stat(path, search_root)
+	#  - stat(path, search_root, flags)
+	#  - stat(path, flags, search_root)
+	def self.stat(path, *args)
 
+		flags		=	0
 		search_root	=	nil
+		message		=	nil
 
-		search_root	=	path
+		case	args.size
+		when	0
+			;
+		when	1
+			case	args[0]
+			when	::Integer
+				flags = args[0]
+			when	::String
+				search_root = args[0]
+			else
+				message = "argument '#{args[0]}' (#{args[0].class}) not valid"
+			end
+		when	2
+			if false
+			elsif ::Integer === args[0] && ::String === args[1]
+				flags		=	args[0]
+				search_root	=	args[1]
+			elsif ::String === args[0] && ::Integer === args[1]
+				search_root	=	args[0]
+				flags		=	args[1]
+			else
+				message = "invalid combination of arguments"
+			end
+		else
+			message = "too many arguments"
+		end
+
+		raise ArgumentError, "#{message}: Recls.stat() takes one (path), two (path+flags or path+search_root), or three (path+search_root+flags) arguments" if message
 
 		begin
 			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
