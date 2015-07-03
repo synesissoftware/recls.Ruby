@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      18th June 2015
+# Updated:      3rd July 2015
 #
 # Author:       Matthew Wilson
 #
@@ -15,7 +15,6 @@
 
 require 'recls/ximpl/util'
 require 'recls/internal/common'
-require 'recls/internal/version'
 require 'recls/ximpl/os'
 
 module Recls

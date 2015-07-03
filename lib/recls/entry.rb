@@ -14,7 +14,6 @@
 
 
 require 'recls/internal/common'
-require 'recls/internal/version'
 require 'recls/ximpl/os'
 require 'recls/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix')
 require 'recls/ximpl/util'

@@ -14,7 +14,6 @@
 
 
 require 'recls/internal/common'
-require 'recls/internal/version'
 require 'recls/entry'
 require 'recls/flags'
 require 'recls/ximpl/os'

@@ -14,7 +14,6 @@
 
 
 require 'recls/internal/common'
-require 'recls/internal/version'
 
 module Recls
 

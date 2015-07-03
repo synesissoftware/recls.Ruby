@@ -4,7 +4,7 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      18th June 2015
+# Updated:      3rd July 2015
 #
 # Author:       Matthew Wilson
 #
@@ -14,7 +14,8 @@
 
 
 require 'recls/internal/common'
-require 'recls/internal/version'
+require 'recls/version'
+
 require 'recls/filesearch'
 require 'recls/foreach'
 require 'recls/stat'

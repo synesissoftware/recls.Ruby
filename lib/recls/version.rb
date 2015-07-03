@@ -1,5 +1,5 @@
 # ######################################################################### #
-# File:         recls/internal/version.rb
+# File:         recls/version.rb
 #
 # Purpose:      Version for recls library
 #
@@ -16,7 +16,7 @@
 module Recls
 
 	# Current version of the recls.ruby library
-	VERSION				=	'2.1.3'
+	VERSION				=	'2.1.4'
 
 	private
 	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
