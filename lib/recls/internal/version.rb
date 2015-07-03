@@ -4,7 +4,7 @@
 # Purpose:      Version for recls library
 #
 # Created:      14th February 2014
-# Updated:      23rd June 2015
+# Updated:      3rd July 2015
 #
 # Author:       Matthew Wilson
 #

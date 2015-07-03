@@ -1,10 +1,10 @@
 # ######################################################################### #
 # File:         recls/stat.rb
 #
-# Purpose:      Defines the Recls.stat() method for the recls.ruby library.
+# Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd June 2015
+# Updated:      3rd July 2015
 #
 # Author:       Matthew Wilson
 #

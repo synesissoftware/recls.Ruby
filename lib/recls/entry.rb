@@ -1,10 +1,10 @@
 # ######################################################################### #
 # File:         recls/entry.rb
 #
-# Purpose:      Defines the Recls::Entry class for the recls.ruby library.
+# Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      23rd June 2015
+# Updated:      3rd July 2015
 #
 # Author:       Matthew Wilson
 #
