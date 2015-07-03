@@ -8,7 +8,7 @@ puts "PATH_NAME_SEPARATOR:\t[#{Recls::PATH_NAME_SEPARATOR}]"
 puts "PATH_SEPARATOR:\t[#{Recls::PATH_SEPARATOR}]"
 puts "WILDCARDS_ALL:\t[#{Recls::WILDCARDS_ALL}]"
 
-f = Recls::stat('.')
+f = Recls.stat('.')
 
 puts "entry:"
 puts "\t#{'(entry)'.ljust(20)}\t#{f}"
