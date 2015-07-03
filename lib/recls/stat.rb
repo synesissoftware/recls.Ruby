@@ -20,15 +20,24 @@ require 'recls/flags'
 
 module Recls
 
+	# USAGE:
+	#
+	#  - stat(path)
+	#  - stat(path, flags)
+	#
 	def self.stat(path, flags = 0)
 
+		search_root	=	nil
+
+		search_root	=	path
+
 		begin
-			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), path, flags)
+			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
 		rescue Errno::ENOENT => x
 
 			if 0 != (flags & Recls::DETAILS_LATER)
 
-				Recls::Entry.new(path, nil, path, flags)
+				Recls::Entry.new(path, nil, search_root, flags)
 			else
 
 				nil
