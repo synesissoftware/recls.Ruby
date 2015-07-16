@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      3rd July 2015
+# Updated:      16th July 2015
 #
 # Author:       Matthew Wilson
 #
@@ -84,6 +84,7 @@ module Recls
 		attr_reader :file_short_name
 		alias_method :basename, :file_full_name
 		attr_reader :file_name_only
+		alias_method :stem, :file_name_only
 		attr_reader :file_extension
 		alias_method :extension, :file_extension
 		attr_reader :search_directory

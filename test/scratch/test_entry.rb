@@ -24,6 +24,7 @@ end
 puts "\t#{'f.file_full_name'.ljust(20)}\t#{f.file_full_name}"
 puts "\t#{'f.file_short_name'.ljust(20)}\t#{f.file_short_name}"
 puts "\t#{'f.file_name_only'.ljust(20)}\t#{f.file_name_only}"
+puts "\t#{'f.stem'.ljust(20)}\t#{f.stem}"
 puts "\t#{'f.file_extension'.ljust(20)}\t#{f.file_extension}"
 puts "\t#{'f.search_directory'.ljust(20)}\t#{f.search_directory}"
 puts "\t#{'f.search_relative_path'.ljust(20)}\t#{f.search_relative_path}"
