@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     18th June 2015
+# Updated:     7th August 2015
 #
 # Author:      Matthew Wilson
 #
@@ -375,7 +375,16 @@ module Recls
 		# determines the absolute path of a given path
 		def self.absolute_path(path, refdir = nil)
 
-			return nil if not path
+			case path
+			when ::NilClass
+				return nil
+			when ::String
+			when ::Recls::Entry
+				path = path.to_s
+			else
+				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or #{::Recls::Entry}"
+			end
+
 			return '' if path.empty?
 
 			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, dummy3, dummy4 = Util.split_path(path)
