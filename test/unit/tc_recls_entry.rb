@@ -33,7 +33,8 @@ class Test_Recls_entry < Test::Unit::TestCase
 
 		cwd	=	Recls.stat @cwd, Recls::MARK_DIRECTORIES
 
-		assert_equal "#{@cwd}#{Recls::PATH_NAME_SEPARATOR}", cwd.path
+#		assert_equal "#{@cwd}#{Recls::PATH_NAME_SEPARATOR}", cwd.path
+		assert_equal "#{@cwd}/", cwd.path
 	end
 end
 
