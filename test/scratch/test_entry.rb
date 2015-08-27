@@ -2,6 +2,8 @@
 #
 # test Recls entry methods
 
+$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
+
 require 'recls'
 
 puts "PATH_NAME_SEPARATOR:\t[#{Recls::PATH_NAME_SEPARATOR}]"

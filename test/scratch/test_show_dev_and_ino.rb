@@ -2,6 +2,8 @@
 #
 # Demonstrates use of dev and ino attributes
 
+$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
+
 require 'recls'
 
 Recls::FileSearch.new('.', Recls::WILDCARDS_ALL, Recls::FILES | Recls::RECURSIVE).each do |fe|

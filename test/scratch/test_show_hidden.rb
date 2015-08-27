@@ -2,6 +2,8 @@
 #
 # Demonstrates search of hidden files
 
+$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
+
 require 'recls'
 
 puts
