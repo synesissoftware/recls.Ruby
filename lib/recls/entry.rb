@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      16th July 2015
+# Updated:      27th August 2015
 #
 # Author:       Matthew Wilson
 #
@@ -61,10 +61,12 @@ module Recls
 
 			@dev	=	@file_stat.dev if @file_stat
 			@ino	=	@file_stat.ino if @file_stat
+			@nlink	=	@file_stat.nlink if @file_stat
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS && @file_stat
 				@dev	=	@file_stat.by_handle_information.volume_id
 				@ino	=	@file_stat.by_handle_information.file_index
+				@nlink	=	@file_stat.by_handle_information.num_links
 			else
 			end
 		end
@@ -189,15 +191,30 @@ module Recls
 		# File-system entry attributes
 
 		# indicates the device of the given entry
+		#
+		# On Windows, this will be 0 if the entry cannot be
+		# opened
 		def dev
 
 			@dev
 		end
 
 		# indicates the ino of the given entry
+		#
+		# On Windows, this will be 0 if the entry cannot be
+		# opened
 		def ino
 
 			@ino
+		end
+
+		# number of links to the given entry
+		#
+		# On Windows, this will be 0 if the entry cannot be
+		# opened
+		def nlink
+
+			@nlink
 		end
 
 		# ##########################
