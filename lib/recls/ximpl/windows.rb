@@ -4,7 +4,7 @@
 # Purpose:     Windows-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     23rd June 2015
+# Updated:     27th August 2015
 #
 # Author:      Matthew Wilson
 #
@@ -22,17 +22,17 @@ module Recls
 		class FileStat < File::Stat
 
 			private
-			GetFileAttributes = Win32API.new("kernel32", "GetFileAttributes", "P", "I")
-			FILE_ATTRIBUTE_READONLY_	=	0x00000001
-			FILE_ATTRIBUTE_HIDDEN_		=	0x00000002
-			FILE_ATTRIBUTE_SYSTEM_		=	0x00000004
-			FILE_ATTRIBUTE_DIRECTORY_	=	0x00000010
-			FILE_ATTRIBUTE_ARCHIVE_		=	0x00000020
-			FILE_ATTRIBUTE_DEVICE_		=	0x00000040
-			FILE_ATTRIBUTE_NORMAL_		=	0x00000080
-			FILE_ATTRIBUTE_TEMPORARY_	=	0x00000100
-			FILE_ATTRIBUTE_COMPRESSED_	=	0x00000800
-			FILE_ATTRIBUTE_ENCRYPTED_	=	0x00004000
+			GetFileAttributes			=	Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
+			FILE_ATTRIBUTE_READONLY		=	0x00000001
+			FILE_ATTRIBUTE_HIDDEN		=	0x00000002
+			FILE_ATTRIBUTE_SYSTEM		=	0x00000004
+			FILE_ATTRIBUTE_DIRECTORY	=	0x00000010
+			FILE_ATTRIBUTE_ARCHIVE		=	0x00000020
+			FILE_ATTRIBUTE_DEVICE		=	0x00000040
+			FILE_ATTRIBUTE_NORMAL		=	0x00000080
+			FILE_ATTRIBUTE_TEMPORARY	=	0x00000100
+			FILE_ATTRIBUTE_COMPRESSED	=	0x00000800
+			FILE_ATTRIBUTE_ENCRYPTED	=	0x00004000
 
 			class ByHandleInformation
 
@@ -57,7 +57,7 @@ module Recls
 
 				@path = path
 
-				# for some reason not forcing this new string cause 'can't modify frozen string (TypeError)'
+				# for some reason not forcing this new string causes 'can't modify frozen string (TypeError)'
 				attributes = GetFileAttributes.call("#{path}")
 
 				if 0xffffffff == attributes
@@ -78,44 +78,44 @@ module Recls
 
 			def hidden?
 
-				0 != (FILE_ATTRIBUTE_HIDDEN_ & @attributes)
+				0 != (FILE_ATTRIBUTE_HIDDEN & @attributes)
 			end
 
 			# Windows-specific attributes
 
 			def system?
 
-				has_attribute_? FILE_ATTRIBUTE_SYSTEM_
+				has_attribute_? FILE_ATTRIBUTE_SYSTEM
 			end
 
 			def archive?
 
-				has_attribute_? FILE_ATTRIBUTE_ARCHIVE_
+				has_attribute_? FILE_ATTRIBUTE_ARCHIVE
 			end
 
 			def device?
 
-				has_attribute_? FILE_ATTRIBUTE_DEVICE_
+				has_attribute_? FILE_ATTRIBUTE_DEVICE
 			end
 
 			def normal?
 
-				has_attribute_? FILE_ATTRIBUTE_NORMAL_
+				has_attribute_? FILE_ATTRIBUTE_NORMAL
 			end
 
 			def temporary?
 
-				has_attribute_? FILE_ATTRIBUTE_TEMPORARY_
+				has_attribute_? FILE_ATTRIBUTE_TEMPORARY
 			end
 
 			def compressed?
 
-				has_attribute_? FILE_ATTRIBUTE_COMPRESSED_
+				has_attribute_? FILE_ATTRIBUTE_COMPRESSED
 			end
 
 			def encrypted?
 
-				has_attribute_? FILE_ATTRIBUTE_ENCRYPTED_
+				has_attribute_? FILE_ATTRIBUTE_ENCRYPTED
 			end
 
 
