@@ -4,7 +4,7 @@
 # Purpose:     Windows-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     27th August 2015
+# Updated:     29th August 2015
 #
 # Author:      Matthew Wilson
 #
@@ -76,7 +76,8 @@ module Recls
 					@file_index	=	0
 					@num_links	=	0
 
-					hFile = CreateFile.call(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL);
+					# for some reason not forcing this new string causes 'can't modify frozen string (TypeError)' (in Ruby 1.8.x)
+					hFile = CreateFile.call("#{path}", 0, 0, NULL, OPEN_EXISTING, 0, NULL);
 					if INVALID_HANDLE_VALUE != hFile
 
 						begin
