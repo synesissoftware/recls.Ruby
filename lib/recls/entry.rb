@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      27th August 2015
+# Updated:      4th September 2015
 #
 # Author:       Matthew Wilson
 #
@@ -117,7 +117,8 @@ module Recls
 		# ##########################
 		# Nature attributes
 
-		# indicates whether the given entry exists
+		# indicates whether the given entry existed at the time the entry
+		# instance was created
 		def exist?
 
 			not @file_stat.nil?
