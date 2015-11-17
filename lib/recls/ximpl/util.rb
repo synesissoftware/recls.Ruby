@@ -405,7 +405,7 @@ module Recls
 			when ::Recls::Entry
 				path = path.to_s
 			else
-				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or #{::Recls::Entry}"
+				raise TypeError, "parameter path ('#{path}') of type #{path.class} must be an instance of #{::String} or #{::Recls::Entry}"
 			end
 
 			return '' if path.empty?
