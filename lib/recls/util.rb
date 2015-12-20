@@ -44,21 +44,21 @@ module Recls
 	# Obtains the absolute form of the given path
 	def self.absolute_path(path)
 
-		return Recls::Ximpl::absolute_path path
+		return Recls::Ximpl.absolute_path path
 	end
 
 	# Canonicalises the given path, by removing dots ('.' and '..')
 	# directories
 	def self.canonicalise_path(path)
 
-		return Recls::Ximpl::canonicalise_path path
+		return Recls::Ximpl.canonicalise_path path
 	end
 
 	# Derives a given path relative to an origin, unless the path is
 	# absolute
 	def self.derive_relative_path(origin, path)
 
-		return Recls::Ximpl::derive_relative_path origin, path
+		return Recls::Ximpl.derive_relative_path origin, path
 	end
 end
 
