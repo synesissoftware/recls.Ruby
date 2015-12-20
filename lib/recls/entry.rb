@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      4th September 2015
+# Updated:      20th December 2015
 #
 # Author:       Matthew Wilson
 #
@@ -75,6 +75,8 @@ module Recls
 
 			@search_directory = search_dir
 			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
+			@search_relative_directory = Recls::Ximpl.derive_relative_path search_dir, @directory
+			@search_relative_directory_path = Recls::Ximpl.derive_relative_path search_dir, @directory_path
 
 			if 0 != (Recls::MARK_DIRECTORIES & flags) && directory?
 				@path					=	Recls::Ximpl::Util.append_trailing_slash @path
@@ -113,6 +115,8 @@ module Recls
 		alias_method :extension, :file_extension
 		attr_reader :search_directory
 		attr_reader :search_relative_path
+		attr_reader :search_relative_directory
+		attr_reader :search_relative_directory_path
 
 		# ##########################
 		# Nature attributes

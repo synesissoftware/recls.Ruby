@@ -30,6 +30,8 @@ puts "\t#{'f.stem'.ljust(20)}\t#{f.stem}"
 puts "\t#{'f.file_extension'.ljust(20)}\t#{f.file_extension}"
 puts "\t#{'f.search_directory'.ljust(20)}\t#{f.search_directory}"
 puts "\t#{'f.search_relative_path'.ljust(20)}\t#{f.search_relative_path}"
+puts "\t#{'f.search_relative_directory'.ljust(20)}\t#{f.search_relative_directory}"
+puts "\t#{'f.search_relative_directory_path'.ljust(20)}\t#{f.search_relative_directory_path}"
 
 puts "\t#{'f.size'.ljust(20)}\t#{f.size}"
 
