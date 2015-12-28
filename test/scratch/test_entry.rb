@@ -10,7 +10,7 @@ puts "PATH_NAME_SEPARATOR:\t[#{Recls::PATH_NAME_SEPARATOR}]"
 puts "PATH_SEPARATOR:\t[#{Recls::PATH_SEPARATOR}]"
 puts "WILDCARDS_ALL:\t[#{Recls::WILDCARDS_ALL}]"
 
-f = Recls.stat('.')
+def show_entry f
 
 puts "entry:"
 puts "\t#{'(entry)'.ljust(20)}\t#{f}"
@@ -44,6 +44,15 @@ puts "\t#{'f.socket?'.ljust(20)}\t#{f.socket?}"
 
 puts "\t#{'f.modification_time'.ljust(20)}\t#{f.modification_time}"
 puts "\t#{'f.last_access_time'.ljust(20)}\t#{f.last_access_time}"
+end
+
+puts
+puts "stat of '.':"
+show_entry Recls::stat '.'
+
+puts
+puts "stat of '~':"
+show_entry Recls::stat '~'
 
 puts
 puts "directories:"
@@ -64,3 +73,4 @@ Recls::FileSearch.new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe|
 	puts "\t<#{fe.search_relative_path}>"
 end
 puts "  #{num_files} file(s)"
+

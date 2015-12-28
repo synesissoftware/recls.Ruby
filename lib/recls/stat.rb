@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      27th August 2015
+# Updated:      28th December 2015
 #
 # Author:       Matthew Wilson
 #
@@ -53,6 +53,8 @@ module Recls
 		flags		=	0
 		search_root	=	nil
 		message		=	nil
+
+		path		=	File.expand_path(path) if path =~ /^~[\\\/]*/
 
 		case	args.size
 		when	0
