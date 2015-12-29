@@ -39,6 +39,8 @@
 require 'recls/ximpl/os'
 require 'recls/flags'
 
+require 'pathname'
+
 module Recls
 
 	module Ximpl
@@ -595,6 +597,25 @@ module Recls
 
 			return '../' * origin_parts.size + path_parts.join('')
 		end
+
+
+		def self.combine_paths(origin, path, options)
+
+			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, dummy3, dummy4 = Util.split_path(path)
+
+#			return path if f1_windows_root
+			return path if f2_directory && Util.is_path_name_separator(f2_directory[0])
+
+			r	=	File.join origin, path
+
+			if options[:clean_path]
+
+				r = Pathname.new(r).cleanpath
+			end
+
+			r
+		end
+
 
 		# Elicits the contents of the given directory, or, if the flag
 		# STOP_ON_ACCESS_FAILURE is specified throws an exception if the

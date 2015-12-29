@@ -60,6 +60,13 @@ module Recls
 
 		return Recls::Ximpl.derive_relative_path origin, path
 	end
+
+	# Combines paths, optionally canonicalising them
+	#
+	def self.combine_paths(origin, path, options={})
+
+		return Recls::Ximpl.combine_paths origin, path, options
+	end
 end
 
 # ############################## end of file ############################# #

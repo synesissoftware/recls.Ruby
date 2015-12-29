@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      20th December 2015
+# Updated:      28th December 2015
 #
 # Author:       Matthew Wilson
 #
@@ -262,6 +262,8 @@ module Recls
 		# ##########################
 		# Comparison
 
+		# determines whether rhs is an instance of Entry and
+		# refers to the same path
 		def eql?(rhs)
 
 			case	rhs
@@ -272,6 +274,7 @@ module Recls
 			end
 		end
 
+		# determines whether rhs refers to the same path
 		def ==(rhs)
 
 			case	rhs
@@ -284,11 +287,13 @@ module Recls
 			end
 		end
 
+		# compares this instance with rhs
 		def <=>(rhs)
 
 			compare_path <=> rhs.compare_path
 		end
 
+		# the hash
 		def hash
 
 			@hash
