@@ -4,7 +4,7 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      27th August 2015
+# Updated:      29th December 2015
 #
 # Author:       Matthew Wilson
 #

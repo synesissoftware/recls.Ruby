@@ -4,7 +4,7 @@
 # Purpose:     Windows-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     29th August 2015
+# Updated:     29th December 2015
 #
 # Author:      Matthew Wilson
 #
@@ -47,6 +47,7 @@ module Recls
 			private
 			GetFileAttributes			=	Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
 			GetFileInformationByHandle	=	Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
+			GetShortPathName			=	Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
 			CreateFile					=	Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
 			CloseHandle					=	Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
 			FILE_ATTRIBUTE_READONLY		=	0x00000001
@@ -65,6 +66,7 @@ module Recls
 			NULL                 		= 	0x00000000
 			INVALID_HANDLE_VALUE		=	0xFFFFFFFF
 
+			MAX_PATH					=	260
 
 			BHFI_pack_string			=	'LQQQLLLLLL'
 
@@ -127,12 +129,17 @@ module Recls
 				super(path)
 
 				@by_handle_information = ByHandleInformation.new(path)
+
+				buff = ' ' * MAX_PATH
+				n = GetShortPathName.call(path, buff, buff.length)
+				@short_path = (0 == n) ? nil : buff[0...n]
 			end
 
 			public
 			attr_reader :attributes
 			attr_reader :path
 			attr_reader :by_handle_information
+			attr_reader :short_path
 
 			def hidden?
 

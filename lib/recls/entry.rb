@@ -59,6 +59,7 @@ module Recls
 			@file_stat		=	file_stat
 
 			@path			=	Recls::Ximpl.absolute_path path
+			@short_path		=	nil
 			@compare_path	=	Entry.get_compare_path_ @path
 			@hash			=	@compare_path.hash
 
@@ -89,9 +90,11 @@ module Recls
 			@nlink	=	@file_stat.nlink if @file_stat
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS && @file_stat
-				@dev	=	@file_stat.by_handle_information.volume_id
-				@ino	=	@file_stat.by_handle_information.file_index
-				@nlink	=	@file_stat.by_handle_information.num_links
+				@dev				=	@file_stat.by_handle_information.volume_id
+				@ino				=	@file_stat.by_handle_information.file_index
+				@nlink				=	@file_stat.by_handle_information.num_links
+				@short_path			=	@file_stat.short_path
+				@file_short_name	=	Recls::Ximpl::Util.split_path(@short_path)[2]
 			else
 			end
 		end
@@ -102,6 +105,7 @@ module Recls
 		attr_reader :compare_path
 
 		attr_reader :path
+		attr_reader :short_path
 		attr_reader :drive
 		attr_reader :directory_path
 		alias_method :dirname, :directory_path
