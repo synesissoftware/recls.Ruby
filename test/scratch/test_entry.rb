@@ -23,6 +23,11 @@ puts "\t#{'f.directory_parts'.ljust(20)}\t[#{directory_parts.size}]"
 directory_parts.each do |part|
 	puts "\t#{''.ljust(20)}\t\t#{part}"
 end
+search_relative_directory_parts = f.search_relative_directory_parts
+puts "\t#{'f.search_relative_directory_parts'.ljust(20)}\t[#{search_relative_directory_parts.size}]"
+search_relative_directory_parts.each do |part|
+	puts "\t#{''.ljust(20)}\t\t#{part}"
+end
 puts "\t#{'f.file_full_name'.ljust(20)}\t#{f.file_full_name}"
 puts "\t#{'f.file_short_name'.ljust(20)}\t#{f.file_short_name}"
 puts "\t#{'f.file_name_only'.ljust(20)}\t#{f.file_name_only}"

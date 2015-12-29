@@ -75,8 +75,9 @@ module Recls
 
 			@search_directory = search_dir
 			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
-			@search_relative_directory = Recls::Ximpl.derive_relative_path search_dir, @directory
 			@search_relative_directory_path = Recls::Ximpl.derive_relative_path search_dir, @directory_path
+			@search_relative_directory = @search_relative_directory_path
+			@search_relative_directory_parts = Recls::Ximpl.directory_parts_from_directory @search_relative_directory
 
 			if 0 != (Recls::MARK_DIRECTORIES & flags) && directory?
 				@path					=	Recls::Ximpl::Util.append_trailing_slash @path
@@ -117,6 +118,7 @@ module Recls
 		attr_reader :search_relative_path
 		attr_reader :search_relative_directory
 		attr_reader :search_relative_directory_path
+		attr_reader :search_relative_directory_parts
 
 		# ##########################
 		# Nature attributes

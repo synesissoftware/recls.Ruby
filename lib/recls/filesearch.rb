@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      27th August 2015
+# Updated:      29th December 2015
 #
 # Author:       Matthew Wilson
 #
@@ -117,7 +117,10 @@ module Recls
 				pattern
 			end
 
-			FileSearch::search_directory_(search_root, search_root, patterns, flags, &blk)
+			search_dir	=	search_root
+			search_root	=	Recls::Ximpl::Util.append_trailing_slash search_root
+
+			FileSearch::search_directory_(search_root, search_dir, patterns, flags, &blk)
 		end
 
 		private
