@@ -4,11 +4,11 @@
 # Purpose:      Version for recls library
 #
 # Created:      14th February 2014
-# Updated:      1st November 2015
+# Updated:      19th April 2016
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
 module Recls
 
 	# Current version of the recls.Ruby library
-	VERSION				=	'2.3.7'
+	VERSION				=	'2.3.8'
 
 	private
 	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
@@ -50,3 +50,4 @@ module Recls
 end
 
 # ############################## end of file ############################# #
+
