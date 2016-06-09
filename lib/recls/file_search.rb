@@ -1,10 +1,10 @@
 # ######################################################################### #
-# File:         recls/filesearch.rb
+# File:         recls/file_search.rb
 #
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      29th December 2015
+# Updated:      9th June 2016
 #
 # Author:       Matthew Wilson
 #

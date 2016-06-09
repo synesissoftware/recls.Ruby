@@ -4,11 +4,11 @@
 # Purpose:      Definition of Recls::foreach() utility function
 #
 # Created:      22nd October 2014
-# Updated:      27th August 2015
+# Updated:      9th June 2016
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
 # ######################################################################### #
 
 
-require 'recls/filesearch'
+require 'recls/file_search'
 
 module Recls
 
