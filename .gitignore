@@ -3,6 +3,9 @@
 
 .bzr/
 .git/
+.svn/
+
+/doc/
 
 # directories (by pattern)
 
@@ -13,8 +16,10 @@
 # files (by pattern)
 
 *.*~
+*.b64
 *.gem
 *.scc
 *.suo
 *.swp
+*.zip
 
