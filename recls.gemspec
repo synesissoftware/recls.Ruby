@@ -6,7 +6,7 @@ require 'recls'
 
 Gem::Specification.new do |gs|
 
-	gs.name			=	'recls'
+	gs.name			=	'recls-ruby'
 	gs.version		=	Recls::VERSION
 	gs.date			=	Date.today.to_s
 	gs.summary		=	'recls.Ruby'
