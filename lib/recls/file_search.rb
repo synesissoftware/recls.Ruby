@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      9th June 2016
+# Updated:      13th June 2016
 #
 # Author:       Matthew Wilson
 #
