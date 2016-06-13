@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:         recls/version.rb
+# File:         recls/api.rb
 #
-# Purpose:      Version for recls library
+# Purpose:      Defines Recls module search functions
 #
-# Created:      14th February 2014
+# Created:      9th June 2016
 # Updated:      9th June 2016
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
+# Copyright (c) 2016, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,18 +36,16 @@
 # ######################################################################### #
 
 
+require 'recls/file_search'
+
 module Recls
 
-	# Current version of the recls.Ruby library
-	VERSION				=	'2.7.1'
+	def self.FileSearch(search_root, patterns, options = {})
 
-	private
-	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
-	public
-	VERSION_MAJOR		=	VERSION_PARTS_[0] # :nodoc:
-	VERSION_MINOR		=	VERSION_PARTS_[1] # :nodoc:
-	VERSION_REVISION	=	VERSION_PARTS_[2] # :nodoc:
+		Recls::FileSearch.new(search_root, patterns, options)
+	end
 end
 
 # ############################## end of file ############################# #
+
 

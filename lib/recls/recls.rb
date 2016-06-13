@@ -38,6 +38,7 @@
 
 require 'recls/version'
 
+require 'recls/api'
 require 'recls/file_search'
 require 'recls/foreach'
 require 'recls/stat'

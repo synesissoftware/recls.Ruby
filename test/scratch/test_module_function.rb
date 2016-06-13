@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#!/usr/bin/ruby
 #
 # test Recls entry methods
 
@@ -9,7 +9,7 @@ require 'recls'
 root_dir	=	'.'
 patterns	=	Recls::WILDCARDS_ALL
 
-Recls::FileSearch.new(root_dir, patterns, Recls::FILES | Recls::RECURSIVE).each do |fe|
+Recls.FileSearch(root_dir, patterns, flags: Recls::FILES).each do |fe|
 
 	drive	=	fe.drive || ''
 
