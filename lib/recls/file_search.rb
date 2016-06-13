@@ -1,10 +1,10 @@
 # ######################################################################### #
-# File:         recls/filesearch.rb
+# File:         recls/file_search.rb
 #
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      29th December 2015
+# Updated:      13th June 2016
 #
 # Author:       Matthew Wilson
 #
@@ -46,11 +46,35 @@ module Recls
 
 		include Enumerable
 
-		def initialize(search_root, patterns, flags)
+		def initialize(search_root, patterns, options={})
+
+			# for backwards compatibility, we allow for options to
+			# be a number
+
+			flags	=	0
+
+			case options
+			when ::NilClass
+
+				options	=	{ flags: 0 }
+			when ::Integer
+
+				flags	=	options
+				options	=	{ flags: flags }
+			when ::Hash
+
+				flags	=	options[:flags] || 0
+			else
+
+				raise ArgumentError, "options parameter must a #{::Hash}, nil, or an integer specifying flags - an instance of #{options.class} given"
+			end
+
 
 			if not search_root
+
 				search_root = '.'
 			else
+
 				search_root = search_root.to_s
 			end
 			search_root = '.' if search_root.empty?
@@ -58,17 +82,21 @@ module Recls
 
 			case	patterns
 			when	NilClass
+
 				patterns = []
 			when	String
+
 				patterns = patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/)
 			when	Array
 			else
+
 				patterns = patterns.to_a
 			end
 
 			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
 
 			if(0 == (Recls::TYPEMASK & flags))
+
 				flags |= Recls::FILES
 			end
 
@@ -98,12 +126,15 @@ module Recls
 			flags = @flags
 
 			if(Recls::Ximpl::OS::OS_IS_WINDOWS)
+
 				mask = (Recls::FILES | Recls::DIRECTORIES)
 			else
+
 				mask = (Recls::FILES | Recls::DIRECTORIES | Recls::LINKS | Recls::DEVICES)
 			end
 
 			if(mask == (mask & flags))
+
 				flags = flags & ~Recls::TYPEMASK
 			end
 
@@ -137,13 +168,17 @@ module Recls
 		def FileSearch::stat_or_nil_(path, flags)
 
 			begin
+
 				Recls::Ximpl::FileStat.stat path
 			rescue Errno::ENOENT => x
+
 				nil
 			rescue SystemCallError => x
+
 				# TODO this should be filtered up and/or logged
 
 				if(0 != (STOP_ON_ACCESS_FAILURE & flags))
+
 					raise
 				end
 
@@ -170,6 +205,7 @@ module Recls
 					next if is_dots(name)
 
 					if not name =~ /^#{pattern}$/
+
 						next
 					end
 
@@ -207,7 +243,9 @@ module Recls
 				next if not fs
 
 				if(0 == (Recls::SHOW_HIDDEN & flags))
+
 					if fs.hidden?
+
 						next
 					end
 				end
@@ -230,13 +268,17 @@ module Recls
 			subdirectories.each do |fs|
 
 				if(0 == (Recls::SHOW_HIDDEN & flags))
+
 					if fs.hidden?
+
 						next
 					end
 				end
 
 				if(0 == (Recls::SEARCH_THROUGH_LINKS & flags))
+
 					if File.symlink? fs.path
+
 						next
 					end
 				end
