@@ -4,11 +4,11 @@
 # Purpose:     Windows-specific constructs for the recls library.
 #
 # Created:     19th February 2014
-# Updated:     29th December 2015
+# Updated:     18th June 2016
 #
 # Author:      Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -131,7 +131,8 @@ module Recls
 				@by_handle_information = ByHandleInformation.new(path)
 
 				buff = ' ' * MAX_PATH
-				n = GetShortPathName.call(path, buff, buff.length)
+				# not forcing this new string causes 'can't modify frozen string (TypeError)'
+				n = GetShortPathName.call("#{path}", buff, buff.length)
 				@short_path = (0 == n) ? nil : buff[0...n]
 			end
 
