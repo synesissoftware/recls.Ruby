@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#! /usr/bin/env ruby
 #
 # test Recls::Ximpl::Util namespace
 
@@ -902,7 +902,5 @@ class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
 		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', './dir1/././dir2/'))
 
 	end
-
 end
-
 
