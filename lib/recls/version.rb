@@ -4,7 +4,7 @@
 # Purpose:      Version for recls library
 #
 # Created:      14th February 2014
-# Updated:      18th June 2016
+# Updated:      30th October 2016
 #
 # Author:       Matthew Wilson
 #
@@ -39,7 +39,7 @@
 module Recls
 
 	# Current version of the recls.Ruby library
-	VERSION				=	'2.7.2'
+	VERSION				=	'2.7.4'
 
 	private
 	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:

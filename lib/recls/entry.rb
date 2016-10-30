@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      28th December 2015
+# Updated:      11th July 2016
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -131,17 +131,23 @@ module Recls
 		# instance was created
 		def exist?
 
+			return false if @file_stat.nil?
+
 			not @file_stat.nil?
 		end
 
 		# indicates whether the given entry is hidden
 		def hidden?
 
+			return false if @file_stat.nil?
+
 			@file_stat.hidden?
 		end
 
 		# indicates whether the given entry is readonly
 		def readonly?
+
+			return false if @file_stat.nil?
 
 			not @file_stat.writable?
 		end
@@ -153,35 +159,49 @@ module Recls
 
 		def system?
 
+			return false if @file_stat.nil?
+
 			@file_stat.system?
 		end
 
 		def archive?
+
+			return false if @file_stat.nil?
 
 			@file_stat.archive?
 		end
 
 		def device?
 
+			return false if @file_stat.nil?
+
 			@file_stat.device?
 		end
 
 		def normal?
+
+			return false if @file_stat.nil?
 
 			@file_stat.normal?
 		end
 
 		def temporary?
 
+			return false if @file_stat.nil?
+
 			@file_stat.temporary?
 		end
 
 		def compressed?
 
+			return false if @file_stat.nil?
+
 			@file_stat.compressed?
 		end
 
 		def encrypted?
+
+			return false if @file_stat.nil?
 
 			@file_stat.encrypted?
 		end
@@ -190,11 +210,15 @@ module Recls
 		# indicates whether the given entry represents a directory
 		def directory?
 
+			return false if @file_stat.nil?
+
 			@file_stat.directory?
 		end
 
 		# indicates whether the given entry represents a file
 		def file?
+
+			return false if @file_stat.nil?
 
 			@file_stat.file?
 		end
@@ -202,11 +226,15 @@ module Recls
 		# indicates whether the given entry represents a link
 		def link?
 
+			return false if @file_stat.nil?
+
 			@file_stat.link?
 		end
 
 		# indicates whether the given entry represents a socket
 		def socket?
+
+			return false if @file_stat.nil?
 
 			@file_stat.socket?
 		end
@@ -216,6 +244,8 @@ module Recls
 
 		# indicates the size of the given entry
 		def size
+
+			return 0 if @file_stat.nil?
 
 			@file_stat.size
 		end
@@ -256,11 +286,15 @@ module Recls
 		# indicates the last access time of the entry
 		def last_access_time
 
+			return nil if @file_stat.nil?
+
 			@file_stat.atime
 		end
 
 		# indicates the modification time of the entry
 		def modification_time
+
+			return nil if @file_stat.nil?
 
 			@file_stat.mtime
 		end
