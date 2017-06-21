@@ -635,9 +635,7 @@ end
 
 class Test_Recls_Ximpl_absolute_path < Test::Unit::TestCase
 
-	private
-		attr_reader :cwd
-	public
+	attr_reader :cwd
 
 	def setup
 
@@ -702,9 +700,7 @@ end
 
 class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
 
-	private
-		attr_reader :cwd
-	public
+	attr_reader :cwd
 
 	def setup
 
