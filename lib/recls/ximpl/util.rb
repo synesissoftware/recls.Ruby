@@ -4,11 +4,11 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     20th December 2015
+# Updated:     22nd June 2017
 #
 # Author:      Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2017, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -253,7 +253,9 @@ module Recls
 
 				newParts = []
 
+=begin
 				trailing_slash = parts.empty? ? nil : self.get_trailing_slash(parts[-1])
+=end
 
 				lastSingleDots = nil
 
@@ -387,6 +389,11 @@ module Recls
 
 			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, directory_parts, dummy3 = Util.split_path(path)
 
+			# suppress unused warnings
+			dummy1 = dummy1
+			dummy2 = dummy2
+			dummy3 = dummy3
+
 			if not f2_directory
 				canonicalised_directory = nil
 			else
@@ -412,7 +419,15 @@ module Recls
 
 			return '' if path.empty?
 
-			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, dummy3, dummy4 = Util.split_path(path)
+			dummy1, f2_directory, dummy2, dummy3, dummy4, dummy5, dummy6 = Util.split_path(path)
+
+			# suppress unused warnings
+			dummy1 = dummy1
+			dummy2 = dummy2
+			dummy3 = dummy3
+			dummy4 = dummy4
+			dummy5 = dummy5
+			dummy6 = dummy6
 
 			if f2_directory =~ /^[\\\/]/
 				return path
@@ -461,6 +476,9 @@ module Recls
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS
 				wr, rem = Util.get_windows_root(path)
+
+				# suppress unused warning
+				wr = wr
 
 				if not rem
 					return ''
@@ -519,6 +537,9 @@ module Recls
 		def self.directory_from_directory_path(directory_path)
 
 			wr, rem =  Util.get_windows_root(directory_path)
+
+			# suppress unused warning
+			wr = wr
 
 			rem
 		end
@@ -601,9 +622,16 @@ module Recls
 
 		def self.combine_paths(origin, path, options)
 
-			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, dummy3, dummy4 = Util.split_path(path)
+			dummy1, f2_directory, dummy2, dummy3, dummy4, dummy5, dummy6 = Util.split_path(path)
 
-#			return path if f1_windows_root
+			# suppress unused warnings
+			dummy1 = dummy1
+			dummy2 = dummy2
+			dummy3 = dummy3
+			dummy4 = dummy4
+			dummy5 = dummy5
+			dummy6 = dummy6
+
 			return path if f2_directory && Util.is_path_name_separator(f2_directory[0])
 
 			r	=	File.join origin, path
@@ -634,7 +662,7 @@ module Recls
 
 			rescue SystemCallError => x
 
-				# TODO this should be filtered up and/or logged
+				$stderr.puts "exception (#{x.class}): #{x}" if $DEBUG
 
 				if(0 != (STOP_ON_ACCESS_FAILURE & flags))
 					raise

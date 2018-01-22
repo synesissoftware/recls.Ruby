@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#! /usr/bin/env ruby
 #
 # test Recls::Ximpl::Util namespace
 
@@ -635,9 +635,7 @@ end
 
 class Test_Recls_Ximpl_absolute_path < Test::Unit::TestCase
 
-	private
-		attr_reader :cwd
-	public
+	attr_reader :cwd
 
 	def setup
 
@@ -702,9 +700,7 @@ end
 
 class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
 
-	private
-		attr_reader :cwd
-	public
+	attr_reader :cwd
 
 	def setup
 
@@ -902,7 +898,5 @@ class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
 		assert_equal('./', Recls::Ximpl::derive_relative_path('./dir1/././././dir2/./', './dir1/././dir2/'))
 
 	end
-
 end
-
 

@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#! /usr/bin/env ruby
 #
 # test Recls constants
 
@@ -74,5 +74,4 @@ class Test_Recls_constants < Test::Unit::TestCase
   end
 
 end
-
 

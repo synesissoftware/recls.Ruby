@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#! /usr/bin/env ruby
 #
 # test Recls canonicalise_path() method
 
@@ -154,6 +154,5 @@ class Test_canonicalise_path < Test::Unit::TestCase
 		end
 
 	end
-
 end
 

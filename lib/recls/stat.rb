@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      28th December 2015
+# Updated:      22nd June 2017
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2017, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -86,8 +86,11 @@ module Recls
 		raise ArgumentError, "#{message}: Recls.stat() takes one (path), two (path+flags or path+search_root), or three (path+search_root+flags) arguments" if message
 
 		begin
+
 			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
 		rescue Errno::ENOENT => x
+
+			x = x # suppress warning
 
 			if 0 != (flags & Recls::DETAILS_LATER)
 
