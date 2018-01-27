@@ -52,6 +52,7 @@ module Recls
 				return true if ?/ == c
 
 				if Recls::Ximpl::OS::OS_IS_WINDOWS
+
 					return true if ?\\ == c
 				end
 
@@ -126,6 +127,7 @@ module Recls
 					#
 					# NOTE: this works for both rooted and unrooted paths
 					if p =~ /^([a-zA-Z]:)/
+
 						return [ $1, $' ]
 					end
 
@@ -133,18 +135,22 @@ module Recls
 					#
 					# NOTE: there are several permutations ...
 					if p =~ /^(\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+)([\\\/].*)$/
+
 						# \\server\share{\{... rest of path}}
 						return [ $1, $2 ]
 					end
 					if p =~ /^(\\\\[^\\\/:*?<>|]+\\[^\\\/:*?<>|]+)$/
+
 						# \\server\share
 						return [ $1, nil ]
 					end
 					if p =~ /^(\\\\[^\\\/:*?<>|]+\\)$/
+
 						# \\server\
 						return [ $1, nil ]
 					end
 					if p =~ /^(\\\\[^\\\/:*?<>|]+)$/
+
 						# \\server
 						return [ $1, nil ]
 					end
@@ -167,10 +173,13 @@ module Recls
 				parts << wr if wr
 
 				until rem.nil? || rem.empty?
+
 					if rem =~ /^([^\\\/]*[\\\/])/
+
 						parts << $1
 						rem = $'
 					else
+
 						parts << rem
 						rem = ''
 					end
@@ -199,15 +208,19 @@ module Recls
 				remainder = nil if not remainder or remainder.empty?
 
 				if not remainder or remainder.empty?
+
 					f2_directory = nil
 					f3_basename = nil
 					f4_nameonly = nil
 					f5_extension = nil
 				else
+
 					if remainder =~ /^(.*[\\\/])([^\\\/]*)$/
+
 						f2_directory = $1
 						f3_basename = $2
 					else
+
 						f2_directory = nil
 						f3_basename = remainder
 						f4_nameonly = nil
@@ -218,18 +231,23 @@ module Recls
 					f3_basename = nil if not f3_basename or f3_basename.empty?
 
 					if f3_basename
+
 						# special case: treat '.' and '..' as file-name only
 						if '.' == f3_basename or '..' == f3_basename
+
 							f4_nameonly = f3_basename
 							f5_extension = nil
 						elsif f3_basename =~ /^(.*)(\.[^.]*)$/
+
 							f4_nameonly = $1
 							f5_extension = $2
 						else
+
 							f4_nameonly = f3_basename
 							f5_extension = nil
 						end
 					else
+
 						f4_nameonly = nil
 						f5_extension = nil
 					end
@@ -270,11 +288,14 @@ module Recls
 					next if part.empty?
 
 					if path_is_rooted.nil?
+
 						path_is_rooted = self.is_path_name_separator(part[0])
 					end
 
 					if ?. == part[0]
+
 						if self.is_path_name_separator(part[1])
+
 							# single dots, so ...
 
 							# ... remember the last instance, and ...
@@ -283,7 +304,9 @@ module Recls
 							# ... skip to leave this out of the result
 							next
 						elsif ?. == part[1]
+
 							if self.is_path_name_separator(part[2])
+
 								# double dots, so ...
 								# ... skip this and pop prior from the new list iff:
 								#
@@ -291,26 +314,34 @@ module Recls
 								# 2. the last element in the new list is not the root directory; AND
 								# 3. the last element in the list is not a dots directory
 								if not newParts.empty? # 1.
+
 									priorPart = newParts[-1]
 									if 1 == newParts.size and OS.is_root_dir_(priorPart)
+
 										# 2.
 										next
 									else
+
 										dirtype = OS.get_number_of_dots_dir_(priorPart)
 										if 0 == dirtype # 3.
+
 											if newParts.pop
+
 												next
 											end
 										end
 									end
 								end
 							else
+
 								# it's a ..X part
 							end
 						else
+
 							# it's a .X part
 						end
 					else
+
 						# it's a non-dots part
 					end
 
@@ -320,25 +351,35 @@ module Recls
 				consume_basename = false
 
 				if basename
+
 					if ?. == basename[0]
+
 						if 1 == basename.size
+
 							# single dots
 							if newParts.empty?
+
 								lastSingleDots = false
 							else
+
 								consume_basename = true
 							end
 						elsif ?. == basename[1] and 2 == basename.size
+
 							# double dots, so ...
 							#
 							# ... pop unless we already have some outstanding double dots
 							if newParts.empty?
+
 								newParts << '..'
 								consume_basename = true
 							elsif 1 == newParts.size && 1 == newParts[0].size && Util.is_path_name_separator(newParts[0][0])
+
 								consume_basename = true
 							else
+
 								if 2 != OS.get_number_of_dots_dir_(newParts[-1])
+
 									newParts.pop
 									consume_basename = true
 								end
@@ -352,23 +393,30 @@ module Recls
 				newParts << lastSingleDots if lastSingleDots and newParts.empty?
 
 				if not newParts.empty?
+
 					if 2 == OS.get_number_of_dots_dir_(newParts[-1])
+
 						# the last element is the double-dots directory, but
 						# need to determine whether to ensure/remote a
 						# trailing slash
 						if basename and not basename.empty?
+
 							if not consume_basename
+
 								# leave as is
 							else
+
 								# 
 								newParts[-1] = '..'
 							end
 						end
 					end
 				else
+
 					# handle case where all (double)-dots have eliminated
 					# all regular directories
 					if not basename or basename.empty? or consume_basename
+
 						newParts << '.'
 					end
 				end
@@ -395,8 +443,10 @@ module Recls
 			dummy3 = dummy3
 
 			if not f2_directory
+
 				canonicalised_directory = nil
 			else
+
 				canonicalised_directory, consume_basename = Util.canonicalise_parts(directory_parts, f3_basename)
 				f3_basename = nil if consume_basename
 			end
@@ -414,6 +464,7 @@ module Recls
 			when ::Recls::Entry
 				path = path.to_s
 			else
+
 				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or #{::Recls::Entry}"
 			end
 
@@ -430,6 +481,7 @@ module Recls
 			dummy6 = dummy6
 
 			if f2_directory =~ /^[\\\/]/
+
 				return path
 			end
 
@@ -438,8 +490,10 @@ module Recls
 			trailing_slash = Util.get_trailing_slash(path)
 
 			if '.' == path
+
 				return Util.trim_trailing_slash cwd
 			elsif 2 == path.size and trailing_slash
+
 				return Util.append_trailing_slash(cwd, path[1..1])
 			end
 
@@ -450,8 +504,10 @@ module Recls
 			path = canonicalise_path path
 
 			if trailing_slash
+
 				path = Util.append_trailing_slash path, trailing_slash
 			else
+
 				path = Util.trim_trailing_slash path
 			end
 
@@ -475,25 +531,31 @@ module Recls
 			# detecting the last (back)slash
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS
+
 				wr, rem = Util.get_windows_root(path)
 
 				# suppress unused warning
 				wr = wr
 
 				if not rem
+
 					return ''
 				else
+
 					path = rem
 				end
 			end
 
 			if not path.is_a? String
+
 				path = path.to_s
 			end
 
 			if path =~ /^.*[\/\\](.*)/
+
 				$1
 			else
+
 				path
 			end
 		end
@@ -510,21 +572,28 @@ module Recls
 			use_split_path = false
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS
+
 				if path.include? ?\\
+
 					use_split_path = true
 				end
 			end
 
 			if path.include? ?/
+
 				use_split_path = true
 			end
 
 			if use_split_path
+
 				ext = Util.split_path(path)[4]
 			else
+
 				if path =~ /^.*(\.[^.]*)$/
+
 					ext = $1
 				else
+
 					ext = nil
 				end
 			end
@@ -552,10 +621,13 @@ module Recls
 			directory_parts = []
 
 			until directory.empty?
+
 				if directory =~ /^([^\\\/]*[\\\/])/
+
 					directory_parts << $1
 					directory = $'
 				else
+
 					directory_parts << directory
 					directory = ''
 				end
@@ -581,6 +653,7 @@ module Recls
 
 			# if different windows root, then cannot provide relative
 			if path_splits[0] and origin_splits[0]
+
 				return path if path_splits[0] != origin_splits[0]
 			end
 
@@ -598,14 +671,17 @@ module Recls
 				origin_part	=	origin_parts[0]
 
 				if 1 == path_parts.size || 1 == origin_parts.size
+
 					path_part	=	Util.append_trailing_slash(path_part)
 					origin_part	=	Util.append_trailing_slash(origin_part)
 				end
 
 				if path_part == origin_part
+
 					path_parts.shift
 					origin_parts.shift
 				else
+
 					break
 				end
 			end
@@ -675,6 +751,7 @@ module Recls
 				$stderr.puts "exception (#{x.class}): #{x}" if $DEBUG
 
 				if(0 != (STOP_ON_ACCESS_FAILURE & flags))
+
 					raise
 				end
 
