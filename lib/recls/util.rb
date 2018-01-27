@@ -66,10 +66,8 @@ module Recls
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +origin+:: [::String, ::Recls::Entry] The origin. May not be +nil+
-	#     unless +path+ is not +nil+
-	#   - +path+:: [::String, ::Recls::Entry] The path. May not be +nil+
-	#     unless +origin+ is not +nil+
+	#   - +paths+:: [ [ ::String, ::Recls::Entry ] ] Array of 1 or more path
+	#     elements to be combined
 	#   - +options+:: [::Hash] Options that moderate the combination
 	#
 	# * *Parameters:*
@@ -84,14 +82,13 @@ module Recls
 	#
 	# === Return
 	#  The combined path
-	def self.combine_paths(origin, path, options={})
+	def self.combine_paths(*paths, **options)
 
-		raise ArgumentError, 'origin and path cannot both be nil' if origin.nil? && path.nil?
+		paths	=	paths.reject { |p| p.nil? }
 
-		return path.to_s if origin.nil?
-		return origin.to_s if path.nil?
+		raise ArgumentError, 'must specify one or more path elements' if paths.empty?
 
-		return Recls::Ximpl.combine_paths origin, path, options
+		return Recls::Ximpl.combine_paths paths, options
 	end
 end
 

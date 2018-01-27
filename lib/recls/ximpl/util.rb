@@ -696,21 +696,32 @@ module Recls
 		end
 
 
-		def self.combine_paths(origin, path, options)
+		def self.combine_paths(paths, options)
 
-			dummy1, f2_directory, dummy2, dummy3, dummy4, dummy5, dummy6 = Util.split_path(path)
+			paths	=	[ paths ] unless ::Array === paths
+			abs_ix	=	0
 
-			# suppress unused warnings
-			dummy1 = dummy1
-			dummy2 = dummy2
-			dummy3 = dummy3
-			dummy4 = dummy4
-			dummy5 = dummy5
-			dummy6 = dummy6
+			paths.each_with_index do |path, index|
 
-			return path if f2_directory && Util.is_path_name_separator(f2_directory[0])
+				dummy1, f2_directory, dummy2, dummy3, dummy4, dummy5, dummy6 = Util.split_path(path)
 
-			r	=	File.join origin, path
+				# suppress unused warnings
+				dummy1 = dummy1
+				dummy2 = dummy2
+				dummy3 = dummy3
+				dummy4 = dummy4
+				dummy5 = dummy5
+				dummy6 = dummy6
+
+				if f2_directory && Util.is_path_name_separator(f2_directory[0])
+
+					abs_ix = index
+				end
+			end
+
+			paths	=	paths[abs_ix..-1]
+
+			r		=	File.join *paths
 
 			cap	=	options[:canonicalise] || options[:canonicalize]
 

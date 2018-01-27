@@ -64,6 +64,32 @@ class Test_combine_paths < Test::Unit::TestCase
 		assert_equal 'abc/../def/ghi', Recls.combine_paths('abc/..', 'def/ghi')
 		assert_equal 'def/ghi', Recls.combine_paths('abc/..', 'def/ghi', clean_path: true)
 	end
+
+	def test_multiple_relative
+
+		assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: false)
+		assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: true)
+
+		assert_equal 'a/b/c/../d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g', clean: false)
+		assert_equal 'a/b/d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', clean: true)
+		assert_equal 'a/b/d/e/f/g/', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', canonicalise: true)
+	end
+
+	def test_various_absolute_placings
+
+		assert_equal '/a/b/c/d/e/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', 'f/g')
+
+		assert_equal '/b/c/d/e/f/g', Recls.combine_paths('/', 'a', '/b', 'c', 'd/e', 'f/g')
+
+		assert_equal '/c/d/e/f/g', Recls.combine_paths('/', 'a', 'b', '/c', 'd/e', 'f/g')
+
+		assert_equal '/d/e/f/g', Recls.combine_paths('/', 'a', 'b', 'c', '/d/e', 'f/g')
+
+		assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g')
+		assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/')
+		assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', clean: true)
+		assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', canonicalise: true)
+	end
 end
 
 class Test_canonicalise_path < Test::Unit::TestCase

@@ -26,3 +26,8 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 ## License
 
 **recls.Ruby** is released under the 3-clause BSD license. See LICENSE for details.
+
+## Compatibility
+
+From v2.8 onwards, recls.Ruby is compatible only with Ruby 2.0+
+
