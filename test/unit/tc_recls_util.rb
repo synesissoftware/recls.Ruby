@@ -9,6 +9,63 @@ require 'recls/util'
 
 require 'test/unit'
 
+class Test_combine_paths < Test::Unit::TestCase
+
+	def test_nil_nil
+
+		assert_raise(::ArgumentError) { Recls.combine_paths(nil, nil) }
+	end
+
+	def test_origin_nil
+
+		strings = [
+
+			'abc',
+			'abc/def',
+			'abc/def/ghi.ext',
+		]
+
+		strings.each do |s|
+
+			assert_equal s, Recls.combine_paths(nil, s)
+		end
+	end
+
+	def test_path_nil
+
+		strings = [
+
+			'abc',
+			'abc/def',
+			'abc/def/ghi.ext',
+		]
+
+		strings.each do |s|
+
+			assert_equal s, Recls.combine_paths(s, nil)
+		end
+	end
+
+	def test_both_relative
+
+		assert_equal 'abc/def', Recls.combine_paths('abc', 'def')
+		assert_equal 'abc/def', Recls.combine_paths('abc/', 'def')
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/def', 'ghi')
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/def/', 'ghi')
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc', 'def/ghi')
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/', 'def/ghi')
+		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi')
+		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi')
+		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: false)
+		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: false)
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: true)
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: true)
+		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./.', 'def/ghi', clean_path: true)
+		assert_equal 'abc/../def/ghi', Recls.combine_paths('abc/..', 'def/ghi')
+		assert_equal 'def/ghi', Recls.combine_paths('abc/..', 'def/ghi', clean_path: true)
+	end
+end
+
 class Test_canonicalise_path < Test::Unit::TestCase
 
 	def test_nil
@@ -142,4 +199,7 @@ class Test_canonicalise_path < Test::Unit::TestCase
 		end
 	end
 end
+
+# ############################## end of file ############################# #
+
 

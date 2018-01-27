@@ -4,11 +4,11 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     22nd June 2017
+# Updated:     25th January 2018
 #
 # Author:      Matthew Wilson
 #
-# Copyright (c) 2012-2017, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -636,9 +636,19 @@ module Recls
 
 			r	=	File.join origin, path
 
-			if options[:clean_path]
+			cap	=	options[:canonicalise] || options[:canonicalize]
 
-				r = Pathname.new(r).cleanpath
+			if cap
+
+				r = Recls.canonicalise_path r
+			else
+
+				clp	=	options[:clean] || options[:clean_path]
+
+				if clp
+
+					r = Pathname.new(r).cleanpath.to_s
+				end
 			end
 
 			r
@@ -675,4 +685,5 @@ module Recls
 end
 
 # ############################## end of file ############################# #
+
 

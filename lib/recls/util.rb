@@ -4,11 +4,11 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      27th August 2015
+# Updated:      25th January 2018
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -63,11 +63,38 @@ module Recls
 
 	# Combines paths, optionally canonicalising them
 	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +origin+:: [::String, ::Recls::Entry] The origin. May not be +nil+
+	#     unless +path+ is not +nil+
+	#   - +path+:: [::String, ::Recls::Entry] The path. May not be +nil+
+	#     unless +origin+ is not +nil+
+	#   - +options+:: [::Hash] Options that moderate the combination
+	#
+	# * *Parameters:*
+	#   - +:canonicalise+:: [boolean] Causes the evaluated path to be
+	#     canonicalised - with +Recls.canonicalise_path+ - before it is
+	#     returned
+	#   - +:clean+:: [boolean] Causes the evaluated path to be cleaned
+	#     (i.e. sent to +cleanpath+) before it is returned. Ignored if
+	#     +:canonicalise+ is specified
+	#   - +:clean_path+:: [boolean] Equivalent to +:clean+, but deprecated
+	#     and may be removed in a future version
+	#
+	# === Return
+	#  The combined path
 	def self.combine_paths(origin, path, options={})
+
+		raise ArgumentError, 'origin and path cannot both be nil' if origin.nil? && path.nil?
+
+		return path.to_s if origin.nil?
+		return origin.to_s if path.nil?
 
 		return Recls::Ximpl.combine_paths origin, path, options
 	end
 end
 
 # ############################## end of file ############################# #
+
 
