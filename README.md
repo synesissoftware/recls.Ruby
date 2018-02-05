@@ -31,3 +31,4 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 From v2.8 onwards, recls.Ruby is compatible only with Ruby 2.0+
 
+
