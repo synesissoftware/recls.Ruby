@@ -4,7 +4,7 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     25th January 2018
+# Updated:     9th July 2018
 #
 # Author:      Matthew Wilson
 #
@@ -432,6 +432,8 @@ module Recls
 		# unequivocally
 		def self.canonicalise_path(path)
 
+			return path.path if ::Recls::Entry === path
+
 			return nil if not path
 			return '' if path.empty?
 
@@ -459,10 +461,14 @@ module Recls
 
 			case path
 			when ::NilClass
+
 				return nil
 			when ::String
-			when ::Recls::Entry
+
 				path = path.to_s
+			when ::Recls::Entry
+
+				return path.path
 			else
 
 				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or #{::Recls::Entry}"
@@ -721,7 +727,7 @@ module Recls
 
 			paths	=	paths[abs_ix..-1]
 
-			r		=	File.join *paths
+			r		=	File.join(*paths)
 
 			cap	=	options[:canonicalise] || options[:canonicalize]
 

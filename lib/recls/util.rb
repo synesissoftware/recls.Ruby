@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      25th January 2018
+# Updated:      9th July 2018
 #
 # Author:       Matthew Wilson
 #
@@ -85,6 +85,7 @@ module Recls
 	def self.combine_paths(*paths, **options)
 
 		paths	=	paths.reject { |p| p.nil? }
+		paths	=	paths.map { |p| p.is_a?(::Recls::Entry) ? p.path : p }
 
 		raise ArgumentError, 'must specify one or more path elements' if paths.empty?
 
