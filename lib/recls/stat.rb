@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd June 2017
+# Updated:      25th September 2017
 #
 # Author:       Matthew Wilson
 #
@@ -58,28 +58,38 @@ module Recls
 
 		case	args.size
 		when	0
+
 			;
 		when	1
+
 			case	args[0]
 			when	::Integer
+
 				flags = args[0]
 			when	::String
+
 				search_root = args[0]
 			else
+
 				message = "argument '#{args[0]}' (#{args[0].class}) not valid"
 			end
 		when	2
+
 			if false
 			elsif ::Integer === args[0] && ::String === args[1]
+
 				flags		=	args[0]
 				search_root	=	args[1]
 			elsif ::String === args[0] && ::Integer === args[1]
+
 				search_root	=	args[0]
 				flags		=	args[1]
 			else
+
 				message = "invalid combination of arguments"
 			end
 		else
+
 			message = "too many arguments"
 		end
 
