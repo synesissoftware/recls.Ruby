@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      25th September 2017
+# Updated:      25th September 2018
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2017, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -111,7 +111,7 @@ module Recls
 			end
 		end
 	end 
-end
+end # module Recls
 
 # ############################## end of file ############################# #
 

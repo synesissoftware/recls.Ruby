@@ -1,12 +1,12 @@
 # ######################################################################### #
-# File:        recls/ximpl/util.rb
+# File:         recls/ximpl/util.rb
 #
-# Purpose:     Internal implementation constructs for the recls library.
+# Purpose:      Internal implementation constructs for the recls library.
 #
-# Created:     24th July 2012
-# Updated:     9th July 2018
+# Created:      24th July 2012
+# Updated:      25th September 2018
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
 # Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
@@ -423,7 +423,7 @@ module Recls
 
 				[ newParts.join(''), consume_basename ]
 			end
-		end
+		end # module Util
 
 		# Canonicalises a path
 		#
@@ -775,8 +775,8 @@ module Recls
 				return []
 			end
 		end
-	end
-end
+	end # module Ximpl
+end # module Recls
 
 # ############################## end of file ############################# #
 

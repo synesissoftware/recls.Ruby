@@ -4,11 +4,11 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      9th June 2016
+# Updated:      25th September 2018
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -54,7 +54,7 @@ module Recls
 	PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
 	PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
-end
+end # module Recls
 
 # ######################################################################### #
 # Obsolete symbols
@@ -107,7 +107,7 @@ if not defined? RECLS_NO_OBSOLETE
 
 			alias_method :creationTime, :modification_time
 		end
-	end
+	end # module Recls
 end
 
 # ############################## end of file ############################# #

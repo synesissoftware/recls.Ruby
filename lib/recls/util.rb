@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      9th July 2018
+# Updated:      25th September 2018
 #
 # Author:       Matthew Wilson
 #
@@ -91,7 +91,7 @@ module Recls
 
 		return Recls::Ximpl.combine_paths paths, options
 	end
-end
+end # module Recls
 
 # ############################## end of file ############################# #
 

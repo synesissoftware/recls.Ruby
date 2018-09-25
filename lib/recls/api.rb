@@ -4,11 +4,11 @@
 # Purpose:      Defines Recls module search functions
 #
 # Created:      9th June 2016
-# Updated:      9th June 2016
+# Updated:      25th September 2018
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2016, Matthew Wilson and Synesis Software
+# Copyright (c) 2016-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@ module Recls
 
 		Recls::FileSearch.new(search_root, patterns, options)
 	end
-end
+end # module Recls
 
 # ############################## end of file ############################# #
 

@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls::Flags module for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      27th August 2015
+# Updated:      25th September 2018
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -71,7 +71,7 @@ public
 	# Causes sub-directories that are links to be searched; default is not
 	# to search through links
 	SEARCH_THROUGH_LINKS	=	0x00100000
-end
+end # module Recls
 
 # ############################## end of file ############################# #
 

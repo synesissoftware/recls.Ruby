@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/ximpl/unix.rb
+# File:         recls/ximpl/unix.rb
 #
-# Purpose:     UNIX-specific constructs for the recls library.
+# Purpose:      UNIX-specific constructs for the recls library.
 #
-# Created:     19th February 2014
-# Updated:     27th August 2015
+# Created:      19th February 2014
+# Updated:      25th September 2018
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -73,9 +73,9 @@ module Recls
 				Recls::Ximpl::FileStat.new(path)
 
 			end
-		end
-	end
-end
+		end # class FileStat
+	end # module Ximpl
+end # module Recls
 
 # ############################## end of file ############################# #
 
