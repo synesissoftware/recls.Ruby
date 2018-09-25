@@ -95,21 +95,7 @@ module Recls
 
 		raise ArgumentError, "#{message}: Recls.stat() takes one (path), two (path+flags or path+search_root), or three (path+search_root+flags) arguments" if message
 
-		begin
-
-			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
-		rescue Errno::ENOENT => x
-
-			x = x # suppress warning
-
-			if 0 != (flags & Recls::DETAILS_LATER)
-
-				Recls::Entry.new(path, nil, search_root, flags)
-			else
-
-				nil
-			end
-		end
+		Recls::Ximpl.stat_prep(path, search_root, flags)
 	end 
 end # module Recls
 

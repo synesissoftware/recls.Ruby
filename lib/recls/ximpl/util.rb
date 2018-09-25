@@ -454,6 +454,37 @@ module Recls
 			return "#{f1_windows_root}#{canonicalised_directory}#{f3_basename}"
 		end
 
+		def self.absolute_path?(path)
+
+			case path
+			when nil
+
+				return nil
+			when ::String
+
+				return nil if path.empty?
+
+				path	=	File.expand_path(path) if '~' == path[0]
+			when ::Recls::Entry
+
+				return path
+			else
+
+				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be nil or an instance of #{::String} or #{::Recls::Entry}"
+			end
+
+			f1_windows_root, f2_directory, dummy1, dummy2, dummy3, dummy4, dummy5 = Util.split_path(path)
+
+			unless f1_windows_root
+
+				return nil unless f2_directory
+
+				return nil unless Util.is_path_name_separator(f2_directory[0])
+			end
+
+			Recls::Ximpl.stat_prep(path, nil, Recls::DETAILS_LATER)
+		end
+
 		# determines the absolute path of a given path
 		def self.absolute_path(path, refdir = nil)
 
@@ -773,6 +804,25 @@ module Recls
 				end
 
 				return []
+			end
+		end
+
+		def self.stat_prep(path, search_root, flags)
+
+			begin
+
+				Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
+			rescue Errno::ENOENT => x
+
+				x = x # suppress warning
+
+				if 0 != (flags & Recls::DETAILS_LATER)
+
+					Recls::Entry.new(path, nil, search_root, flags)
+				else
+
+					nil
+				end
 			end
 		end
 	end # module Ximpl

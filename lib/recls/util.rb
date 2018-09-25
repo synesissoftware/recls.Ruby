@@ -36,6 +36,7 @@
 # ######################################################################### #
 
 
+require 'recls/stat'
 require 'recls/ximpl/util'
 require 'recls/ximpl/os'
 
@@ -90,6 +91,58 @@ module Recls
 		raise ArgumentError, 'must specify one or more path elements' if paths.empty?
 
 		return Recls::Ximpl.combine_paths paths, options
+	end
+
+	# Indicates whether the given path exists
+	#
+	# @return The corresponding +Recls::Entry+ if it exists; +nil+ if
+	#  not
+	def self.exist?(path)
+
+		return nil if path.nil?
+
+		Recls.stat(path)
+	end
+
+	# Indicates whether the given path is absolute
+	#
+	# @return The corresponding +Recls::Entry+ if it is absolute; +nil+ if
+	#  not
+	def self.absolute_path?(path)
+
+		return nil if path.nil?
+
+		Recls::Ximpl.absolute_path? path
+	end
+
+	# Equivalent to a +stat+ but only returns (a non-+nil+ value) if the
+	# path exists _and_ represents a directory
+	#
+	# This has two advantages over +File.directory?+: it obtains a
+	# +Recls::Entry+ in the case where the path represents a directory; and
+	# it does '~' interpretation
+	def self.directory?(path, *args)
+
+		fe	=	self.stat(path, *args)
+
+		return nil if fe && !fe.directory?
+
+		fe
+	end
+
+	# Equivalent to a +stat+ but only returns (a non-+nil+ value) if the
+	# path exists _and_ represents a file
+	#
+	# This has two advantages over +File.file?+: it obtains a
+	# +Recls::Entry+ in the case where the path represents a file; and
+	# it does '~' interpretation
+	def self.file?(path, *args)
+
+		fe	=	self.stat(path, *args)
+
+		return nil if fe && !fe.file?
+
+		fe
 	end
 end # module Recls
 
