@@ -271,10 +271,6 @@ module Recls
 
 				newParts = []
 
-=begin
-				trailing_slash = parts.empty? ? nil : self.get_trailing_slash(parts[-1])
-=end
-
 				lastSingleDots = nil
 
 				path_is_rooted = nil
@@ -437,6 +433,8 @@ module Recls
 			return nil if not path
 			return '' if path.empty?
 
+			paths	=	File.expand_path(path) if '~' == path[0].to_s
+
 			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, directory_parts, dummy3 = Util.split_path(path)
 
 			# suppress unused warnings
@@ -465,7 +463,7 @@ module Recls
 				return nil
 			when ::String
 
-				path = path.to_s
+				path	=	File.expand_path(path) if '~' == path[0]
 			when ::Recls::Entry
 
 				return path.path
@@ -706,6 +704,8 @@ module Recls
 
 			paths	=	[ paths ] unless ::Array === paths
 			abs_ix	=	0
+
+			paths	=	paths.map { |path| '~' == path[0].to_s ? File.expand_path(path) : path }
 
 			paths.each_with_index do |path, index|
 
