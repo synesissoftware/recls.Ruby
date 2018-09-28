@@ -4,6 +4,8 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'recls'
 
+require 'date'
+
 Gem::Specification.new do |gs|
 
 	gs.name			=	'recls-ruby'
