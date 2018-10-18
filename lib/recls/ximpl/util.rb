@@ -4,7 +4,7 @@
 # Purpose:      Internal implementation constructs for the recls library.
 #
 # Created:      24th July 2012
-# Updated:      1st October 2018
+# Updated:      14th October 2018
 #
 # Author:       Matthew Wilson
 #
@@ -433,7 +433,7 @@ module Recls
 			return nil if not path
 			return '' if path.empty?
 
-			paths	=	File.expand_path(path) if '~' == path[0].to_s
+			path	=	File.expand_path(path) if '~' == path[0].to_s
 
 			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, directory_parts, dummy3 = Util.split_path(path)
 
@@ -474,6 +474,8 @@ module Recls
 			end
 
 			f1_windows_root, f2_directory, dummy1, dummy2, dummy3, dummy4, dummy5 = Util.split_path(path)
+
+			dummy1 = dummy2 = dummy3 = dummy4 = dummy5 = nil
 
 			unless f1_windows_root
 

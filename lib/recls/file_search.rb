@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      1st October 2018
+# Updated:      14th October 2018
 #
 # Author:       Matthew Wilson
 #
@@ -170,7 +170,7 @@ module Recls
 			begin
 
 				Recls::Ximpl::FileStat.stat path
-			rescue Errno::ENOENT, Errno::ENXIO => x
+			rescue Errno::ENOENT, Errno::ENXIO
 
 				nil
 			rescue SystemCallError => x
