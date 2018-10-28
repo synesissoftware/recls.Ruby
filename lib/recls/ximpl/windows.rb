@@ -121,8 +121,10 @@ module Recls
 				attributes = GetFileAttributes.call("#{path}")
 
 				if 0xffffffff == attributes
+
 					@attributes = 0
 				else
+
 					@attributes = attributes
 				end
 

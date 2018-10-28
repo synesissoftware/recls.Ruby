@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      14th October 2018
+# Updated:      24th October 2018
 #
 # Author:       Matthew Wilson
 #
@@ -155,7 +155,7 @@ module Recls
 		end
 
 		private
-		def FileSearch::is_dots(name)
+		def FileSearch.is_dots(name)
 
 			case	name
 			when	'.', '..'
@@ -165,7 +165,7 @@ module Recls
 			end
 		end
 
-		def FileSearch::stat_or_nil_(path, flags)
+		def FileSearch.stat_or_nil_(path, flags)
 
 			begin
 
@@ -193,7 +193,7 @@ module Recls
 		# order to allow calculation of search_relative_path in the
 		# entry.
 
-		def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
+		def FileSearch.search_directory_(search_root, dir, patterns, flags, &blk)
 
 			# array of FileStat instances
 			entries = []

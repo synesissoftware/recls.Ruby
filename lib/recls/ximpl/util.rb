@@ -685,10 +685,16 @@ module Recls
 			path			=	self.canonicalise_path path
 			origin			=	self.canonicalise_path origin
 
+			path			=	self.absolute_path path
+			origin			=	self.absolute_path origin
+
+			return path if /^\.[\\\/]*$/ =~ origin
+
 			path_splits		=	Util.split_path(path)
 			origin_splits	=	Util.split_path(origin)
 
 			# if different windows root, then cannot provide relative
+
 			if path_splits[0] and origin_splits[0]
 
 				return path if path_splits[0] != origin_splits[0]
@@ -699,7 +705,7 @@ module Recls
 			path_parts		=	path_splits[6]
 			origin_parts	=	origin_splits[6]
 
-			while true
+			loop do
 
 				break if path_parts.empty?
 				break if origin_parts.empty?

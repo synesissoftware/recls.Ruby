@@ -4,7 +4,7 @@
 # Purpose:      Definition of Recls::foreach() utility function
 #
 # Created:      22nd October 2014
-# Updated:      25th September 2018
+# Updated:      28th October 2018
 #
 # Author:       Matthew Wilson
 #
@@ -54,7 +54,7 @@ module Recls
 
 			@fs.each do |fe|
 
-				IO::readlines(fe).each_with_index do |line, index|
+				IO.readlines(fe).each_with_index do |line, index|
 
 					case	block.arity
 					when	1
