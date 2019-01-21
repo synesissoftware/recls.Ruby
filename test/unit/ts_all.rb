@@ -2,19 +2,21 @@
 #
 # executes all other tests
 
-this_file   =   File.expand_path(__FILE__)
-this_dir    =   File.expand_path(File.dirname(__FILE__))
-$:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
+this_dir = File.expand_path(File.dirname(__FILE__))
 
-puts "executing all test cases in directory #{this_dir}"
+# all tc_*rb in current directory
+Dir[File.join(this_dir, 'tc_*rb')].each do |file|
 
-Dir["#{this_dir}/*.rb"].each do |file|
-
-    next if this_file == file
+	$stderr.puts "requiring file '#{file}'" if $DEBUG
 
 	require file
-
 end
 
-require 'test/unit'
+# all ts_*rb in immediate sub-directories
+Dir[File.join(this_dir, '*', 'ts_*rb')].each do |file|
+
+	$stderr.puts "requiring file '#{file}'" if $DEBUG
+
+	require file
+end
 
