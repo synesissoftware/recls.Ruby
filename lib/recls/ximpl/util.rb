@@ -4,11 +4,11 @@
 # Purpose:     Internal implementation constructs for the recls library.
 #
 # Created:     24th July 2012
-# Updated:     9th July 2018
+# Updated:     21st Jannuary 2019
 #
 # Author:      Matthew Wilson
 #
-# Copyright (c) 2012-2018, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -432,8 +432,6 @@ module Recls
 		# unequivocally
 		def self.canonicalise_path(path)
 
-			return path.path if ::Recls::Entry === path
-
 			return nil if not path
 			return '' if path.empty?
 
@@ -466,12 +464,9 @@ module Recls
 			when ::String
 
 				path = path.to_s
-			when ::Recls::Entry
-
-				return path.path
 			else
 
-				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or #{::Recls::Entry}"
+				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or Recls::Entry"
 			end
 
 			return '' if path.empty?
