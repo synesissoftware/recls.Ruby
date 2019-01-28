@@ -708,6 +708,53 @@ class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
 
 	end
 
+	M = Recls::Ximpl
+
+	def test_libpath_cases_test_nils_and_empties
+
+		# to get nowhere from nowhere, go nowhere
+		assert_nil M.derive_relative_path(nil, nil)
+		assert_nil M.derive_relative_path('', nil)
+		assert_nil M.derive_relative_path('', '')
+		assert_nil M.derive_relative_path(nil, '')
+
+		# to get somewhere from nowhere, just go there
+		assert_equal 'abc', M.derive_relative_path(nil, 'abc')
+		assert_equal 'abc', M.derive_relative_path('', 'abc')
+
+		# to get nowhere from anywhere else, go nowhere
+		assert_nil M.derive_relative_path('dir', nil)
+		assert_nil M.derive_relative_path('dir', '')
+	end
+
+	def test_libpath_cases_test_same_location
+
+		assert_equal '.', M.derive_relative_path('abc', 'abc')
+		assert_equal './', M.derive_relative_path('abc/', 'abc/')
+		assert_equal './', M.derive_relative_path('abc', 'abc/')
+
+		assert_equal './', M.derive_relative_path('/', '/')
+
+=begin
+
+		assert_equal '.', M.derive_relative_path('./abc', 'abc')
+=end
+		assert_equal '.', M.derive_relative_path('./abc/', 'abc')
+=begin
+
+		assert_equal './', M.derive_relative_path('./abc', 'abc/')
+=end
+		assert_equal './', M.derive_relative_path('./abc/', 'abc/')
+	end
+
+	def test_libpath_cases_test_one_above
+
+=begin
+
+		assert_equal '..', M.derive_relative_path('.', '..')
+=end
+	end
+
 	def test_absolute_proper_subset
 
 		assert_equal('abc', Recls::Ximpl::derive_relative_path('/dir1/dir2', '/dir1/dir2/abc'))
@@ -720,9 +767,11 @@ class Test_Recls_Ximpl_derive_relative_path < Test::Unit::TestCase
 		assert_equal('abc/', Recls::Ximpl::derive_relative_path('dir1/dir2', 'dir1/dir2/abc/'))
 		assert_equal('abc/', Recls::Ximpl::derive_relative_path('dir1/dir2/', 'dir1/dir2/abc/'))
 
-#		assert_equal('/dir/dir2/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', 'dir1/dir2'))
-#		assert_equal('/dir/dir2/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', 'dir1/dir2/'))
+=begin
 
+		assert_equal('/dir/dir2/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', 'dir1/dir2'))
+		assert_equal('/dir/dir2/abc', Recls::Ximpl::derive_relative_path('/dir1/dir2/abc', 'dir1/dir2/'))
+=end
 	end
 
 	def test_absolute_proper_subset_2
