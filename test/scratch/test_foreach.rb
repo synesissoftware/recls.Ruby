@@ -4,10 +4,7 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
-
-#require 'recls/util'
 require 'recls/foreach'
-#require 'recls'
 
 puts
 puts "with given block:"

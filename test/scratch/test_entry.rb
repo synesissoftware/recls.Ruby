@@ -15,17 +15,13 @@ def show_entry f
 puts "entry:"
 puts "\t#{'(entry)'.ljust(20)}\t#{f}"
 puts "\t#{'f.path'.ljust(20)}\t#{f.path}"
+puts "\t#{'f.compare_path'.ljust(20)}\t#{f.compare_path}"
 puts "\t#{'f.drive'.ljust(20)}\t#{f.drive}"
 puts "\t#{'f.directory_path'.ljust(20)}\t#{f.directory_path}"
 puts "\t#{'f.directory'.ljust(20)}\t#{f.directory}"
 directory_parts = f.directory_parts
 puts "\t#{'f.directory_parts'.ljust(20)}\t[#{directory_parts.size}]"
 directory_parts.each do |part|
-	puts "\t#{''.ljust(20)}\t\t#{part}"
-end
-search_relative_directory_parts = f.search_relative_directory_parts
-puts "\t#{'f.search_relative_directory_parts'.ljust(20)}\t[#{search_relative_directory_parts.size}]"
-search_relative_directory_parts.each do |part|
 	puts "\t#{''.ljust(20)}\t\t#{part}"
 end
 puts "\t#{'f.file_full_name'.ljust(20)}\t#{f.file_full_name}"
@@ -37,6 +33,11 @@ puts "\t#{'f.search_directory'.ljust(20)}\t#{f.search_directory}"
 puts "\t#{'f.search_relative_path'.ljust(20)}\t#{f.search_relative_path}"
 puts "\t#{'f.search_relative_directory'.ljust(20)}\t#{f.search_relative_directory}"
 puts "\t#{'f.search_relative_directory_path'.ljust(20)}\t#{f.search_relative_directory_path}"
+search_relative_directory_parts = f.search_relative_directory_parts
+puts "\t#{'f.search_relative_directory_parts'.ljust(20)}\t[#{search_relative_directory_parts.size}]"
+search_relative_directory_parts.each do |part|
+	puts "\t#{''.ljust(20)}\t\t#{part}"
+end
 
 puts "\t#{'f.size'.ljust(20)}\t#{f.size}"
 
@@ -52,12 +53,12 @@ puts "\t#{'f.last_access_time'.ljust(20)}\t#{f.last_access_time}"
 end
 
 puts
-puts "stat of '.':"
-show_entry Recls::stat '.'
+puts "stat of '.' (from '.'):"
+show_entry Recls::stat '.', '.'
 
 puts
-puts "stat of '~':"
-show_entry Recls::stat '~'
+puts "stat of '~' (from '.'):"
+show_entry Recls::stat '~', '.'
 
 puts
 puts "directories:"

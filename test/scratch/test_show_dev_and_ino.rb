@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#! /usr/bin/ruby
 #
 # Demonstrates use of dev and ino attributes
 
