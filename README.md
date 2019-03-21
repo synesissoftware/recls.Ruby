@@ -9,7 +9,7 @@ Install using `gem install recls-ruby` or add it to your `Gemfile`.
 
 ## Description
 
-TODO
+T.B.C.
 
 ## Where to get help
 
@@ -29,6 +29,7 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 ## Compatibility
 
-From v2.8 onwards, recls.Ruby is compatible only with Ruby 2.0+
+For v2.8.x onwards, recls.Ruby is compatible only with Ruby 2.0+; all other
+past and current versions work with Ruby 1.9.3+.
 
 
