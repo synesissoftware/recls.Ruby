@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      22nd June 2017
+# Updated:      21st March 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2017, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,34 @@ require 'recls/entry'
 require 'recls/flags'
 
 module Recls
+
+	# Performs a +stat()+ but returns +nil+ if an obtained entry is not a
+	# directory
+	def self.directory?(path, *args)
+
+		fe = self.stat(path, *args)
+
+		if fe
+
+			return nil unless fe.directory?
+		end
+
+		fe
+	end
+
+	# Performs a +stat()+ but returns +nil+ if an obtained entry is not a
+	# file
+	def self.file?(path, *args)
+
+		fe = self.stat(path, *args)
+
+		if fe
+
+			return nil unless fe.file?
+		end
+
+		fe
+	end
 
 	# USAGE:
 	#
@@ -100,8 +128,9 @@ module Recls
 				nil
 			end
 		end
-	end 
+	end
 end
 
 # ############################## end of file ############################# #
+
 

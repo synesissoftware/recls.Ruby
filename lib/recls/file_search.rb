@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      13th June 2016
+# Updated:      21st March 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,30 @@ module Recls
 
 		include Enumerable
 
+		# Initialises a +FileSearch+ instance, which acts as an +Enumerable+
+		# of Recls::Entry
+		#
+		# === Signature
+		#
+		# * *Parameters:*
+		#   - +search_root+:: (String, Recls::Entry) The root directory of
+		#    the search. May be +nil+, in which case the current directory
+		#    is assumed
+		#   - +patterns+:: (String, Array) The pattern(s) for which to
+		#    search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is
+		#    assumed
+		#   - +options+:: (Hash, Integer) Combination of flags (with
+		#    behaviour as described below for the +flags+ option), or an
+		#    options hash
+		#
+		# * *Options:*
+		#   - +flags+:: (Integer) Combination of flags - FILES,
+		#    DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0,
+		#    then FILES is assumed
+		#
+		# === Return
+		#  An instance of the class
+		#
 		def initialize(search_root, patterns, options={})
 
 			# for backwards compatibility, we allow for options to
@@ -101,12 +125,12 @@ module Recls
 			end
 
 			# now de-dup the patterns, to avoid duplicates in search
-			patterns	=	patterns.flatten
-			patterns	=	patterns.uniq
+			patterns		=	patterns.flatten
+			patterns		=	patterns.uniq
 
 			@search_root	=	search_root
-			@patterns	=	patterns
-			@flags		=	flags
+			@patterns		=	patterns
+			@flags			=	flags
 		end
 
 		attr_reader :search_root
@@ -290,4 +314,5 @@ module Recls
 end
 
 # ############################## end of file ############################# #
+
 
