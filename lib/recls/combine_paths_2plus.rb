@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:         recls/util.rb
+# File:         recls/compare_paths_2plus.rb
 #
-# Purpose:      Utility module functions for recls library
+# Purpose:      Definition of Recls::compare_paths() for Ruby 2+
 #
 # Created:      17th February 2014
 # Updated:      21st March 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
+# Copyright (c) 2014-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -37,42 +37,40 @@
 
 
 require 'recls/ximpl/util'
-require 'recls/ximpl/os'
 
 module Recls
 
-	# Obtains the absolute form of the given path
-	def self.absolute_path(path)
+	# Combines paths, optionally canonicalising them
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +paths+:: ([ (::String, ::Recls::Entry( ]) Array of 1 or more path
+	#     elements to be combined
+	#   - +options+:: (::Hash) Options that moderate the combination
+	#
+	# * *Options:*
+	#   - +:canonicalise+:: (boolean) Causes the evaluated path to be
+	#     canonicalised - with +Recls.canonicalise_path+ - before it is
+	#     returned
+	#   - +:clean+:: (boolean) Causes the evaluated path to be cleaned
+	#     (i.e. sent to +cleanpath+) before it is returned. Ignored if
+	#     +:canonicalise+ is specified
+	#   - +:clean_path+:: (boolean) Equivalent to +:clean+, but deprecated
+	#     and may be removed in a future version
+	#
+	# === Return
+	#  The combined path
+	def self.combine_paths(*paths, **options)
 
-		return path.path if 'Recls::Entry' === path.class.to_s
+		paths	=	paths.reject { |p| p.nil? }
+		paths	=	paths.map { |p| 'Recls::Entry' == p.class.to_s ? p.path : p }
 
-		return Recls::Ximpl.absolute_path path
-	end
+		raise ArgumentError, 'must specify one or more path elements' if paths.empty?
 
-	# Canonicalises the given path, by removing dots ('.' and '..')
-	# directories
-	def self.canonicalise_path(path)
-
-		path = path.path if 'Recls::Entry' === path.class.to_s
-
-		return Recls::Ximpl.canonicalise_path path
-	end
-
-	# Derives a given path relative to an origin, unless the path is
-	# absolute
-	def self.derive_relative_path(origin, path)
-
-		return Recls::Ximpl.derive_relative_path origin, path
+		return Recls::Ximpl.combine_paths paths, options
 	end
 end # module Recls
-
-if RUBY_VERSION >= '2'
-
-	require 'recls/combine_paths_2plus'
-else
-
-	require 'recls/combine_paths_1'
-end
 
 # ############################## end of file ############################# #
 
