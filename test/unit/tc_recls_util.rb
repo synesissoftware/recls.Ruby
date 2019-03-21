@@ -56,6 +56,7 @@ class Test_combine_paths < Test::Unit::TestCase
 		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/', 'def/ghi')
 		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi')
 		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi')
+		if RUBY_VERSION >= '2'
 		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: false)
 		assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: false)
 		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: true)
@@ -63,16 +64,19 @@ class Test_combine_paths < Test::Unit::TestCase
 		assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./.', 'def/ghi', clean_path: true)
 		assert_equal 'abc/../def/ghi', Recls.combine_paths('abc/..', 'def/ghi')
 		assert_equal 'def/ghi', Recls.combine_paths('abc/..', 'def/ghi', clean_path: true)
+		end
 	end
 
 	def test_multiple_relative
 
+		if RUBY_VERSION >= '2'
 		assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: false)
 		assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: true)
 
 		assert_equal 'a/b/c/../d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g', clean: false)
 		assert_equal 'a/b/d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', clean: true)
 		assert_equal 'a/b/d/e/f/g/', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', canonicalise: true)
+		end
 	end
 
 	def test_various_absolute_placings
@@ -87,8 +91,10 @@ class Test_combine_paths < Test::Unit::TestCase
 
 		assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g')
 		assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/')
+		if RUBY_VERSION >= '2'
 		assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', clean: true)
 		assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', canonicalise: true)
+		end
 	end
 end
 
