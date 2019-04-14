@@ -1,12 +1,12 @@
 # ######################################################################### #
-# File:        recls/ximpl/util.rb
+# File:         recls/ximpl/util.rb
 #
-# Purpose:     Internal implementation constructs for the recls library.
+# Purpose:      Internal implementation constructs for the recls library.
 #
-# Created:     24th July 2012
-# Updated:     21st Jannuary 2019
+# Created:      24th July 2012
+# Updated:      14th April 2019
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
@@ -41,11 +41,14 @@ require 'recls/flags'
 
 require 'pathname'
 
-module Recls
+=begin
+=end
 
-	module Ximpl
+module Recls # :nodoc:
 
-		module Util
+	module Ximpl # :nodoc: all
+
+		module Util # :nodoc: all
 
 			def self.is_path_name_separator(c)
 
@@ -271,10 +274,6 @@ module Recls
 
 				newParts = []
 
-=begin
-				trailing_slash = parts.empty? ? nil : self.get_trailing_slash(parts[-1])
-=end
-
 				lastSingleDots = nil
 
 				path_is_rooted = nil
@@ -423,7 +422,7 @@ module Recls
 
 				[ newParts.join(''), consume_basename ]
 			end
-		end
+		end # module Util
 
 		# Canonicalises a path
 		#
@@ -434,6 +433,8 @@ module Recls
 
 			return nil if not path
 			return '' if path.empty?
+
+			path	=	File.expand_path(path) if '~' == path[0].to_s
 
 			f1_windows_root, f2_directory, f3_basename, dummy1, dummy2, directory_parts, dummy3 = Util.split_path(path)
 
@@ -454,6 +455,39 @@ module Recls
 			return "#{f1_windows_root}#{canonicalised_directory}#{f3_basename}"
 		end
 
+		def self.absolute_path?(path)
+
+			case path
+			when nil
+
+				return nil
+			when ::String
+
+				return nil if path.empty?
+
+				path	=	File.expand_path(path) if '~' == path[0]
+			when ::Recls::Entry
+
+				return path
+			else
+
+				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be nil or an instance of #{::String} or #{::Recls::Entry}"
+			end
+
+			f1_windows_root, f2_directory, dummy1, dummy2, dummy3, dummy4, dummy5 = Util.split_path(path)
+
+			dummy1 = dummy2 = dummy3 = dummy4 = dummy5 = nil
+
+			unless f1_windows_root
+
+				return nil unless f2_directory
+
+				return nil unless Util.is_path_name_separator(f2_directory[0])
+			end
+
+			Recls::Ximpl.stat_prep(path, nil, Recls::DETAILS_LATER)
+		end
+
 		# determines the absolute path of a given path
 		def self.absolute_path(path, refdir = nil)
 
@@ -463,7 +497,10 @@ module Recls
 				return nil
 			when ::String
 
-				path = path.to_s
+				path	=	File.expand_path(path) if '~' == path[0]
+			when ::Recls::Entry
+
+				return path.path
 			else
 
 				raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or Recls::Entry"
@@ -649,10 +686,16 @@ module Recls
 			path			=	self.canonicalise_path path
 			origin			=	self.canonicalise_path origin
 
+			path			=	self.absolute_path path
+			origin			=	self.absolute_path origin
+
+			return path if /^\.[\\\/]*$/ =~ origin
+
 			path_splits		=	Util.split_path(path)
 			origin_splits	=	Util.split_path(origin)
 
 			# if different windows root, then cannot provide relative
+
 			if path_splits[0] and origin_splits[0]
 
 				return path if path_splits[0] != origin_splits[0]
@@ -663,7 +706,7 @@ module Recls
 			path_parts		=	path_splits[6]
 			origin_parts	=	origin_splits[6]
 
-			while true
+			loop do
 
 				break if path_parts.empty?
 				break if origin_parts.empty?
@@ -701,6 +744,8 @@ module Recls
 
 			paths	=	[ paths ] unless ::Array === paths
 			abs_ix	=	0
+
+			paths	=	paths.map { |path| '~' == path[0].to_s ? File.expand_path(path) : path }
 
 			paths.each_with_index do |path, index|
 
@@ -770,8 +815,27 @@ module Recls
 				return []
 			end
 		end
-	end
-end
+
+		def self.stat_prep(path, search_root, flags)
+
+			begin
+
+				Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
+			rescue Errno::ENOENT, Errno::ENXIO => x
+
+				x = x # suppress warning
+
+				if 0 != (flags & Recls::DETAILS_LATER)
+
+					Recls::Entry.new(path, nil, search_root, flags)
+				else
+
+					nil
+				end
+			end
+		end
+	end # module Ximpl
+end # module Recls
 
 # ############################## end of file ############################# #
 

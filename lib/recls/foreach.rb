@@ -4,11 +4,11 @@
 # Purpose:      Definition of Recls::foreach() utility function
 #
 # Created:      22nd October 2014
-# Updated:      9th June 2016
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -38,10 +38,15 @@
 
 require 'recls/file_search'
 
+=begin
+=end
+
+class Object; end # :nodoc:
+
 module Recls
 
 	private
-	class FileSearchLineEnumerator
+	class FileSearchLineEnumerator # :nodoc: all
 
 		include Enumerable
 
@@ -54,7 +59,7 @@ module Recls
 
 			@fs.each do |fe|
 
-				IO::readlines(fe).each_with_index do |line, index|
+				IO.readlines(fe).each_with_index do |line, index|
 
 					case	block.arity
 					when	1
@@ -69,9 +74,36 @@ module Recls
 				end
 			end
 		end
-	end
+	end # class FileSearchLineEnumerator
 	public
 
+	# Performs a recursive search and enumerates the lines of all files
+	# found
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +searchable+ A searchable instance obtained from Recls::file_search() or Recls::file_rsearch()
+	#   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
+	#   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
+	#   - +options+ (Hash) An options hash
+	#   - +flags+ (Integer) Combination of flags (with behaviour as described below for the +flags+ option)
+	#
+	# * *Block:*
+	# An optional block that will be executed once for each line in each file
+	# found, where the block must take 1, 2, or 3 parameters, representing the
+	# line [ + file-line-index [ + entry ]]. If no block is given, an
+	# enumerator is returned.
+	#
+	# ==== Parameter Ordering
+	#
+	# The parameters may be expressed in any of the following permutations:
+	# - +searchable+
+	# - +search_root+, +patterns+, +flags+
+	# - +search_root+, +patterns+, +options+
+	#
+	# === Return
+	#
 	def self.foreach(*args, &block)
 
 		fs = nil
@@ -97,7 +129,7 @@ module Recls
 			return FileSearchLineEnumerator.new(fs)
 		end
 	end
-end
+end # module Recls
 
 # ############################## end of file ############################# #
 

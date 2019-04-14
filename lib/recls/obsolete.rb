@@ -1,9 +1,9 @@
 # ######################################################################### #
-# File:         recls/version.rb
+# File:         recls/obsolete.rb
 #
-# Purpose:      Version for recls library
+# Purpose:      Obsolete elements
 #
-# Created:      14th February 2014
+# Created:      19th July 2012
 # Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
@@ -36,23 +36,63 @@
 # ######################################################################### #
 
 
-=begin
-=end
 
-class Object; end # :nodoc:
+# ######################################################################### #
+# Obsolete symbols
 
-module Recls
+if not defined? RECLS_NO_OBSOLETE
 
-	# Current version of the recls.Ruby library
-	VERSION				=	'2.10.0'
+	module Recls # :nodoc: all
 
-	private
-	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
-	public
-	VERSION_MAJOR		=	VERSION_PARTS_[0] # :nodoc:
-	VERSION_MINOR		=	VERSION_PARTS_[1] # :nodoc:
-	VERSION_REVISION	=	VERSION_PARTS_[2] # :nodoc:
-end # module Recls
+		def self.pathNameSeparator
+
+			PATH_NAME_SEPARATOR
+		end
+
+		def self.pathSeparator
+
+			PATH_SEPARATOR
+		end
+
+		def self.wildcardsAll
+
+			WILDCARDS_ALL
+		end
+
+		class FileSearch # :nodoc:
+
+			alias_method :searchRoot, :search_root
+			alias_method :pattern, :patterns
+		end
+
+		class Entry # :nodoc:
+
+			alias_method :uncDrive, :drive
+			alias_method :directoryPath, :directory_path
+			alias_method :directoryParts, :directory_parts
+			alias_method :file, :file_full_name
+			alias_method :shortFile, :file_short_name
+			alias_method :fileBaseName, :file_name_only
+			alias_method :fileName, :file_name_only
+			alias_method :fileExt, :file_extension
+			alias_method :searchDirectory, :search_directory
+			alias_method :searchRelativePath, :search_relative_path
+
+			alias_method :isDirectory, :directory?
+			alias_method :isFile, :file?
+			#alias_method :isLink, :link?
+			alias_method :isReadOnly, :readonly?
+			def isUNC
+
+				d = drive
+
+				d and d.size > 2
+			end
+
+			alias_method :creationTime, :modification_time
+		end
+	end # module Recls
+end
 
 # ############################## end of file ############################# #
 

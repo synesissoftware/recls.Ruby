@@ -4,7 +4,7 @@
 # Purpose:      Utility module functions for recls library
 #
 # Created:      17th February 2014
-# Updated:      21st March 2019
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
@@ -36,33 +36,64 @@
 # ######################################################################### #
 
 
+require 'recls/stat'
 require 'recls/ximpl/util'
 require 'recls/ximpl/os'
+
+=begin
+=end
+
+class Object; end # :nodoc:
 
 module Recls
 
 	# Obtains the absolute form of the given path
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String, Recls::Entry) The path
+	#
+	# === Return
+	# (String) The absolute form of the path
 	def self.absolute_path(path)
 
 		return path.path if 'Recls::Entry' === path.class.to_s
 
-		return Recls::Ximpl.absolute_path path
+		Recls::Ximpl.absolute_path path
 	end
 
 	# Canonicalises the given path, by removing dots ('.' and '..')
 	# directories
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String, Recls::Entry) The path
+	#
+	# === Return
+	# (String) The canonical form of the path
 	def self.canonicalise_path(path)
 
 		path = path.path if 'Recls::Entry' === path.class.to_s
 
-		return Recls::Ximpl.canonicalise_path path
+		Recls::Ximpl.canonicalise_path path
 	end
 
 	# Derives a given path relative to an origin, unless the path is
 	# absolute
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +origin+ (String, Recls::Entry) The path against which +path+ will be evaluated
+	#   - +path+ (String, Recls::Entry) The path to evaluate
+	#
+	# === Return
+	# (String) The relative form of the path
 	def self.derive_relative_path(origin, path)
 
-		return Recls::Ximpl.derive_relative_path origin, path
+		Recls::Ximpl.derive_relative_path origin, path
 	end
 end # module Recls
 
@@ -73,6 +104,42 @@ else
 
 	require 'recls/combine_paths_1'
 end
+
+module Recls
+
+	# Indicates whether the given path exists, obtaining a Recls::Entry
+	# instance if so
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String, Recls::Entry) The path
+	#
+	# === Return
+	# (Recls::Entry, nil) The entry if +path+ exists; +nil+ otherwise
+	def self.exist?(path)
+
+		return nil if path.nil?
+
+		Recls.stat(path)
+	end
+
+	# Indicates whether the given path is absolute
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String, Recls::Entry) The path
+	#
+	# === Return
+	# (boolean) +true+ if +path+ is absolute; +false+ otherwise
+	def self.absolute_path?(path)
+
+		return nil if path.nil?
+
+		Recls::Ximpl.absolute_path? path
+	end
+end # module Recls
 
 # ############################## end of file ############################# #
 

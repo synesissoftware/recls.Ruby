@@ -4,7 +4,7 @@
 # Purpose:      Definition of Recls::compare_paths() for Ruby 1.x
 #
 # Created:      17th February 2014
-# Updated:      21st March 2019
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
@@ -38,6 +38,11 @@
 
 require 'recls/ximpl/util'
 
+=begin
+=end
+
+class Object; end # :nodoc:
+
 module Recls
 
 	# Combines paths
@@ -45,11 +50,10 @@ module Recls
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +paths+:: ([ (::String, ::Recls::Entry( ]) Array of 1 or more path
-	#     elements to be combined
+	#   - +paths+ ([ (::String, ::Recls::Entry) ]) Array of 1 or more path elements to be combined
 	#
 	# === Return
-	#  The combined path
+	# (String) The combined path
 	def self.combine_paths(*paths)
 
 		paths	=	paths.reject { |p| p.nil? }

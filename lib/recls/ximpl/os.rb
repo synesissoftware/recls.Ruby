@@ -1,15 +1,15 @@
 # ######################################################################### #
-# File:        recls/ximpl/os.rb
+# File:         recls/ximpl/os.rb
 #
-# Purpose:     Operating system internal implementation constructs for the
-#              recls library.
+# Purpose:      Operating system internal implementation constructs for the
+#               recls library.
 #
-# Created:     16th February 2014
-# Updated:     27th August 2015
+# Created:      16th February 2014
+# Updated:      14th April 2019
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -37,11 +37,14 @@
 # ######################################################################### #
 
 
-module Recls
+=begin
+=end
 
-	module Ximpl
+module Recls # :nodoc:
 
-		module OS
+	module Ximpl # :nodoc: all
+
+		module OS # :nodoc: all
 
 			OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
 
@@ -77,9 +80,9 @@ module Recls
 
 				return false
 			end
-		end
-	end
-end
+		end # module OS
+	end # module Ximpl
+end # module Recls
 
 # ############################## end of file ############################# #
 

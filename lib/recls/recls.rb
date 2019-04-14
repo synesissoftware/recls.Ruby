@@ -4,11 +4,11 @@
 # Purpose:      Main source file for recls library
 #
 # Created:      19th July 2012
-# Updated:      9th June 2016
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -39,11 +39,32 @@
 require 'recls/version'
 
 require 'recls/api'
+require 'recls/entry'
 require 'recls/file_search'
 require 'recls/foreach'
 require 'recls/stat'
 require 'recls/util'
 require 'recls/ximpl/os'
+
+
+# The *recls* module
+#
+# == Significant Components
+# - Recls::Entry
+# - Recls::absolute_path
+# - Recls::absolute_path?
+# - Recls::canonicalise_path
+# - Recls::derive_relative_path
+# - Recls::directory?
+# - Recls::exist?
+# - Recls::file?
+# - Recls::file_rsearch
+# - Recls::file_search
+# - Recls::foreach
+# - Recls::stat
+module Recls
+
+end # module Recls
 
 module Recls
 
@@ -51,64 +72,14 @@ module Recls
 	# system
 	WILDCARDS_ALL = Recls::Ximpl::OS::WILDCARDS_ALL
 
+	# The string sequence used to separate names in paths, e.g. "/" on UNIX
 	PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
+	# The string sequence used to separate paths, e.g. ":" on UNIX
 	PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
-end
+end # module Recls
 
-# ######################################################################### #
-# Obsolete symbols
-
-if not defined? RECLS_NO_OBSOLETE
-
-	module Recls
-
-		def self.pathNameSeparator
-			PATH_NAME_SEPARATOR
-		end
-
-		def self.pathSeparator
-			PATH_SEPARATOR
-		end
-
-		def self.wildcardsAll
-			WILDCARDS_ALL
-		end
-
-		class FileSearch
-
-			alias_method :searchRoot, :search_root
-			alias_method :pattern, :patterns
-		end
-
-		class Entry
-
-			alias_method :uncDrive, :drive
-			alias_method :directoryPath, :directory_path
-			alias_method :directoryParts, :directory_parts
-			alias_method :file, :file_full_name
-			alias_method :shortFile, :file_short_name
-			alias_method :fileBaseName, :file_name_only
-			alias_method :fileName, :file_name_only
-			alias_method :fileExt, :file_extension
-			alias_method :searchDirectory, :search_directory
-			alias_method :searchRelativePath, :search_relative_path
-
-			alias_method :isDirectory, :directory?
-			alias_method :isFile, :file?
-			#alias_method :isLink, :link?
-			alias_method :isReadOnly, :readonly?
-			def isUNC
-
-				d = drive
-
-				d and d.size > 2
-			end
-
-			alias_method :creationTime, :modification_time
-		end
-	end
-end
+require 'recls/obsolete'
 
 # ############################## end of file ############################# #
 

@@ -1,14 +1,14 @@
 # ######################################################################### #
-# File:        recls/ximpl/windows.rb
+# File:         recls/ximpl/windows.rb
 #
-# Purpose:     Windows-specific constructs for the recls library.
+# Purpose:      Windows-specific constructs for the recls library.
 #
-# Created:     19th February 2014
-# Updated:     18th June 2016
+# Created:      19th February 2014
+# Updated:      14th April 2019
 #
-# Author:      Matthew Wilson
+# Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -38,11 +38,14 @@
 
 require 'Win32API'
 
-module Recls
+=begin
+=end
 
-	module Ximpl
+module Recls # :nodoc:
 
-		class FileStat < File::Stat
+	module Ximpl # :nodoc: all
+
+		class FileStat < File::Stat # :nodoc:
 
 			private
 			GetFileAttributes			=	Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
@@ -70,7 +73,7 @@ module Recls
 
 			BHFI_pack_string			=	'LQQQLLLLLL'
 
-			class ByHandleInformation
+			class ByHandleInformation # :nodoc:
 
 				def initialize(path)
 
@@ -121,8 +124,10 @@ module Recls
 				attributes = GetFileAttributes.call("#{path}")
 
 				if 0xffffffff == attributes
+
 					@attributes = 0
 				else
+
 					@attributes = attributes
 				end
 
@@ -190,9 +195,9 @@ module Recls
 
 				Recls::Ximpl::FileStat.new(path)
 			end
-		end
-	end
-end
+		end # class FileStat
+	end # module Ximpl
+end # module Recls
 
 # ############################## end of file ############################# #
 

@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls::Flags module for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      27th August 2015
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,11 @@
 # ######################################################################### #
 
 
+=begin
+=end
+
+class Object; end # :nodoc:
+
 module Recls
 
 	# Specifies that files are to be listed
@@ -46,32 +51,43 @@ module Recls
 	LINKS					=	0x00000004
 	# Specifies that devices are to be listed
 	DEVICES					=	0x00000008
+	# Type mask (combination of Recls::FILES, Recls::DIRECTORIES, Recls::LINKS, Recls::DEVICES)
 	TYPEMASK				=	0x000000ff
 
 	# Specifies that hidden items are to be shown and hidden directories are
 	# to be searched
 	SHOW_HIDDEN				=	0x00000100
 
+	# [IGNORED] This for compatibility with *recls* libraries written in other languages
 	DIR_PROGRESS			=	0x00001000
 	# Causes search to terminate if a directory cannot be entered or an
 	# entry's information cannot be stat()'d
 	STOP_ON_ACCESS_FAILURE	=	0x00002000
+	# [IGNORED] This for compatibility with *recls* libraries written in other languages
 	LINK_COUNT				=	0000004000
+	# [IGNORED] This for compatibility with *recls* libraries written in other languages
 	NODE_INDEX				=	0x00008000
 
+	# Causes search to operate recursively
 	RECURSIVE				=	0x00010000
 private
-	NO_SEARCH_LINKS			=	0x00020000
+	NO_SEARCH_LINKS			=	0x00020000 # :nodoc:
 public
+	# [IGNORED] In previous versions the Recls::Entry#directory_parts property was not obtained (for performance reasons) unless this flag was specified. In current version the parts are always obtained
 	DIRECTORY_PARTS			=	0x00040000
+	# Causes operations (such as Recls::stat()) to obtain a result even when
+	# no corresponding file-system entity does not exist
 	DETAILS_LATER			=	0x00080000
 
+	# Causes the Recls::Entry#path and Recls::Entry#search_relative_path
+	# attributes to contain a trailing path-name-separator for directory
+	# entries
 	MARK_DIRECTORIES		=	0x00200000
 
 	# Causes sub-directories that are links to be searched; default is not
 	# to search through links
 	SEARCH_THROUGH_LINKS	=	0x00100000
-end
+end # module Recls
 
 # ############################## end of file ############################# #
 

@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      21st March 2019
+# Updated:      14th March 2019
 #
 # Author:       Matthew Wilson
 #
@@ -39,10 +39,27 @@
 require 'recls/entry'
 require 'recls/flags'
 
+=begin
+=end
+
+class Object; end # :nodoc:
+
 module Recls
 
-	# Performs a +stat()+ but returns +nil+ if an obtained entry is not a
-	# directory
+	# Equivalent to a Recls::stat() but only returns (a non-+nil+ value) if the
+	# path exists _and_ represents a directory
+	#
+	# This has two advantages over +File.directory?+: it obtains a
+	# Recls::Entry in the case where the path represents a directory; and
+	# it does '~' interpretation
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String, Recls::Entry) The path
+	#
+	# === Return
+	# (Recls::Entry, nil) The entry if +path+ exists and is a directory; +nil+ otherwise
 	def self.directory?(path, *args)
 
 		fe = self.stat(path, *args)
@@ -55,8 +72,20 @@ module Recls
 		fe
 	end
 
-	# Performs a +stat()+ but returns +nil+ if an obtained entry is not a
-	# file
+	# Equivalent to a Recls::stat() but only returns (a non-+nil+ value) if the
+	# path exists _and_ represents a file
+	#
+	# This has two advantages over +File.file?+: it obtains a
+	# Recls::Entry in the case where the path represents a file; and
+	# it does '~' interpretation
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String, Recls::Entry) The path
+	#
+	# === Return
+	# (Recls::Entry, nil) The entry if +path+ exists and is a file; +nil+ otherwise
 	def self.file?(path, *args)
 
 		fe = self.stat(path, *args)
@@ -69,13 +98,31 @@ module Recls
 		fe
 	end
 
-	# USAGE:
+	# Obtains a single Recls::Entry instance from a path, according to the
+	# given arguments, which can be any combination of search-root and
+	# flags, as discussed below
 	#
-	#  - stat(path)
-	#  - stat(path, flags)
-	#  - stat(path, search_root)
-	#  - stat(path, search_root, flags)
-	#  - stat(path, flags, search_root)
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +path+ (String) A path to evaluate. May not be +nil+
+	#   - +search_root+ (String, Recls::Entry) A directory from which the returned Entry instance's search-relative attributes are evaluated
+	#   - +flags+ (Integer) A bit-combined set of flags (such as Recls::DIRECTORIES, Recls::FILES, Recls::RECURSIVE, Recls::DETAILS_LATER, and so on)
+	#
+	# ==== Parameter Ordering
+	#
+	# The parameters may be expressed in any of the following permutations:
+	# - +path+
+	# - +path+, +flags+
+	# - +path+, +search_root+
+	# - +path+, +flags+, +search_root+
+	# - +path+, +search_root+, +flags+
+	#
+	# === Return
+	# (Recls::Entry) An entry representing the path on the file-system, or
+	# +nil+ if the path does not refer to an existing entity. If the
+	# Recls::DETAILS_LATER flag is included, then an entry is returned
+	# regardless of its existence
 	def self.stat(path, *args)
 
 		flags		=	0
@@ -86,50 +133,46 @@ module Recls
 
 		case	args.size
 		when	0
+
 			;
 		when	1
+
 			case	args[0]
 			when	::Integer
+
 				flags = args[0]
 			when	::String
+
 				search_root = args[0]
 			else
+
 				message = "argument '#{args[0]}' (#{args[0].class}) not valid"
 			end
 		when	2
+
 			if false
 			elsif ::Integer === args[0] && ::String === args[1]
+
 				flags		=	args[0]
 				search_root	=	args[1]
 			elsif ::String === args[0] && ::Integer === args[1]
+
 				search_root	=	args[0]
 				flags		=	args[1]
 			else
+
 				message = "invalid combination of arguments"
 			end
 		else
+
 			message = "too many arguments"
 		end
 
 		raise ArgumentError, "#{message}: Recls.stat() takes one (path), two (path+flags or path+search_root), or three (path+search_root+flags) arguments" if message
 
-		begin
-
-			Recls::Entry.new(path, Recls::Ximpl::FileStat.stat(path), search_root, flags)
-		rescue Errno::ENOENT => x
-
-			x = x # suppress warning
-
-			if 0 != (flags & Recls::DETAILS_LATER)
-
-				Recls::Entry.new(path, nil, search_root, flags)
-			else
-
-				nil
-			end
-		end
-	end
-end
+		Recls::Ximpl.stat_prep(path, search_root, flags)
+	end 
+end # module Recls
 
 # ############################## end of file ############################# #
 

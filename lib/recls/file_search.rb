@@ -4,7 +4,7 @@
 # Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      21st March 2019
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
@@ -40,9 +40,14 @@ require 'recls/entry'
 require 'recls/flags'
 require 'recls/ximpl/os'
 
+=begin
+=end
+
+class Object; end # :nodoc:
+
 module Recls
 
-	class FileSearch
+	class FileSearch # :nodoc: all
 
 		include Enumerable
 
@@ -52,20 +57,12 @@ module Recls
 		# === Signature
 		#
 		# * *Parameters:*
-		#   - +search_root+:: (String, Recls::Entry) The root directory of
-		#    the search. May be +nil+, in which case the current directory
-		#    is assumed
-		#   - +patterns+:: (String, Array) The pattern(s) for which to
-		#    search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is
-		#    assumed
-		#   - +options+:: (Hash, Integer) Combination of flags (with
-		#    behaviour as described below for the +flags+ option), or an
-		#    options hash
+		#   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
+		#   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed
+		#   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
 		#
 		# * *Options:*
-		#   - +flags+:: (Integer) Combination of flags - FILES,
-		#    DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0,
-		#    then FILES is assumed
+		#   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0, then FILES is assumed
 		#
 		# === Return
 		#  An instance of the class
@@ -133,11 +130,14 @@ module Recls
 			@flags			=	flags
 		end
 
+		# (String) The search root
 		attr_reader :search_root
+		# (String) The search patterns
 		attr_reader :patterns
+		# (Integer) The search flags
 		attr_reader :flags
 
-		def each(&blk)
+		def each(&blk) # :nodoc:
 
 			search_root = @search_root
 			search_root = Recls::Ximpl::absolute_path search_root
@@ -179,7 +179,7 @@ module Recls
 		end
 
 		private
-		def FileSearch::is_dots(name)
+		def FileSearch.is_dots(name) # :nodoc:
 
 			case	name
 			when	'.', '..'
@@ -189,12 +189,12 @@ module Recls
 			end
 		end
 
-		def FileSearch::stat_or_nil_(path, flags)
+		def FileSearch.stat_or_nil_(path, flags) # :nodoc:
 
 			begin
 
 				Recls::Ximpl::FileStat.stat path
-			rescue Errno::ENOENT => x
+			rescue Errno::ENOENT, Errno::ENXIO
 
 				nil
 			rescue SystemCallError => x
@@ -217,7 +217,7 @@ module Recls
 		# order to allow calculation of search_relative_path in the
 		# entry.
 
-		def FileSearch::search_directory_(search_root, dir, patterns, flags, &blk)
+		def FileSearch.search_directory_(search_root, dir, patterns, flags, &blk) # :nodoc:
 
 			# array of FileStat instances
 			entries = []
@@ -310,8 +310,8 @@ module Recls
 				FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
 			end
 		end
-	end
-end
+	end # class FileSearch
+end # module Recls
 
 # ############################## end of file ############################# #
 

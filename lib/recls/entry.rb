@@ -4,11 +4,11 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      11th July 2016
+# Updated:      14th April 2019
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2012-2016, Matthew Wilson and Synesis Software
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -41,8 +41,14 @@ require 'recls/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix')
 require 'recls/ximpl/util'
 require 'recls/flags'
 
+=begin
+=end
+
+class Object; end # :nodoc:
+
 module Recls
 
+	# A file-system entry
 	class Entry
 
 		private
@@ -90,6 +96,7 @@ module Recls
 			@nlink	=	@file_stat.nlink if @file_stat
 
 			if Recls::Ximpl::OS::OS_IS_WINDOWS && @file_stat
+
 				@dev				=	@file_stat.by_handle_information.volume_id
 				@ino				=	@file_stat.by_handle_information.file_index
 				@nlink				=	@file_stat.by_handle_information.num_links
@@ -102,26 +109,43 @@ module Recls
 		# ##########################
 		# Name-related attributes
 
+		# (String) A normalised form of #path that can be used in comparisons
 		attr_reader :compare_path
 
+		# (String) The full-path of the instance
 		attr_reader :path
+		# (String) The (Windows) short-form of #path, or +nil+ if not on Windows
 		attr_reader :short_path
+		# (String) The (Windows) drive. +nil+ if does not exist
 		attr_reader :drive
+		# (String) The full path of the entry's directory (taking into account the
+		# #drive if on Windows)
 		attr_reader :directory_path
 		alias_method :dirname, :directory_path
+		# (String) The entry's directory (excluding the #drive if on Windows)
 		attr_reader :directory
+		# ([String]) An array of directory parts, where each part ends in Recls::PATH_NAME_SEPARATOR
 		attr_reader :directory_parts
+		# (String) The entry's file name (combination of #stem + #extension)
 		attr_reader :file_full_name
+		# (String) The (Windows) short-form of #basename, or +nil+ if not on Windows
 		attr_reader :file_short_name
 		alias_method :basename, :file_full_name
+		# (String) The entry's file stem
 		attr_reader :file_name_only
 		alias_method :stem, :file_name_only
+		# (String) The entry's file extension
 		attr_reader :file_extension
 		alias_method :extension, :file_extension
+		# (String) The search directory if specified; +nil+ otherwise
 		attr_reader :search_directory
+		# (String) The #path relative to #search_directory; +nil+ if no search directory specified
 		attr_reader :search_relative_path
+		# (String) The #directory relative to #search_directory; +nil+ if no search directory specified
 		attr_reader :search_relative_directory
+		# (String) The #directory_path relative to #search_directory; +nil+ if no search directory specified
 		attr_reader :search_relative_directory_path
+		# ([String]) The #directory_parts relative to #search_directory; +nil+ if no search directory specified
 		attr_reader :search_relative_directory_parts
 
 		# ##########################
@@ -157,6 +181,7 @@ module Recls
 
 	if Recls::Ximpl::OS::OS_IS_WINDOWS
 
+		# [WINDOWS-ONLY] Indicates whether the entry has the *system* bit
 		def system?
 
 			return false if @file_stat.nil?
@@ -164,6 +189,7 @@ module Recls
 			@file_stat.system?
 		end
 
+		# [WINDOWS-ONLY] Indicates whether the entry has the *archive* bit
 		def archive?
 
 			return false if @file_stat.nil?
@@ -171,6 +197,7 @@ module Recls
 			@file_stat.archive?
 		end
 
+		# [WINDOWS-ONLY] Indicates whether the entry is a device
 		def device?
 
 			return false if @file_stat.nil?
@@ -178,6 +205,7 @@ module Recls
 			@file_stat.device?
 		end
 
+		# [WINDOWS-ONLY] Indicates whether the entry is *normal*
 		def normal?
 
 			return false if @file_stat.nil?
@@ -185,6 +213,7 @@ module Recls
 			@file_stat.normal?
 		end
 
+		# [WINDOWS-ONLY] Indicates whether the entry has the *temporary* bit
 		def temporary?
 
 			return false if @file_stat.nil?
@@ -192,6 +221,7 @@ module Recls
 			@file_stat.temporary?
 		end
 
+		# [WINDOWS-ONLY] Indicates whether the entry has the *compressed* bit
 		def compressed?
 
 			return false if @file_stat.nil?
@@ -199,6 +229,7 @@ module Recls
 			@file_stat.compressed?
 		end
 
+		# [WINDOWS-ONLY] Indicates whether the entry has the *encrypted* bit
 		def encrypted?
 
 			return false if @file_stat.nil?
@@ -355,8 +386,8 @@ module Recls
 
 			path
 		end
-	end
-end
+	end # class Entry
+end # module Recls
 
 # ############################## end of file ############################# #
 
