@@ -46,11 +46,14 @@ require 'pathname'
 
 module Recls # :nodoc:
 
+# :stopdoc:
+
 	module Ximpl # :nodoc: all
 
 		module Util # :nodoc: all
 
-			def self.is_path_name_separator(c)
+			# @!visibility private
+			def self.is_path_name_separator(c) # :nodoc:
 
 				return true if ?/ == c
 
@@ -65,7 +68,9 @@ module Recls # :nodoc:
 			# Indicates whether a trailing slash is on the given path
 			#
 			# dependencies: none
-			def self.has_trailing_slash(p)
+			#
+			# @!visibility private
+			def self.has_trailing_slash(p) # :nodoc:
 
 				return p if p.nil? or p.empty?
 
@@ -75,7 +80,9 @@ module Recls # :nodoc:
 			# returns the trailing slash, or nil if none present
 			#
 			# dependencies: none
-			def self.get_trailing_slash(p, args = {})
+			#
+			# @!visibility private
+			def self.get_trailing_slash(p, args = {}) # :nodoc:
 
 				return nil if p.nil?
 				return nil if p.empty?
@@ -87,7 +94,9 @@ module Recls # :nodoc:
 			# present
 			#
 			# dependencies: none
-			def self.append_trailing_slash(p, slash = nil)
+			#
+			# @!visibility private
+			def self.append_trailing_slash(p, slash = nil) # :nodoc:
 
 				return p if not p or p.empty?
 
@@ -102,7 +111,9 @@ module Recls # :nodoc:
 			# root
 			#
 			# dependencies: none
-			def self.trim_trailing_slash(p)
+			#
+			# @!visibility private
+			def self.trim_trailing_slash(p) # :nodoc:
 
 				return p if not p or p.empty?
 
@@ -120,7 +131,9 @@ module Recls # :nodoc:
 			#  [ nil, nil ] if p is nil
 			#
 			# dependencies: none
-			def self.get_windows_root(p)
+			#
+			# @!visibility private
+			def self.get_windows_root(p) # :nodoc:
 
 				return [ nil, nil ] if not p
 
@@ -164,7 +177,9 @@ module Recls # :nodoc:
 
 			# obtains the parts from a path, including any Windows root and
 			# the file basename
-			def self.path_parts(path)
+			#
+			# @!visibility private
+			def self.path_parts(path) # :nodoc:
 
 				return nil if path.nil?
 				return [] if path.empty?
@@ -204,7 +219,9 @@ module Recls # :nodoc:
 			# f7. array of all path parts, which may be empty (not nil)
 			#
 			# dependencies: Util.path_parts, Util.get_windows_root
-			def self.split_path(p)
+			#
+			# @!visibility private
+			def self.split_path(p) # :nodoc:
 
 				f1_windows_root, remainder = self.get_windows_root p
 				f1_windows_root = nil if not f1_windows_root or f1_windows_root.empty?
@@ -270,7 +287,9 @@ module Recls # :nodoc:
 			# f2. A boolean indicating whether to 'consume' the basename
 			#
 			# dependencies: OS.is_root_dir_, OS.get_number_of_dots_dir_,
-			def self.canonicalise_parts(parts, basename = nil)
+			#
+			# @!visibility private
+			def self.canonicalise_parts(parts, basename = nil) # :nodoc:
 
 				newParts = []
 
@@ -429,7 +448,9 @@ module Recls # :nodoc:
 		# Note: contains a trailing slash if, in the context of the given
 		# path, the last element of the canonicalised path is a directory
 		# unequivocally
-		def self.canonicalise_path(path)
+		#
+		# @!visibility private
+		def self.canonicalise_path(path) # :nodoc:
 
 			return nil if not path
 			return '' if path.empty?
@@ -455,7 +476,8 @@ module Recls # :nodoc:
 			return "#{f1_windows_root}#{canonicalised_directory}#{f3_basename}"
 		end
 
-		def self.absolute_path?(path)
+		# @!visibility private
+		def self.absolute_path?(path) # :nodoc:
 
 			case path
 			when nil
@@ -489,7 +511,9 @@ module Recls # :nodoc:
 		end
 
 		# determines the absolute path of a given path
-		def self.absolute_path(path, refdir = nil)
+		#
+		# @!visibility private
+		def self.absolute_path(path, refdir = nil) # :nodoc:
 
 			case path
 			when ::NilClass
@@ -560,7 +584,8 @@ module Recls # :nodoc:
 		# is
 		#  ghi.jkl
 		#
-		def self.basename(path)
+		# @!visibility private
+		def self.basename(path) # :nodoc:
 
 			return nil if not path
 
@@ -603,7 +628,9 @@ module Recls # :nodoc:
 		#  ghi.jkl
 		# is
 		#  .jkl
-		def self.file_ext(path)
+		#
+		# @!visibility private
+		def self.file_ext(path) # :nodoc:
 
 			return nil if not path
 
@@ -641,7 +668,8 @@ module Recls # :nodoc:
 
 		# obtains the directory from the directory path
 		#
-		def self.directory_from_directory_path(directory_path)
+		# @!visibility private
+		def self.directory_from_directory_path(directory_path) # :nodoc:
 
 			wr, rem =  Util.get_windows_root(directory_path)
 
@@ -652,7 +680,9 @@ module Recls # :nodoc:
 		end
 
 		# obtains the directory parts from a directory
-		def self.directory_parts_from_directory(directory)
+		#
+		# @!visibility private
+		def self.directory_parts_from_directory(directory) # :nodoc:
 
 			return nil if not directory
 
@@ -676,7 +706,9 @@ module Recls # :nodoc:
 
 		# obtains the relative path of a given path and
 		# a reference directory
-		def self.derive_relative_path(origin, path)
+		#
+		# @!visibility private
+		def self.derive_relative_path(origin, path) # :nodoc:
 
 			return nil if path.nil?
 			return nil if path.empty?
@@ -739,8 +771,8 @@ module Recls # :nodoc:
 			return '../' * origin_parts.size + path_parts.join('')
 		end
 
-
-		def self.combine_paths(paths, options)
+		# @!visibility private
+		def self.combine_paths(paths, options) # :nodoc:
 
 			paths	=	[ paths ] unless ::Array === paths
 			abs_ix	=	0
@@ -797,7 +829,8 @@ module Recls # :nodoc:
 		# * (Mac OSX) /dev/fd/<N> - some of these stat() as directories but
 		#    Dir.new fails with ENOTDIR
 		#
-		def self.dir_entries_maybe(dir, flags)
+		# @!visibility private
+		def self.dir_entries_maybe(dir, flags) # :nodoc:
 
 			begin
 
@@ -816,7 +849,8 @@ module Recls # :nodoc:
 			end
 		end
 
-		def self.stat_prep(path, search_root, flags)
+		# @!visibility private
+		def self.stat_prep(path, search_root, flags) # :nodoc:
 
 			begin
 
@@ -835,6 +869,9 @@ module Recls # :nodoc:
 			end
 		end
 	end # module Ximpl
+
+# :startdoc:
+
 end # module Recls
 
 # ############################## end of file ############################# #

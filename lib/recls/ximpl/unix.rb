@@ -43,12 +43,16 @@ require 'recls/ximpl/util'
 
 module Recls # :nodoc:
 
+# :stopdoc:
+
 	module Ximpl # :nodoc: all
 
+		# @!visibility private
 		class FileStat < File::Stat # :nodoc:
 
 			private
-			def initialize(path)
+			# @!visibility private
+			def initialize(path) # :nodoc:
 
 				@path = path
 
@@ -56,9 +60,11 @@ module Recls # :nodoc:
 			end
 
 			public
-			attr_reader :path
+			# @!visibility private
+			attr_reader :path # :nodoc:
 
-			def hidden?
+			# @!visibility private
+			def hidden? # :nodoc:
 
 				basename = File.basename @path
 
@@ -71,13 +77,17 @@ module Recls # :nodoc:
 			end
 
 			public
-			def FileStat.stat(path)
+			# @!visibility private
+			def FileStat.stat(path) # :nodoc:
 
 				Recls::Ximpl::FileStat.new(path)
 
 			end
 		end # class FileStat
 	end # module Ximpl
+
+# :startdoc:
+
 end # module Recls
 
 # ############################## end of file ############################# #

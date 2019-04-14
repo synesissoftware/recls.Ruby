@@ -46,7 +46,6 @@ require 'recls/stat'
 require 'recls/util'
 require 'recls/ximpl/os'
 
-
 # The *recls* module
 #
 # == Significant Components

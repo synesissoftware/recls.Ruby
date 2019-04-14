@@ -42,19 +42,26 @@
 
 module Recls # :nodoc:
 
+# :stopdoc:
+
 	module Ximpl # :nodoc: all
 
 		module OS # :nodoc: all
 
+			# @!visibility private
 			OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
 
+			# @!visibility private
 			PATH_NAME_SEPARATOR = OS_IS_WINDOWS ? '\\' : '/'
 
+			# @!visibility private
 			PATH_SEPARATOR = OS_IS_WINDOWS ? ';' : ':'
 
+			# @!visibility private
 			WILDCARDS_ALL = OS_IS_WINDOWS ? '*' : '*'
 
-			def OS.get_number_of_dots_dir_(p)
+			# @!visibility private
+			def OS.get_number_of_dots_dir_(p) # :nodoc:
 
 				if p
 					if ?. == p[0]
@@ -72,7 +79,8 @@ module Recls # :nodoc:
 				return 0
 			end
 
-			def OS.is_root_dir_(p)
+			# @!visibility private
+			def OS.is_root_dir_(p) # :nodoc:
 
 				return nil if not p
 				return true if '/' == p
@@ -82,6 +90,9 @@ module Recls # :nodoc:
 			end
 		end # module OS
 	end # module Ximpl
+
+# :startdoc:
+
 end # module Recls
 
 # ############################## end of file ############################# #

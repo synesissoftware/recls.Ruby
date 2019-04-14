@@ -46,15 +46,18 @@ class Object; end # :nodoc:
 module Recls
 
 	private
+	# @!visibility private
 	class FileSearchLineEnumerator # :nodoc: all
 
 		include Enumerable
 
+		# @!visibility private
 		def initialize(fs)
 
 			@fs = fs
 		end
 
+		# @!visibility private
 		def each(&block)
 
 			@fs.each do |fe|

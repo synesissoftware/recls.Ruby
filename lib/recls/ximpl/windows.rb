@@ -43,8 +43,11 @@ require 'Win32API'
 
 module Recls # :nodoc:
 
+# :stopdoc:
+
 	module Ximpl # :nodoc: all
 
+		# @!visibility private
 		class FileStat < File::Stat # :nodoc:
 
 			private
@@ -73,9 +76,11 @@ module Recls # :nodoc:
 
 			BHFI_pack_string			=	'LQQQLLLLLL'
 
+			# @!visibility private
 			class ByHandleInformation # :nodoc:
 
-				def initialize(path)
+				# @!visibility private
+				def initialize(path) # :nodoc:
 
 					@volume_id	=	0
 					@file_index	=	0
@@ -104,19 +109,24 @@ module Recls # :nodoc:
 					end
 				end
 
+				# @!visibility private
 				attr_reader :volume_id
+				# @!visibility private
 				attr_reader :file_index
+				# @!visibility private
 				attr_reader :num_links
 			end
 
 			private
-			def has_attribute_? (attr)
+			# @!visibility private
+			def has_attribute_? (attr) # :nodoc:
 
 				0 != (attr & @attributes)
 			end
 
 			private
-			def initialize(path)
+			# @!visibility private
+			def initialize(path) # :nodoc:
 
 				@path = path
 
@@ -142,61 +152,77 @@ module Recls # :nodoc:
 			end
 
 			public
+			# @!visibility private
 			attr_reader :attributes
+			# @!visibility private
 			attr_reader :path
+			# @!visibility private
 			attr_reader :by_handle_information
+			# @!visibility private
 			attr_reader :short_path
 
-			def hidden?
+			# @!visibility private
+			def hidden? # :nodoc:
 
 				0 != (FILE_ATTRIBUTE_HIDDEN & @attributes)
 			end
 
 			# Windows-specific attributes
 
-			def system?
+			# @!visibility private
+			def system? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_SYSTEM
 			end
 
-			def archive?
+			# @!visibility private
+			def archive? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_ARCHIVE
 			end
 
-			def device?
+			# @!visibility private
+			def device? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_DEVICE
 			end
 
-			def normal?
+			# @!visibility private
+			def normal? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_NORMAL
 			end
 
-			def temporary?
+			# @!visibility private
+			def temporary? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_TEMPORARY
 			end
 
-			def compressed?
+			# @!visibility private
+			def compressed? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_COMPRESSED
 			end
 
-			def encrypted?
+			# @!visibility private
+			def encrypted? # :nodoc:
 
 				has_attribute_? FILE_ATTRIBUTE_ENCRYPTED
 			end
 
 
 			public
-			def FileStat.stat(path)
+			# @!visibility private
+			def FileStat.stat(path) # :nodoc:
 
 				Recls::Ximpl::FileStat.new(path)
 			end
 		end # class FileStat
 	end # module Ximpl
+
+# :startdoc:
+
 end # module Recls
 
 # ############################## end of file ############################# #

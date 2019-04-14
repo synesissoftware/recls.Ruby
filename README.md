@@ -54,6 +54,7 @@ None
 ### Related projects
 
 * [**recls**](https://github.com/synesissoftware/recls/)
+* [**recls.Go**](https://github.com/synesissoftware/recls.Go/)
 * [**recls.NET**](https://github.com/synesissoftware/recls.NET/)
 * [**recls.Python**](https://github.com/synesissoftware/recls.Python/)
 

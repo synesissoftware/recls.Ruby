@@ -52,6 +52,7 @@ module Recls
 	class Entry
 
 		private
+		# @!visibility private
 		def self.get_compare_path_(path)
 			return path.upcase if Recls::Ximpl::OS::OS_IS_WINDOWS
 			path

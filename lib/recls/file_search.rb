@@ -137,6 +137,10 @@ module Recls
 		# (Integer) The search flags
 		attr_reader :flags
 
+		# Calls the block once for each found file, passing a single
+		# parameter that is a Recls::Entry instance
+		#
+		# @!visibility private
 		def each(&blk) # :nodoc:
 
 			search_root = @search_root
@@ -179,6 +183,7 @@ module Recls
 		end
 
 		private
+		# @!visibility private
 		def FileSearch.is_dots(name) # :nodoc:
 
 			case	name
@@ -189,6 +194,7 @@ module Recls
 			end
 		end
 
+		# @!visibility private
 		def FileSearch.stat_or_nil_(path, flags) # :nodoc:
 
 			begin
@@ -217,6 +223,7 @@ module Recls
 		# order to allow calculation of search_relative_path in the
 		# entry.
 
+		# @!visibility private
 		def FileSearch.search_directory_(search_root, dir, patterns, flags, &blk) # :nodoc:
 
 			# array of FileStat instances
