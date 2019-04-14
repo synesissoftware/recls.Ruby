@@ -283,6 +283,8 @@ module Recls
 
 				match	=	false
 
+				match	||=	(0 == (Recls::TYPEMASK & flags))
+
 				match	||=	(0 != (Recls::FILES & flags) && fs.file?)
 				match	||=	(0 != (Recls::DIRECTORIES & flags) && fs.directory?)
 				match	||=	(0 != (Recls::DEVICES & flags) && fs.blockdev?)
