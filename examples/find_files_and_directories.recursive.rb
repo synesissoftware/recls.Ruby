@@ -9,11 +9,11 @@ Recls.file_rsearch(nil, nil, Recls::FILES).each { |fe| puts "\t#{fe.search_relat
 puts
 
 puts "directories under current directory:"
-Recls.file_rsearch(nil, nil, Recls::DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.file_rsearch(nil, nil, Recls::DIRECTORIES | Recls::MARK_DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 
 puts "files and directories under current directory:"
-Recls.file_rsearch(nil, nil, Recls::DIRECTORIES | Recls::FILES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.file_rsearch(nil, nil, Recls::DIRECTORIES | Recls::FILES | Recls::MARK_DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 
 

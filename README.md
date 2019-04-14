@@ -27,6 +27,17 @@ Install using `gem install recls-ruby` or add it to your `Gemfile`.
 
 ## Components
 
+The main components of **recls.Ruby** are:
+
+* the ``Recls`` module; and
+* the ``Recls::Entry`` class
+
+### The ``Recls`` module
+
+T.B.C.
+
+### The ``Recls::Entry`` class
+
 T.B.C.
 
 ## Examples

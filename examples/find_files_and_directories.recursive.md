@@ -18,11 +18,11 @@ Recls.file_rsearch(nil, nil, Recls::FILES).each { |fe| puts "\t#{fe.search_relat
 puts
 
 puts "directories under current directory:"
-Recls.file_rsearch(nil, nil, Recls::DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.file_rsearch(nil, nil, Recls::DIRECTORIES | Recls::MARK_DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 
 puts "files and directories under current directory:"
-Recls.file_rsearch(nil, nil, Recls::DIRECTORIES | Recls::FILES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.file_rsearch(nil, nil, Recls::DIRECTORIES | Recls::FILES | Recls::MARK_DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 ```
 
@@ -33,12 +33,13 @@ the ```Recls.file_rsearch()``` module method, passing FILES, DIRECTORIES, and
 FILES|DIRECTORIES, respectively. For each search, a simple block is
 presented, which takes a single-parameter of the file-entry (of type
 ``Recls::Entry``) from which the ``#search_relative_path`` instance
-attribute is used to display the relative path.
+attribute is used to display the relative path. For clarity, directories are
+marked with trailing slashes.
 
 ## Example results
 
 ```
-files in current directory:
+files under current directory:
 	build_gem.cmd
 	build_gem.sh
 	CHANGES.md
@@ -47,6 +48,7 @@ files in current directory:
 	LICENSE
 	Rakefile
 	README.md
+	recls-ruby-2.10.1.gem
 	recls.gemspec
 	run_all_unit_tests.sh
 	doc/CHANGES_md.html
@@ -104,7 +106,6 @@ files in current directory:
 	doc/Recls/Entry.html
 	examples/find_files_and_directories.md
 	examples/find_files_and_directories.rb
-	examples/find_files_and_directories.recursive.
 	examples/find_files_and_directories.recursive.md
 	examples/find_files_and_directories.recursive.rb
 	examples/show_hidden_files.md
@@ -130,6 +131,8 @@ files in current directory:
 	lib/recls/ximpl/windows.rb
 	old-gems/recls-2.6.3.gem
 	old-gems/recls-ruby-2.10.0.gem
+	test/fixtures/readonly/file-1
+	test/fixtures/readonly/file-2
 	test/scratch/test_display_parts.rb
 	test/scratch/test_entry.rb
 	test/scratch/test_files_and_directories.rb
@@ -147,51 +150,55 @@ files in current directory:
 	test/unit/test_all_separately.sh
 	test/unit/ts_all.rb
 
-directories in current directory:
-	doc
-	examples
-	lib
-	old-gems
-	test
-	doc/css
-	doc/examples
-	doc/fonts
-	doc/images
-	doc/js
-	doc/Recls
-	lib/recls
-	lib/recls/ximpl
-	test/scratch
-	test/unit
+directories under current directory:
+	doc/
+	examples/
+	lib/
+	old-gems/
+	test/
+	doc/css/
+	doc/examples/
+	doc/fonts/
+	doc/images/
+	doc/js/
+	doc/Recls/
+	lib/recls/
+	lib/recls/ximpl/
+	test/fixtures/
+	test/scratch/
+	test/unit/
+	test/fixtures/hidden/
+	test/fixtures/readonly/
 
-files and directories in current directory:
+files and directories under current directory:
 	build_gem.cmd
 	build_gem.sh
 	CHANGES.md
-	doc
-	examples
+	doc/
+	examples/
 	EXAMPLES.md
 	generate_rdoc.sh
-	lib
+	lib/
 	LICENSE
-	old-gems
+	old-gems/
 	Rakefile
 	README.md
+	recls-ruby-2.10.1.gem
 	recls.gemspec
 	run_all_unit_tests.sh
-	test
+	test/
 	doc/CHANGES_md.html
 	doc/created.rid
-	doc/css
-	doc/examples
+	doc/css/
+	doc/examples/
 	doc/EXAMPLES_md.html
-	doc/fonts
-	doc/images
+	doc/fonts/
+	doc/images/
 	doc/index.html
-	doc/js
+	doc/js/
 	doc/LICENSE.html
 	doc/README_md.html
-	doc/Recls
+	doc/Recls/
 	doc/Recls.html
 	doc/table_of_contents.html
 	doc/css/fonts.css
@@ -241,14 +248,13 @@ files and directories in current directory:
 	doc/Recls/Entry.html
 	examples/find_files_and_directories.md
 	examples/find_files_and_directories.rb
-	examples/find_files_and_directories.recursive.
 	examples/find_files_and_directories.recursive.md
 	examples/find_files_and_directories.recursive.rb
 	examples/show_hidden_files.md
 	examples/show_hidden_files.rb
 	examples/show_readonly_files.md
 	examples/show_readonly_files.rb
-	lib/recls
+	lib/recls/
 	lib/recls.rb
 	lib/recls/api.rb
 	lib/recls/combine_paths_1.rb
@@ -262,15 +268,20 @@ files and directories in current directory:
 	lib/recls/stat.rb
 	lib/recls/util.rb
 	lib/recls/version.rb
-	lib/recls/ximpl
+	lib/recls/ximpl/
 	lib/recls/ximpl/os.rb
 	lib/recls/ximpl/unix.rb
 	lib/recls/ximpl/util.rb
 	lib/recls/ximpl/windows.rb
 	old-gems/recls-2.6.3.gem
 	old-gems/recls-ruby-2.10.0.gem
-	test/scratch
-	test/unit
+	test/fixtures/
+	test/scratch/
+	test/unit/
+	test/fixtures/hidden/
+	test/fixtures/readonly/
+	test/fixtures/readonly/file-1
+	test/fixtures/readonly/file-2
 	test/scratch/test_display_parts.rb
 	test/scratch/test_entry.rb
 	test/scratch/test_files_and_directories.rb
@@ -288,5 +299,6 @@ files and directories in current directory:
 	test/unit/test_all_separately.sh
 	test/unit/ts_all.rb
 ```
+
 
 
