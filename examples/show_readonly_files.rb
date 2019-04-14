@@ -7,9 +7,8 @@ require 'recls'
 # To find only readonly files, need to:
 #
 # 1. Filter returned entries by readonly? attribute
-Recls::FileSearch.new('.', Recls::WILDCARDS_ALL, Recls::FILES | Recls::RECURSIVE).each do |fe|
+Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES).each do |fe|
 
 	puts fe.path if fe.readonly?
-
 end
 
