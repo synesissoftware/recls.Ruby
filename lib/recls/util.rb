@@ -137,6 +137,8 @@ module Recls
 
 		return nil if path.nil?
 
+		return true if 'Recls::Entry' === path.class.to_s
+
 		Recls::Ximpl.absolute_path? path
 	end
 end # module Recls
