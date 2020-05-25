@@ -4,10 +4,11 @@
 # Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:      24th July 2012
-# Updated:      14th April 2019
+# Updated:      25th May 2020
 #
 # Author:       Matthew Wilson
 #
+# Copyright (c) 2019-2020, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -246,6 +247,8 @@ module Recls
 
 			@file_stat.directory?
 		end
+
+		alias_method :dir?, :directory?
 
 		# indicates whether the given entry represents a file
 		def file?

@@ -4,7 +4,7 @@
 # Purpose:      Definition of Recls::foreach() utility function
 #
 # Created:      22nd October 2014
-# Updated:      14th April 2019
+# Updated:      26th May 2020
 #
 # Author:       Matthew Wilson
 #
@@ -113,12 +113,15 @@ module Recls
 
 		case	args.length
 		when	1
+
 			raise ArgumentError "Single argument must be of type #{Recls::FileSearch}" unless args[0].kind_of? Recls::FileSearch
 
 			fs = args[0]
 		when	3
+
 			fs = Recls::FileSearch.new(args[0], args[1], args[2])
 		else
+
 			raise ArgumentError "Function requires single argument (#{Recls::FileSearch}) or three arguments (directory, patterns, flags)"
 		end
 

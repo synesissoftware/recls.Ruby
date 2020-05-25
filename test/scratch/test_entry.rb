@@ -45,6 +45,7 @@ puts "\t#{'f.exist?'.ljust(20)}\t#{f.exist?}"
 puts "\t#{'f.hidden?'.ljust(20)}\t#{f.hidden?}"
 puts "\t#{'f.readonly?'.ljust(20)}\t#{f.readonly?}"
 puts "\t#{'f.directory?'.ljust(20)}\t#{f.directory?}"
+puts "\t#{'f.dir?'.ljust(20)}\t#{f.dir?}"
 puts "\t#{'f.file?'.ljust(20)}\t#{f.file?}"
 puts "\t#{'f.socket?'.ljust(20)}\t#{f.socket?}"
 

@@ -1,5 +1,10 @@
 # **recls.Ruby** Changes
 
+## 2.11.0 - 26th May 2020
+
+* added alias `Recls::Entry#dir?` for `Recls::Entry#directory?`
+* added **test/scratch/test_pattern_arrays.rb**
+
 ## 25th May 2020
 
 * CHANGES.md : improved markup
