@@ -43,9 +43,9 @@ require 'Win32API'
 =begin
 =end
 
-module Recls # :nodoc:
-
 # :stopdoc:
+
+module Recls # :nodoc:
 
   # @!visibility private
   module Ximpl # :nodoc: all
@@ -223,10 +223,9 @@ module Recls # :nodoc:
       end
     end # class FileStat
   end # module Ximpl
+end # module Recls
 
 # :startdoc:
-
-end # module Recls
 
 
 # ############################## end of file ############################# #

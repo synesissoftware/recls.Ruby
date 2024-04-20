@@ -46,7 +46,7 @@ class Object; end # :nodoc:
 module Recls
 
   # Current version of the recls.Ruby library
-  VERSION           = '2.11.0.3'
+  VERSION           = '2.12.0.1'
 
   private
   # @!visibility private

@@ -64,19 +64,20 @@ require 'recls/ximpl/os'
 # - Recls::stat
 module Recls
 
-end # module Recls
-
-module Recls
-
-  # Represents the "all" wildcards string for the ambient operating
-  # system
-  WILDCARDS_ALL = Recls::Ximpl::OS::WILDCARDS_ALL
-
   # The string sequence used to separate names in paths, e.g. "/" on UNIX
   PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
-  # The string sequence used to separate paths, e.g. ":" on UNIX
+  # The string sequence used to separate paths, e.g. ";" on Windows
   PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
+
+  # Represents the "all" wildcards string for the ambient operating system
+  WILDCARDS_ALL = Recls::Ximpl::OS::WILDCARDS_ALL
+
+  # Indicates whether the operating system is a variant of Windows
+  def self.windows?
+
+    Recls::Ximpl::OS::OS_IS_WINDOWS
+  end
 end # module Recls
 
 require 'recls/obsolete'

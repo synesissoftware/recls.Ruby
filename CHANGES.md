@@ -1,5 +1,11 @@
 # **recls.Ruby** Changes
 
+## 2.12.0.1 - 20th April 2024
+
+* added module methods `Recls.windows?`
+* compatibility with **cygwin**
+
+
 ## 2.11.0.3 - 20th April 2024
 
 * documentation improvements
