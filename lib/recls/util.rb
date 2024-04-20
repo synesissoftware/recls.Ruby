@@ -119,7 +119,7 @@ module Recls
   #   - +path+ (+String+, +Recls::Entry+) The path;
   #
   # === Return
-  # (Recls::Entry, nil) The entry if +path+ exists; +nil+ otherwise.
+  # (+Recls::Entry+, +nil+) The entry if +path+ exists; +nil+ otherwise.
   def self.exist?(path)
 
     return nil if path.nil?
