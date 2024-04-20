@@ -179,9 +179,6 @@ module Recls
       not @file_stat.writable?
     end
 
-    # ##########################
-    # Comparison
-
   if Recls::Ximpl::OS::OS_IS_WINDOWS
 
     # [WINDOWS-ONLY] Indicates whether the entry has the *system* bit
