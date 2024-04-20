@@ -19,7 +19,7 @@ require 'recls'
 # 2. Filter returned entries by hidden? attribute
 Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES | Recls::SHOW_HIDDEN).each do |fe|
 
-  puts fe.path if fe.hidden?
+  puts fe if fe.hidden?
 end
 ```
 

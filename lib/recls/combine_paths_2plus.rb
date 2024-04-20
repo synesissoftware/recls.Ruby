@@ -53,7 +53,7 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +paths+ (+[ String, Recls::Entry ]+) Array of 1 or more path elements to be combined;
+  #   - +paths+ (+[ (String, Recls::Entry) ]+) Array of 1 or more path elements to be combined;
   #   - +options+ (+Hash+) Options that moderate the combination;
   #
   # * *Options:*
@@ -65,10 +65,11 @@ module Recls
   # (+String+) The combined path.
   def self.combine_paths(*paths, **options)
 
-    paths = paths.reject { |p| p.nil? }
-    paths = paths.map { |p| 'Recls::Entry' == p.class.to_s ? p.path : p }
+    paths.reject! { |p| p.nil? }
 
     raise ArgumentError, 'must specify one or more path elements' if paths.empty?
+
+    ix_last_entry = paths.rindex { |path| ::Recls::Entry === path } and return paths[ix_last_entry]
 
     return Recls::Ximpl.combine_paths paths, options
   end

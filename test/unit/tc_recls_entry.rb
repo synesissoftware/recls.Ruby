@@ -27,14 +27,29 @@ class Test_Recls_entry < Test::Unit::TestCase
     cwd = Recls.stat @cwd
 
     assert_equal @cwd, cwd.path
+    assert_equal @cwd, cwd
+
+    cwd2 = Recls.stat cwd
+
+    assert_equal @cwd, cwd.path
+    assert_equal @cwd, cwd
+
+    assert_equal cwd.object_id, cwd2.object_id
   end
 
   def test_entry_does_mark_directory
 
     cwd = Recls.stat @cwd, Recls::MARK_DIRECTORIES
 
-    # assert_equal "#{@cwd}#{Recls::PATH_NAME_SEPARATOR}", cwd.path
     assert_equal "#{@cwd}/", cwd.path
+    assert_equal "#{@cwd}/", cwd
+
+    cwd2 = Recls.stat cwd, Recls::MARK_DIRECTORIES
+
+    assert_equal "#{@cwd}/", cwd.path
+    assert_equal "#{@cwd}/", cwd
+
+    assert_not_equal cwd.object_id, cwd2.object_id
   end
 end
 

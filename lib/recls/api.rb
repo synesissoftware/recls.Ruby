@@ -66,7 +66,7 @@ module Recls
   #   - +options+ (+Hash+, +Integer+) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash;
   #
   # * *Options:*
-  #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed. The value +Recls::RECURSIVE+ is added by the function, and so need not be added by the caller; it cannot be removed
+  #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed. The value +Recls::RECURSIVE+ is added by the function, and so need not be added by the caller; it cannot be removed;
   #
   # === Return
   # An instance of a class implementing +Enumerable+ whose value type is
@@ -105,7 +105,7 @@ module Recls
   #   - +options+ (+Hash+, +Integer+) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash;
   #
   # * *Options:*
-  #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, +Recls::RECURSIVE+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed
+  #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, +Recls::RECURSIVE+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed;
   #
   # === Return
   # An instance of a class implementing +Enumerable+ whose value type is

@@ -61,8 +61,6 @@ module Recls
   # (+String+) The absolute form of the path.
   def self.absolute_path(path)
 
-    return path.path if 'Recls::Entry' === path.class.to_s
-
     Recls::Ximpl.absolute_path path
   end
 
@@ -78,7 +76,7 @@ module Recls
   # (+String+) The canonical form of the path.
   def self.canonicalise_path(path)
 
-    path = path.path if 'Recls::Entry' === path.class.to_s
+    return path.path if ::Recls::Entry === path
 
     Recls::Ximpl.canonicalise_path path
   end
@@ -132,15 +130,11 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+) The path;
+  #   - +path+ (+String+, +Recls::Entry+, +nil+) The path to be evaluated;
   #
   # === Return
   # (boolean) +true+ if +path+ is absolute; +false+ otherwise.
   def self.absolute_path?(path)
-
-    return nil if path.nil?
-
-    return true if 'Recls::Entry' === path.class.to_s
 
     Recls::Ximpl.absolute_path? path
   end
