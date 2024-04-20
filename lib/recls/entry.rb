@@ -397,5 +397,35 @@ module Recls
 end # module Recls
 
 
+# We now monkey-patch `::String` cautiously, to facilitate constructs such
+# as:
+#
+#      cwd = Recls.stat @cwd
+#      assert_equal @cwd, cwd
+
+
+=begin
+=end
+
+# @!visibility private
+class String # :nodoc:
+
+  # TODO: work out if can use `super` for all supported versions of Ruby
+
+  # @!visibility private
+  alias_method :String_modified_for_Recls_Entry_for_original_op_eq, :== # :nodoc:
+
+  def == rhs
+
+    if ::Recls::Entry === rhs
+
+      rhs = rhs.path
+    end
+
+    String_modified_for_Recls_Entry_for_original_op_eq rhs
+  end
+end
+
+
 # ############################## end of file ############################# #
 

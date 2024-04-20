@@ -18,7 +18,7 @@ require 'recls'
 # 1. Filter returned entries by readonly? attribute
 Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES).each do |fe|
 
-  puts fe.path if fe.readonly?
+  puts fe if fe.readonly?
 end
 ```
 

@@ -6,6 +6,10 @@ $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
 require 'recls/util'
 
+if RUBY_VERSION >= '2'
+
+  require 'xqsr3/extensions/test/unit'
+end
 require 'test/unit'
 
 
@@ -13,7 +17,13 @@ class Test_combine_paths < Test::Unit::TestCase
 
   def test_nil_nil
 
-    assert_raise(::ArgumentError) { Recls.combine_paths(nil, nil) }
+    if RUBY_VERSION >= '2'
+
+      assert_raise_with_message(::ArgumentError, /must specify one or more path elements/) { Recls.combine_paths(nil, nil) }
+    else
+
+      assert_raise(::ArgumentError) { Recls.combine_paths(nil, nil) }
+    end
   end
 
   def test_origin_nil
@@ -56,26 +66,29 @@ class Test_combine_paths < Test::Unit::TestCase
     assert_equal 'abc/def/ghi', Recls.combine_paths('abc/', 'def/ghi')
     assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi')
     assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi')
+
     if RUBY_VERSION >= '2'
-    assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: false)
-    assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: false)
-    assert_equal 'abc/def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: true)
-    assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: true)
-    assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./.', 'def/ghi', clean_path: true)
-    assert_equal 'abc/../def/ghi', Recls.combine_paths('abc/..', 'def/ghi')
-    assert_equal 'def/ghi', Recls.combine_paths('abc/..', 'def/ghi', clean_path: true)
+
+      assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: false)
+      assert_equal 'abc/./def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: false)
+      assert_equal 'abc/def/ghi', Recls.combine_paths('abc/.', 'def/ghi', clean_path: true)
+      assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./', 'def/ghi', clean: true)
+      assert_equal 'abc/def/ghi', Recls.combine_paths('abc/./.', 'def/ghi', clean_path: true)
+      assert_equal 'abc/../def/ghi', Recls.combine_paths('abc/..', 'def/ghi')
+      assert_equal 'def/ghi', Recls.combine_paths('abc/..', 'def/ghi', clean_path: true)
     end
   end
 
   def test_multiple_relative
 
     if RUBY_VERSION >= '2'
-    assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: false)
-    assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: true)
 
-    assert_equal 'a/b/c/../d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g', clean: false)
-    assert_equal 'a/b/d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', clean: true)
-    assert_equal 'a/b/d/e/f/g/', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', canonicalise: true)
+      assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: false)
+      assert_equal 'a/b/c/d/e/f/g', Recls.combine_paths('a', 'b', 'c', 'd/e/f/', 'g', clean: true)
+
+      assert_equal 'a/b/c/../d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g', clean: false)
+      assert_equal 'a/b/d/e/f/g', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', clean: true)
+      assert_equal 'a/b/d/e/f/g/', Recls.combine_paths('a', 'b', 'c', '..', 'd/e/f/', 'g/', canonicalise: true)
     end
   end
 
@@ -91,10 +104,21 @@ class Test_combine_paths < Test::Unit::TestCase
 
     assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g')
     assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/')
+
     if RUBY_VERSION >= '2'
-    assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', clean: true)
-    assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', canonicalise: true)
+
+      assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', clean: true)
+      assert_equal '/f/g/', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g/', canonicalise: true)
     end
+  end
+
+  def test_combining_with_entries
+
+    f_g = Recls.stat('/f/g', Recls::DETAILS_LATER)
+    b = Recls.stat('b', Recls::DETAILS_LATER)
+
+    assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', f_g)
+    assert_equal '/f/g', Recls.combine_paths('/', 'a', b, 'c', 'd/e', f_g)
   end
 end
 
@@ -128,6 +152,14 @@ class Test_canonicalise_path < Test::Unit::TestCase
     assert_equal('a', Recls.canonicalise_path('a'))
     assert_equal('file', Recls.canonicalise_path('file'))
     assert_equal('file.ext', Recls.canonicalise_path('file.ext'))
+
+    a = Recls.stat 'a', Recls::DETAILS_LATER
+    file = Recls.stat 'file', Recls::DETAILS_LATER
+    file_ext = Recls.stat 'file.ext', Recls::DETAILS_LATER
+
+    assert_equal(Recls.canonicalise_path(a.path), Recls.canonicalise_path(a))
+    assert_equal(Recls.canonicalise_path(file.path), Recls.canonicalise_path(file))
+    assert_equal(Recls.canonicalise_path(file_ext.path), Recls.canonicalise_path(file_ext))
   end
 
   def test_zero_parts

@@ -453,6 +453,8 @@ module Recls # :nodoc:
     # @!visibility private
     def self.canonicalise_path(path) # :nodoc:
 
+      raise ArgumentError, "`path` must be an instance of `::String` or `nil`" if $DEBUG && !path.nil? && !path.is_a?(::String)
+
       return nil if not path
       return '' if path.empty?
 
@@ -494,7 +496,7 @@ module Recls # :nodoc:
         return path
       else
 
-        raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be nil or an instance of #{::String} or #{::Recls::Entry}"
+        raise TypeError, "parameter path ('#{path}') is of type `#{path.class}` must be `nil` or an instance of `#{::String}` or `#{::Recls::Entry}`"
       end
 
       f1_windows_root, f2_directory, dummy1, dummy2, dummy3, dummy4, dummy5 = Util.split_path(path)
@@ -528,7 +530,7 @@ module Recls # :nodoc:
         return path.path
       else
 
-        raise TypeError, "parameter path ('#{path}') is of type #{path.class} must be an instance of #{::String} or Recls::Entry"
+        raise TypeError, "parameter path ('#{path}') is of type `#{path.class}` must be an instance of `#{::String}` or `#{::Recls::Entry}`"
       end
 
       return '' if path.empty?
@@ -775,7 +777,9 @@ module Recls # :nodoc:
     # @!visibility private
     def self.combine_paths(paths, options) # :nodoc:
 
-      paths   = [ paths ] unless ::Array === paths
+      raise ArgumentError, "`paths` must be an instance of `::Array`" if $DEBUG && !paths.is_a?(::Array)
+      raise ArgumentError, "`paths` elements must be instances of `::String`" if $DEBUG && paths.any? { |s| !s.is_a?(::String) }
+
       abs_ix  = 0
 
       paths = paths.map { |path| '~' == path[0].to_s ? File.expand_path(path) : path }
@@ -839,7 +843,7 @@ module Recls # :nodoc:
 
       rescue SystemCallError => x
 
-        $stderr.puts "exception (#{x.class}): #{x}" if $DEBUG
+        $stderr.puts "exception (`#{x.class}`): #{x}" if $DEBUG
 
         if(0 != (STOP_ON_ACCESS_FAILURE & flags))
 

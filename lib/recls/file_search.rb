@@ -89,7 +89,7 @@ module Recls
         flags = options[:flags] || 0
       else
 
-        raise ArgumentError, "options parameter must a #{::Hash}, nil, or an integer specifying flags - an instance of #{options.class} given"
+        raise ArgumentError, "options parameter must a `#{::Hash}`, `nil`, or an integer specifying flags - an instance of `#{options.class}` given"
       end
 
 

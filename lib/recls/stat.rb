@@ -107,9 +107,9 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (String) A path to evaluate. May not be +nil+
-  #   - +search_root+ (String, Recls::Entry) A directory from which the returned Entry instance's search-relative attributes are evaluated
-  #   - +flags+ (Integer) A bit-combined set of flags (such as Recls::DIRECTORIES, Recls::FILES, Recls::RECURSIVE, Recls::DETAILS_LATER, and so on)
+  #   - +path+ (+String+) A path to evaluate. May not be +nil+;
+  #   - +search_root+ (+String+, +Recls::Entry+) A directory from which the returned +Entry+ instance's search-relative attributes are evaluated;
+  #   - +flags+ (+Integer+) A bit-combined set of flags (such as +Recls::DIRECTORIES+, +Recls::FILES+, +Recls::RECURSIVE+, +Recls::DETAILS_LATER+, and so on);
   #
   # ==== Parameter Ordering
   #
@@ -131,12 +131,17 @@ module Recls
     search_root = nil
     message     = nil
 
-    path = File.expand_path(path) if path =~ /^~[\\\/]*/
+    path_is_entry = ::Recls::Entry === path
+
+    unless path_is_entry
+
+      path = File.expand_path(path) if path =~ /^~[\\\/]*/
+    end
 
     case args.size
     when 0
 
-      ;
+      return path if path_is_entry
     when 1
 
       case args[0]
@@ -148,7 +153,7 @@ module Recls
         search_root = args[0]
       else
 
-        message = "argument '#{args[0]}' (#{args[0].class}) not valid"
+        message = "argument '#{args[0]}' (of type `#{args[0].class}`) not valid"
       end
     when 2
 
@@ -170,7 +175,7 @@ module Recls
       message = "too many arguments"
     end
 
-    raise ArgumentError, "#{message}: Recls.stat() takes one (path), two (path+flags or path+search_root), or three (path+search_root+flags) arguments" if message
+    raise ArgumentError, "#{message}: `Recls.stat()` takes one (path), two (path+flags or path+search_root), or three (path+search_root+flags) arguments" if message
 
     Recls::Ximpl.stat_prep(path, search_root, flags)
   end
