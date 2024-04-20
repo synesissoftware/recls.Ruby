@@ -45,6 +45,7 @@ require 'recls/ximpl/os'
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls
@@ -54,10 +55,10 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (String, Recls::Entry) The path
+  #   - +path+ (+String+, +Recls::Entry+) The path;
   #
   # === Return
-  # (String) The absolute form of the path
+  # (+String+) The absolute form of the path.
   def self.absolute_path(path)
 
     Recls::Ximpl.absolute_path path
@@ -69,10 +70,10 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (String, Recls::Entry) The path
+  #   - +path+ (+String+, +Recls::Entry+) The path;
   #
   # === Return
-  # (String) The canonical form of the path
+  # (+String+) The canonical form of the path.
   def self.canonicalise_path(path)
 
     return path.path if ::Recls::Entry === path
@@ -86,11 +87,11 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +origin+ (String, Recls::Entry) The path against which +path+ will be evaluated
-  #   - +path+ (String, Recls::Entry) The path to evaluate
+  #   - +origin+ (+String+, +Recls::Entry+) The path against which +path+ will be evaluated;
+  #   - +path+ (+String+, +Recls::Entry+) The path to evaluate;
   #
   # === Return
-  # (String) The relative form of the path
+  # (+String+) The relative form of the path.
   def self.derive_relative_path(origin, path)
 
     Recls::Ximpl.derive_relative_path origin, path
@@ -113,10 +114,10 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (String, Recls::Entry) The path
+  #   - +path+ (+String+, +Recls::Entry+) The path;
   #
   # === Return
-  # (Recls::Entry, nil) The entry if +path+ exists; +nil+ otherwise
+  # (+Recls::Entry+, +nil+) The entry if +path+ exists; +nil+ otherwise.
   def self.exist?(path)
 
     return nil if path.nil?
@@ -132,7 +133,7 @@ module Recls
   #   - +path+ (+String+, +Recls::Entry+, +nil+) The path to be evaluated;
   #
   # === Return
-  # (boolean) +true+ if +path+ is absolute; +false+ otherwise
+  # (boolean) +true+ if +path+ is absolute; +false+ otherwise.
   def self.absolute_path?(path)
 
     Recls::Ximpl.absolute_path? path

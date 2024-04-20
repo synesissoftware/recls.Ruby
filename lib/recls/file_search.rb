@@ -45,6 +45,7 @@ require 'recls/ximpl/os'
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls
@@ -59,16 +60,15 @@ module Recls
     # === Signature
     #
     # * *Parameters:*
-    #   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
-    #   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed
-    #   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
+    #   - +search_root+ (+String+, +Recls::Entry+) The root directory of the search. May be +nil+, in which case the current directory is assumed;
+    #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed;
+    #   - +options+ (+Hash+, +Integer+) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash;
     #
     # * *Options:*
-    #   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0, then FILES is assumed
+    #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, +Recls::RECURSIVE+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed;
     #
     # === Return
-    #  An instance of the class
-    #
+    # An instance of the class.
     def initialize(search_root, patterns, options={})
 
       # for backwards compatibility, we allow for options to
@@ -132,11 +132,11 @@ module Recls
       @flags        = flags
     end
 
-    # (String) The search root
+    # (+String+) The search root
     attr_reader :search_root
-    # (String) The search patterns
+    # (+String+) The search patterns
     attr_reader :patterns
-    # (Integer) The search flags
+    # (+Integer+) The search flags
     attr_reader :flags
 
     # Calls the block once for each found file, passing a single
@@ -218,12 +218,11 @@ module Recls
       end
     end
 
-    # searches all entries - files, directories, links, devices
-    # - that match the given (patterns) in the given directory
-    # (dir) according to the given (flags), invoking the given
-    # block (blk). The search directory (search_root) is passed in
-    # order to allow calculation of search_relative_path in the
-    # entry.
+    # searches all entries - files, directories, links, devices - that match
+    # the given +patterns+ in the given directory (+dir+) according to the
+    # given +flags+, invoking the given block (+blk+). The search directory
+    # (+search_root+) is passed in order to allow calculation of
+    # +#search_relative_path+ in the entry.
 
     # @!visibility private
     def FileSearch.search_directory_(search_root, dir, patterns, flags, &blk) # :nodoc:

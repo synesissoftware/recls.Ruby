@@ -43,6 +43,7 @@ require 'recls/ximpl/util'
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls
@@ -52,10 +53,10 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +paths+ (+[ (::String, ::Recls::Entry) ]+) Array of 1 or more path elements to be combined
+  #   - +paths+ (+[ (String, Recls::Entry) ]+) Array of 1 or more path elements to be combined;
   #
   # === Return
-  # (String) The combined path
+  # (+String+) The combined path.
   def self.combine_paths(*paths)
 
     paths.reject! { |p| p.nil? }

@@ -40,6 +40,7 @@
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls

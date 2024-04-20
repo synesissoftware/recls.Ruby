@@ -44,6 +44,7 @@ require 'recls/flags'
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls
@@ -58,10 +59,10 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (String, Recls::Entry) The path
+  #   - +path+ (+String+, +Recls::Entry+) The path;
   #
   # === Return
-  # (Recls::Entry, nil) The entry if +path+ exists and is a directory; +nil+ otherwise
+  # (+Recls::Entry+, +nil+) The entry if +path+ exists and is a directory; +nil+ otherwise.
   def self.directory?(path, *args)
 
     fe = self.stat(path, *args)
@@ -84,10 +85,10 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (String, Recls::Entry) The path
+  #   - +path+ (+String+, +Recls::Entry+) The path;
   #
   # === Return
-  # (Recls::Entry, nil) The entry if +path+ exists and is a file; +nil+ otherwise
+  # (+Recls::Entry+, +nil+) The entry if +path+ exists and is a file; +nil+ otherwise.
   def self.file?(path, *args)
 
     fe = self.stat(path, *args)
@@ -121,10 +122,10 @@ module Recls
   # - +path+, +search_root+, +flags+
   #
   # === Return
-  # (Recls::Entry) An entry representing the path on the file-system, or
+  # (+Recls::Entry+) An entry representing the path on the file-system, or
   # +nil+ if the path does not refer to an existing entity. If the
-  # Recls::DETAILS_LATER flag is included, then an entry is returned
-  # regardless of its existence
+  # +Recls::DETAILS_LATER+ flag is included, then an entry is returned
+  # regardless of its existence.
   def self.stat(path, *args)
 
     flags       = 0
