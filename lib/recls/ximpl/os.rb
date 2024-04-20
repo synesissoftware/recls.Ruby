@@ -1,14 +1,15 @@
-# ######################################################################### #
-# File:         recls/ximpl/os.rb
+# ######################################################################## #
+# File:     recls/ximpl/os.rb
 #
-# Purpose:      Operating system internal implementation constructs for the
-#               recls library.
+# Purpose:  Operating system internal implementation constructs for the
+#           recls library.
 #
-# Created:      16th February 2014
-# Updated:      14th April 2019
+# Created:  16th February 2014
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -34,7 +35,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 =begin
@@ -44,56 +45,57 @@ module Recls # :nodoc:
 
 # :stopdoc:
 
-	module Ximpl # :nodoc: all
+  module Ximpl # :nodoc: all
 
-		module OS # :nodoc: all
+    module OS # :nodoc: all
 
-			# @!visibility private
-			OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
+      # @!visibility private
+      OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
 
-			# @!visibility private
-			PATH_NAME_SEPARATOR = OS_IS_WINDOWS ? '\\' : '/'
+      # @!visibility private
+      PATH_NAME_SEPARATOR = OS_IS_WINDOWS ? '\\' : '/'
 
-			# @!visibility private
-			PATH_SEPARATOR = OS_IS_WINDOWS ? ';' : ':'
+      # @!visibility private
+      PATH_SEPARATOR = OS_IS_WINDOWS ? ';' : ':'
 
-			# @!visibility private
-			WILDCARDS_ALL = OS_IS_WINDOWS ? '*' : '*'
+      # @!visibility private
+      WILDCARDS_ALL = OS_IS_WINDOWS ? '*' : '*'
 
-			# @!visibility private
-			def OS.get_number_of_dots_dir_(p) # :nodoc:
+      # @!visibility private
+      def OS.get_number_of_dots_dir_(p) # :nodoc:
 
-				if p
-					if ?. == p[0]
-						return 1 if 1 == p.size
-						return 1 if ?/ == p[1]
-						return 1 if OS_IS_WINDOWS and ?\\ == p[1]
-						if ?. == p[1]
-							return 2 if 2 == p.size
-							return 2 if ?/ == p[2]
-							return 2 if OS_IS_WINDOWS and ?\\ == p[2]
-						end
-					end
-				end
+        if p
+          if ?. == p[0]
+            return 1 if 1 == p.size
+            return 1 if ?/ == p[1]
+            return 1 if OS_IS_WINDOWS and ?\\ == p[1]
+            if ?. == p[1]
+              return 2 if 2 == p.size
+              return 2 if ?/ == p[2]
+              return 2 if OS_IS_WINDOWS and ?\\ == p[2]
+            end
+          end
+        end
 
-				return 0
-			end
+        return 0
+      end
 
-			# @!visibility private
-			def OS.is_root_dir_(p) # :nodoc:
+      # @!visibility private
+      def OS.is_root_dir_(p) # :nodoc:
 
-				return nil if not p
-				return true if '/' == p
-				return true if OS_IS_WINDOWS and '\\' == p
+        return nil if not p
+        return true if '/' == p
+        return true if OS_IS_WINDOWS and '\\' == p
 
-				return false
-			end
-		end # module OS
-	end # module Ximpl
+        return false
+      end
+    end # module OS
+  end # module Ximpl
 
 # :startdoc:
 
 end # module Recls
+
 
 # ############################## end of file ############################# #
 

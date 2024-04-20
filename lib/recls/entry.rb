@@ -1,14 +1,14 @@
-# ######################################################################### #
-# File:         recls/entry.rb
+# ######################################################################## #
+# File:     recls/entry.rb
 #
-# Purpose:      Defines the Recls::Entry class for the recls.Ruby library.
+# Purpose:  Defines the Recls::Entry class for the recls.Ruby library.
 #
-# Created:      24th July 2012
-# Updated:      25th May 2020
+# Created:  24th July 2012
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2020, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -34,13 +34,14 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/ximpl/os'
 require 'recls/ximpl/' + (Recls::Ximpl::OS::OS_IS_WINDOWS ? 'windows' : 'unix')
 require 'recls/ximpl/util'
 require 'recls/flags'
+
 
 =begin
 =end
@@ -49,350 +50,355 @@ class Object; end # :nodoc:
 
 module Recls
 
-	# A file-system entry
-	class Entry
-
-		private
-		# @!visibility private
-		def self.get_compare_path_(path)
-			return path.upcase if Recls::Ximpl::OS::OS_IS_WINDOWS
-			path
-		end
-		public
-
-		# initialises an entry instance from the given path,
-		# file_stat, and search_dir
-		def initialize(path, file_stat, search_dir, flags)
-
-			@file_stat		=	file_stat
-
-			@path			=	Recls::Ximpl.absolute_path path
-			@short_path		=	nil
-			@compare_path	=	Entry.get_compare_path_ @path
-			@hash			=	@compare_path.hash
-
-			windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
-
-			@drive = windows_drive
-			@directory_path = "#{windows_drive}#{directory}"
-			@directory = directory ? directory : ''
-			@directory_parts = Recls::Ximpl.directory_parts_from_directory directory
-			@file_full_name = basename ? basename : ''
-			@file_short_name = nil
-			@file_name_only = file_name ? file_name : ''
-			@file_extension = file_ext ? file_ext : ''
-
-			@search_directory = search_dir
-			@search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
-			@search_relative_directory_path = Recls::Ximpl.derive_relative_path search_dir, @directory_path
-			@search_relative_directory = @search_relative_directory_path
-			@search_relative_directory_parts = Recls::Ximpl.directory_parts_from_directory @search_relative_directory
-
-			if 0 != (Recls::MARK_DIRECTORIES & flags) && directory?
-				@path					=	Recls::Ximpl::Util.append_trailing_slash @path
-				@search_relative_path	=	Recls::Ximpl::Util.append_trailing_slash @search_relative_path
-			end
-
-			@dev	=	@file_stat.dev if @file_stat
-			@ino	=	@file_stat.ino if @file_stat
-			@nlink	=	@file_stat.nlink if @file_stat
-
-			if Recls::Ximpl::OS::OS_IS_WINDOWS && @file_stat
-
-				@dev				=	@file_stat.by_handle_information.volume_id
-				@ino				=	@file_stat.by_handle_information.file_index
-				@nlink				=	@file_stat.by_handle_information.num_links
-				@short_path			=	@file_stat.short_path
-				@file_short_name	=	Recls::Ximpl::Util.split_path(@short_path)[2]
-			else
-			end
-		end
-
-		# ##########################
-		# Name-related attributes
-
-		# (String) A normalised form of #path that can be used in comparisons
-		attr_reader :compare_path
-
-		# (String) The full-path of the instance
-		attr_reader :path
-		# (String) The (Windows) short-form of #path, or +nil+ if not on Windows
-		attr_reader :short_path
-		# (String) The (Windows) drive. +nil+ if does not exist
-		attr_reader :drive
-		# (String) The full path of the entry's directory (taking into account the
-		# #drive if on Windows)
-		attr_reader :directory_path
-		alias_method :dirname, :directory_path
-		# (String) The entry's directory (excluding the #drive if on Windows)
-		attr_reader :directory
-		# ([String]) An array of directory parts, where each part ends in Recls::PATH_NAME_SEPARATOR
-		attr_reader :directory_parts
-		# (String) The entry's file name (combination of #stem + #extension)
-		attr_reader :file_full_name
-		# (String) The (Windows) short-form of #basename, or +nil+ if not on Windows
-		attr_reader :file_short_name
-		alias_method :basename, :file_full_name
-		# (String) The entry's file stem
-		attr_reader :file_name_only
-		alias_method :stem, :file_name_only
-		# (String) The entry's file extension
-		attr_reader :file_extension
-		alias_method :extension, :file_extension
-		# (String) The search directory if specified; +nil+ otherwise
-		attr_reader :search_directory
-		# (String) The #path relative to #search_directory; +nil+ if no search directory specified
-		attr_reader :search_relative_path
-		# (String) The #directory relative to #search_directory; +nil+ if no search directory specified
-		attr_reader :search_relative_directory
-		# (String) The #directory_path relative to #search_directory; +nil+ if no search directory specified
-		attr_reader :search_relative_directory_path
-		# ([String]) The #directory_parts relative to #search_directory; +nil+ if no search directory specified
-		attr_reader :search_relative_directory_parts
+  # A file-system entry
+  class Entry
+
+    private
+    # @!visibility private
+    def self.get_compare_path_(path)
+      return path.upcase if Recls::Ximpl::OS::OS_IS_WINDOWS
+      path
+    end
+    public
+
+    # initialises an entry instance from the given path,
+    # file_stat, and search_dir
+    def initialize(path, file_stat, search_dir, flags)
+
+      @file_stat    = file_stat
+
+      @path         = Recls::Ximpl.absolute_path path
+      @short_path   = nil
+      @compare_path = Entry.get_compare_path_ @path
+      @hash         = @compare_path.hash
+
+      windows_drive, directory, basename, file_name, file_ext = Recls::Ximpl::Util.split_path @path
+
+      @drive = windows_drive
+      @directory_path = "#{windows_drive}#{directory}"
+      @directory = directory ? directory : ''
+      @directory_parts = Recls::Ximpl.directory_parts_from_directory directory
+      @file_full_name = basename ? basename : ''
+      @file_short_name = nil
+      @file_name_only = file_name ? file_name : ''
+      @file_extension = file_ext ? file_ext : ''
+
+      @search_directory = search_dir
+      @search_relative_path = Recls::Ximpl.derive_relative_path search_dir, @path
+      @search_relative_directory_path = Recls::Ximpl.derive_relative_path search_dir, @directory_path
+      @search_relative_directory = @search_relative_directory_path
+      @search_relative_directory_parts = Recls::Ximpl.directory_parts_from_directory @search_relative_directory
+
+      if 0 != (Recls::MARK_DIRECTORIES & flags) && directory?
+        @path                 = Recls::Ximpl::Util.append_trailing_slash @path
+        @search_relative_path = Recls::Ximpl::Util.append_trailing_slash @search_relative_path
+      end
+
+      @dev    = @file_stat.dev if @file_stat
+      @ino    = @file_stat.ino if @file_stat
+      @nlink  = @file_stat.nlink if @file_stat
+
+      if Recls::Ximpl::OS::OS_IS_WINDOWS && @file_stat
+
+        @dev              = @file_stat.by_handle_information.volume_id
+        @ino              = @file_stat.by_handle_information.file_index
+        @nlink            = @file_stat.by_handle_information.num_links
+        @short_path       = @file_stat.short_path
+        @file_short_name  = Recls::Ximpl::Util.split_path(@short_path)[2]
+      else
+      end
+    end
+
+    # ##########################
+    # Name-related attributes
+
+    # (String) A normalised form of #path that can be used in comparisons
+    attr_reader :compare_path
+
+    # (String) The full-path of the instance
+    attr_reader :path
+    # (String) The (Windows) short-form of #path, or +nil+ if not on Windows
+    attr_reader :short_path
+    # (String) The (Windows) drive. +nil+ if does not exist
+    attr_reader :drive
+    # (String) The full path of the entry's directory (taking into account the
+    # #drive if on Windows)
+    attr_reader :directory_path
+    alias_method :dirname, :directory_path
+    # (String) The entry's directory (excluding the #drive if on Windows)
+    attr_reader :directory
+    # ([String]) An array of directory parts, where each part ends in Recls::PATH_NAME_SEPARATOR
+    attr_reader :directory_parts
+    # (String) The entry's file name (combination of #stem + #extension)
+    attr_reader :file_full_name
+    # (String) The (Windows) short-form of #basename, or +nil+ if not on Windows
+    attr_reader :file_short_name
+    alias_method :basename, :file_full_name
+    # (String) The entry's file stem
+    attr_reader :file_name_only
+    alias_method :stem, :file_name_only
+    # (String) The entry's file extension
+    attr_reader :file_extension
+    alias_method :extension, :file_extension
+    # (String) The search directory if specified; +nil+ otherwise
+    attr_reader :search_directory
+    # (String) The #path relative to #search_directory; +nil+ if no search directory specified
+    attr_reader :search_relative_path
+    # (String) The #directory relative to #search_directory; +nil+ if no search directory specified
+    attr_reader :search_relative_directory
+    # (String) The #directory_path relative to #search_directory; +nil+ if no search directory specified
+    attr_reader :search_relative_directory_path
+    # ([String]) The #directory_parts relative to #search_directory; +nil+ if no search directory specified
+    attr_reader :search_relative_directory_parts
 
-		# ##########################
-		# Nature attributes
+    # ##########################
+    # Nature attributes
 
-		# indicates whether the given entry existed at the time the entry
-		# instance was created
-		def exist?
+    # indicates whether the given entry existed at the time the entry
+    # instance was created
+    def exist?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			not @file_stat.nil?
-		end
+      not @file_stat.nil?
+    end
 
-		# indicates whether the given entry is hidden
-		def hidden?
+    # indicates whether the given entry is hidden
+    def hidden?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.hidden?
-		end
+      @file_stat.hidden?
+    end
 
-		# indicates whether the given entry is readonly
-		def readonly?
+    # indicates whether the given entry is readonly
+    def readonly?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			not @file_stat.writable?
-		end
+      not @file_stat.writable?
+    end
 
-		# ##########################
-		# Comparison
+    # ##########################
+    # Comparison
 
-	if Recls::Ximpl::OS::OS_IS_WINDOWS
+  if Recls::Ximpl::OS::OS_IS_WINDOWS
 
-		# [WINDOWS-ONLY] Indicates whether the entry has the *system* bit
-		def system?
+    # [WINDOWS-ONLY] Indicates whether the entry has the *system* bit
+    def system?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.system?
-		end
+      @file_stat.system?
+    end
 
-		# [WINDOWS-ONLY] Indicates whether the entry has the *archive* bit
-		def archive?
+    # [WINDOWS-ONLY] Indicates whether the entry has the *archive* bit
+    def archive?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.archive?
-		end
+      @file_stat.archive?
+    end
 
-		# [WINDOWS-ONLY] Indicates whether the entry is a device
-		def device?
+    # [WINDOWS-ONLY] Indicates whether the entry is a device
+    def device?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.device?
-		end
+      @file_stat.device?
+    end
 
-		# [WINDOWS-ONLY] Indicates whether the entry is *normal*
-		def normal?
+    # [WINDOWS-ONLY] Indicates whether the entry is *normal*
+    def normal?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.normal?
-		end
+      @file_stat.normal?
+    end
 
-		# [WINDOWS-ONLY] Indicates whether the entry has the *temporary* bit
-		def temporary?
+    # [WINDOWS-ONLY] Indicates whether the entry has the *temporary* bit
+    def temporary?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.temporary?
-		end
+      @file_stat.temporary?
+    end
 
-		# [WINDOWS-ONLY] Indicates whether the entry has the *compressed* bit
-		def compressed?
+    # [WINDOWS-ONLY] Indicates whether the entry has the *compressed* bit
+    def compressed?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.compressed?
-		end
+      @file_stat.compressed?
+    end
 
-		# [WINDOWS-ONLY] Indicates whether the entry has the *encrypted* bit
-		def encrypted?
+    # [WINDOWS-ONLY] Indicates whether the entry has the *encrypted* bit
+    def encrypted?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.encrypted?
-		end
-	end
+      @file_stat.encrypted?
+    end
+  end
 
-		# indicates whether the given entry represents a directory
-		def directory?
+    # indicates whether the given entry represents a directory
+    def directory?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.directory?
-		end
+      @file_stat.directory?
+    end
 
-		alias_method :dir?, :directory?
+    alias_method :dir?, :directory?
 
-		# indicates whether the given entry represents a file
-		def file?
+    # indicates whether the given entry represents a file
+    def file?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.file?
-		end
+      @file_stat.file?
+    end
 
-		# indicates whether the given entry represents a link
-		def link?
+    # indicates whether the given entry represents a link
+    def link?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.link?
-		end
+      @file_stat.link?
+    end
 
-		# indicates whether the given entry represents a socket
-		def socket?
+    # indicates whether the given entry represents a socket
+    def socket?
 
-			return false if @file_stat.nil?
+      return false if @file_stat.nil?
 
-			@file_stat.socket?
-		end
+      @file_stat.socket?
+    end
 
-		# ##########################
-		# Size attributes
+    # ##########################
+    # Size attributes
 
-		# indicates the size of the given entry
-		def size
+    # indicates the size of the given entry
+    def size
 
-			return 0 if @file_stat.nil?
+      return 0 if @file_stat.nil?
 
-			@file_stat.size
-		end
+      @file_stat.size
+    end
 
-		# ##########################
-		# File-system entry attributes
+    # ##########################
+    # File-system entry attributes
 
-		# indicates the device of the given entry
-		#
-		# On Windows, this will be 0 if the entry cannot be
-		# opened
-		def dev
+    # indicates the device of the given entry
+    #
+    # On Windows, this will be 0 if the entry cannot be
+    # opened
+    def dev
 
-			@dev
-		end
+      @dev
+    end
 
-		# indicates the ino of the given entry
-		#
-		# On Windows, this will be 0 if the entry cannot be
-		# opened
-		def ino
+    # indicates the ino of the given entry
+    #
+    # On Windows, this will be 0 if the entry cannot be
+    # opened
+    def ino
 
-			@ino
-		end
+      @ino
+    end
 
-		# number of links to the given entry
-		#
-		# On Windows, this will be 0 if the entry cannot be
-		# opened
-		def nlink
+    # number of links to the given entry
+    #
+    # On Windows, this will be 0 if the entry cannot be
+    # opened
+    def nlink
 
-			@nlink
-		end
+      @nlink
+    end
 
-		# ##########################
-		# Time attributes
+    # ##########################
+    # Time attributes
 
-		# indicates the last access time of the entry
-		def last_access_time
+    # indicates the last access time of the entry
+    def last_access_time
 
-			return nil if @file_stat.nil?
+      return nil if @file_stat.nil?
 
-			@file_stat.atime
-		end
+      @file_stat.atime
+    end
 
-		# indicates the modification time of the entry
-		def modification_time
+    # indicates the modification time of the entry
+    def modification_time
 
-			return nil if @file_stat.nil?
+      return nil if @file_stat.nil?
 
-			@file_stat.mtime
-		end
+      @file_stat.mtime
+    end
 
-		# ##########################
-		# Comparison
+    # ##########################
+    # Comparison
 
-		# determines whether rhs is an instance of Entry and
-		# refers to the same path
-		def eql?(rhs)
+    # determines whether rhs is an instance of Entry and
+    # refers to the same path
+    def eql?(rhs)
 
-			case	rhs
-			when	self.class
-				return compare_path == rhs.compare_path
-			else
-				return false
-			end
-		end
+      case rhs
+      when self.class
 
-		# determines whether rhs refers to the same path
-		def ==(rhs)
+        return compare_path == rhs.compare_path
+      else
 
-			case	rhs
-			when	String
-				return compare_path == Entry.get_compare_path_(rhs)
-			when	self.class
-				return compare_path == rhs.compare_path
-			else
-				return false
-			end
-		end
+        return false
+      end
+    end
 
-		# compares this instance with rhs
-		def <=>(rhs)
+    # determines whether rhs refers to the same path
+    def ==(rhs)
 
-			compare_path <=> rhs.compare_path
-		end
+      case rhs
+      when String
 
-		# the hash
-		def hash
+        return compare_path == Entry.get_compare_path_(rhs)
+      when self.class
 
-			@hash
-		end
+        return compare_path == rhs.compare_path
+      else
 
-		# ##########################
-		# Conversion
+        return false
+      end
+    end
 
-		# represents the entry as a string (in the form of
-		# the full path)
-		def to_s
+    # compares this instance with rhs
+    def <=>(rhs)
 
-			path
-		end
+      compare_path <=> rhs.compare_path
+    end
 
-		# represents the entry as a string (in the form of
-		# the full path)
-		def to_str
+    # the hash
+    def hash
 
-			path
-		end
-	end # class Entry
+      @hash
+    end
+
+    # ##########################
+    # Conversion
+
+    # represents the entry as a string (in the form of
+    # the full path)
+    def to_s
+
+      path
+    end
+
+    # represents the entry as a string (in the form of
+    # the full path)
+    def to_str
+
+      path
+    end
+  end # class Entry
 end # module Recls
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

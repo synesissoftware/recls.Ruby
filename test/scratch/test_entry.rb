@@ -22,7 +22,7 @@ puts "\t#{'f.directory'.ljust(20)}\t#{f.directory}"
 directory_parts = f.directory_parts
 puts "\t#{'f.directory_parts'.ljust(20)}\t[#{directory_parts.size}]"
 directory_parts.each do |part|
-	puts "\t#{''.ljust(20)}\t\t#{part}"
+  puts "\t#{''.ljust(20)}\t\t#{part}"
 end
 puts "\t#{'f.file_full_name'.ljust(20)}\t#{f.file_full_name}"
 puts "\t#{'f.file_short_name'.ljust(20)}\t#{f.file_short_name}"
@@ -36,7 +36,7 @@ puts "\t#{'f.search_relative_directory_path'.ljust(20)}\t#{f.search_relative_dir
 search_relative_directory_parts = f.search_relative_directory_parts
 puts "\t#{'f.search_relative_directory_parts'.ljust(20)}\t[#{search_relative_directory_parts.size}]"
 search_relative_directory_parts.each do |part|
-	puts "\t#{''.ljust(20)}\t\t#{part}"
+  puts "\t#{''.ljust(20)}\t\t#{part}"
 end
 
 puts "\t#{'f.size'.ljust(20)}\t#{f.size}"
@@ -66,8 +66,8 @@ puts "directories:"
 num_directories = 0
 Recls::FileSearch.new('.', '*', Recls::DIRECTORIES).each do |fe|
 
-	num_directories += 1
-	puts "\t[#{fe.search_relative_path}]"
+  num_directories += 1
+  puts "\t[#{fe.search_relative_path}]"
 end
 puts "  #{num_directories} directories"
 
@@ -76,8 +76,8 @@ puts "files:"
 num_files = 0
 Recls::FileSearch.new('.', '*.rb', Recls::RECURSIVE | Recls::FILES).each do |fe|
 
-	num_files += 1
-	puts "\t<#{fe.search_relative_path}>"
+  num_files += 1
+  puts "\t<#{fe.search_relative_path}>"
 end
 puts "  #{num_files} file(s)"
 

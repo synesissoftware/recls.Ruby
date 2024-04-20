@@ -4,72 +4,72 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
-
 require 'recls'
 
 require 'test/unit'
 
+
 class Test_Recls_constants < Test::Unit::TestCase
 
-	private
-	@@OS_IS_WINDOWS = Recls::Ximpl::OS::OS_IS_WINDOWS
+  private
+  @@OS_IS_WINDOWS = Recls::Ximpl::OS::OS_IS_WINDOWS
 
-	public
+  public
 
 
-	def test_PATH_NAME_SEPARATOR
+  def test_PATH_NAME_SEPARATOR
 
-		expected = @@OS_IS_WINDOWS ? '\\' : '/'
+    expected = @@OS_IS_WINDOWS ? '\\' : '/'
 
-		assert_equal(expected, Recls::PATH_NAME_SEPARATOR)
+    assert_equal(expected, Recls::PATH_NAME_SEPARATOR)
 
-	end # def test_PATH_NAME_SEPARATOR
+  end # def test_PATH_NAME_SEPARATOR
 
   if not defined? RECLS_NO_OBSOLETE
 
-	def test_pathNameSeparator
+  def test_pathNameSeparator
 
-		assert_equal(Recls::PATH_NAME_SEPARATOR, Recls::pathNameSeparator)
+    assert_equal(Recls::PATH_NAME_SEPARATOR, Recls::pathNameSeparator)
 
-	end # def test_pathNameSeparator
+  end # def test_pathNameSeparator
 
   end
 
-	def test_PATH_SEPARATOR
+  def test_PATH_SEPARATOR
 
-		expected = @@OS_IS_WINDOWS ? ';' : ':'
+    expected = @@OS_IS_WINDOWS ? ';' : ':'
 
-		assert_equal(expected, Recls::PATH_SEPARATOR)
+    assert_equal(expected, Recls::PATH_SEPARATOR)
 
-	end # def test_PATH_SEPARATOR
+  end # def test_PATH_SEPARATOR
 
   if not defined? RECLS_NO_OBSOLETE
 
-	def test_pathSeparator
+  def test_pathSeparator
 
-		assert_equal(Recls::PATH_SEPARATOR, Recls::pathSeparator)
+    assert_equal(Recls::PATH_SEPARATOR, Recls::pathSeparator)
 
-	end # def test_pathSeparator
+  end # def test_pathSeparator
 
   end
 
 
 
-	def test_WILDCARDS_ALL
+  def test_WILDCARDS_ALL
 
-		#expected = @@OS_IS_WINDOWS ? '*.*' : '*'
+    #expected = @@OS_IS_WINDOWS ? '*.*' : '*'
 
-		assert_equal('*', Recls::WILDCARDS_ALL)
+    assert_equal('*', Recls::WILDCARDS_ALL)
 
-	end # def test_WILDCARDS_ALL
+  end # def test_WILDCARDS_ALL
 
   if not defined? RECLS_NO_OBSOLETE
 
-	def test_wildcardsAll
+  def test_wildcardsAll
 
-		assert_equal(Recls::WILDCARDS_ALL, Recls::wildcardsAll)
+    assert_equal(Recls::WILDCARDS_ALL, Recls::wildcardsAll)
 
-	end # def test_wildcardsAll
+  end # def test_wildcardsAll
 
   end
 

@@ -1,14 +1,14 @@
-# ######################################################################### #
-# File:         recls/version.rb
+# ######################################################################## #
+# File:     recls/version.rb
 #
-# Purpose:      Version for recls library
+# Purpose:  Version for recls library
 #
-# Created:      14th February 2014
-# Updated:      25th May 2020
+# Created:  14th February 2014
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2020, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -34,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 =begin
@@ -44,17 +44,17 @@ class Object; end # :nodoc:
 
 module Recls
 
-	# Current version of the recls.Ruby library
-	VERSION				=	'2.11.0'
+  # Current version of the recls.Ruby library
+  VERSION           = '2.11.0.1'
 
-	private
-	VERSION_PARTS_		=	VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
-	public
-	VERSION_MAJOR		=	VERSION_PARTS_[0] # :nodoc:
-	VERSION_MINOR		=	VERSION_PARTS_[1] # :nodoc:
-	VERSION_REVISION	=	VERSION_PARTS_[2] # :nodoc:
+  private
+  VERSION_PARTS_    = VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
+  public
+  VERSION_MAJOR     = VERSION_PARTS_[0] # :nodoc:
+  VERSION_MINOR     = VERSION_PARTS_[1] # :nodoc:
+  VERSION_REVISION  = VERSION_PARTS_[2] # :nodoc:
 end # module Recls
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

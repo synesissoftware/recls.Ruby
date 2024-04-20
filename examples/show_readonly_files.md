@@ -18,7 +18,7 @@ require 'recls'
 # 1. Filter returned entries by readonly? attribute
 Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES).each do |fe|
 
-	puts fe.path if fe.readonly?
+  puts fe.path if fe.readonly?
 end
 ```
 
@@ -32,4 +32,7 @@ TBC
 /Users/matthewwilson/dev/freelibs/recls/100/recls.Ruby/trunk/test/fixtures/readonly/file-1
 /Users/matthewwilson/dev/freelibs/recls/100/recls.Ruby/trunk/test/fixtures/readonly/file-2
 ```
+
+
+<!-- ########################### end of file ########################### -->
 

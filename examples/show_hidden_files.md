@@ -19,7 +19,7 @@ require 'recls'
 # 2. Filter returned entries by hidden? attribute
 Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES | Recls::SHOW_HIDDEN).each do |fe|
 
-	puts fe.path if fe.hidden?
+  puts fe.path if fe.hidden?
 end
 ```
 
@@ -36,4 +36,7 @@ TBC
 /Users/matthewwilson/dev/freelibs/recls/100/recls.Ruby/trunk/test/fixtures/hidden/.file-1
 /Users/matthewwilson/dev/freelibs/recls/100/recls.Ruby/trunk/test/fixtures/hidden/.file-2
 ```
+
+
+<!-- ########################### end of file ########################### -->
 

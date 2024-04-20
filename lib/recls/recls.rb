@@ -1,13 +1,14 @@
-# ######################################################################### #
-# File:         recls/recls.rb
+# ######################################################################## #
+# File:     recls/recls.rb
 #
-# Purpose:      Main source file for recls library
+# Purpose:  Main source file for recls library
 #
-# Created:      19th July 2012
-# Updated:      14th April 2019
+# Created:  19th July 2012
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -33,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/version'
@@ -67,19 +68,19 @@ end # module Recls
 
 module Recls
 
-	# Represents the "all" wildcards string for the ambient operating
-	# system
-	WILDCARDS_ALL = Recls::Ximpl::OS::WILDCARDS_ALL
+  # Represents the "all" wildcards string for the ambient operating
+  # system
+  WILDCARDS_ALL = Recls::Ximpl::OS::WILDCARDS_ALL
 
-	# The string sequence used to separate names in paths, e.g. "/" on UNIX
-	PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
+  # The string sequence used to separate names in paths, e.g. "/" on UNIX
+  PATH_NAME_SEPARATOR = Recls::Ximpl::OS::PATH_NAME_SEPARATOR
 
-	# The string sequence used to separate paths, e.g. ":" on UNIX
-	PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
+  # The string sequence used to separate paths, e.g. ":" on UNIX
+  PATH_SEPARATOR = Recls::Ximpl::OS::PATH_SEPARATOR
 end # module Recls
 
 require 'recls/obsolete'
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 
