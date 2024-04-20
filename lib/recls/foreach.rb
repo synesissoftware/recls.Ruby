@@ -1,13 +1,14 @@
-# ######################################################################### #
-# File:         recls/foreach.rb
+# ######################################################################## #
+# File:     recls/foreach.rb
 #
-# Purpose:      Definition of Recls::foreach() utility function
+# Purpose:  Definition of Recls::foreach() utility function
 #
-# Created:      22nd October 2014
-# Updated:      26th May 2020
+# Created:  22nd October 2014
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -33,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/file_search'
@@ -45,98 +46,102 @@ class Object; end # :nodoc:
 
 module Recls
 
-	private
-	# @!visibility private
-	class FileSearchLineEnumerator # :nodoc: all
+  private
+  # @!visibility private
+  class FileSearchLineEnumerator # :nodoc: all
 
-		include Enumerable
+    include Enumerable
 
-		# @!visibility private
-		def initialize(fs)
+    # @!visibility private
+    def initialize(fs)
 
-			@fs = fs
-		end
+      @fs = fs
+    end
 
-		# @!visibility private
-		def each(&block)
+    # @!visibility private
+    def each(&block)
 
-			@fs.each do |fe|
+      @fs.each do |fe|
 
-				IO.readlines(fe).each_with_index do |line, index|
+        IO.readlines(fe).each_with_index do |line, index|
 
-					case	block.arity
-					when	1
-						yield line
-					when	2
-						yield line, index
-					when	3
-						yield line, index, fe
-					else
-						raise ArgumentError, "block must take 1, 2, or 3 parameters - #{block.arity} given. (Perhaps you have applied each_with_index, which cannot be done to Recls.foreach)"
-					end
-				end
-			end
-		end
-	end # class FileSearchLineEnumerator
-	public
+          case block.arity
+          when 1
 
-	# Performs a recursive search and enumerates the lines of all files
-	# found
-	#
-	# === Signature
-	#
-	# * *Parameters:*
-	#   - +searchable+ A searchable instance obtained from Recls::file_search() or Recls::file_rsearch()
-	#   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
-	#   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
-	#   - +options+ (Hash) An options hash
-	#   - +flags+ (Integer) Combination of flags (with behaviour as described below for the +flags+ option)
-	#
-	# * *Block:*
-	# An optional block that will be executed once for each line in each file
-	# found, where the block must take 1, 2, or 3 parameters, representing the
-	# line [ + file-line-index [ + entry ]]. If no block is given, an
-	# enumerator is returned.
-	#
-	# ==== Parameter Ordering
-	#
-	# The parameters may be expressed in any of the following permutations:
-	# - +searchable+
-	# - +search_root+, +patterns+, +flags+
-	# - +search_root+, +patterns+, +options+
-	#
-	# === Return
-	#
-	def self.foreach(*args, &block)
+            yield line
+          when 2
 
-		fs = nil
+            yield line, index
+          when 3
 
-		case	args.length
-		when	1
+            yield line, index, fe
+          else
 
-			raise ArgumentError "Single argument must be of type #{Recls::FileSearch}" unless args[0].kind_of? Recls::FileSearch
+            raise ArgumentError, "block must take 1, 2, or 3 parameters - #{block.arity} given. (Perhaps you have applied each_with_index, which cannot be done to Recls.foreach)"
+          end
+        end
+      end
+    end
+  end # class FileSearchLineEnumerator
+  public
 
-			fs = args[0]
-		when	3
+  # Performs a recursive search and enumerates the lines of all files
+  # found
+  #
+  # === Signature
+  #
+  # * *Parameters:*
+  #   - +searchable+ A searchable instance obtained from Recls::file_search() or Recls::file_rsearch()
+  #   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
+  #   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
+  #   - +options+ (Hash) An options hash
+  #   - +flags+ (Integer) Combination of flags (with behaviour as described below for the +flags+ option)
+  #
+  # * *Block:*
+  # An optional block that will be executed once for each line in each file
+  # found, where the block must take 1, 2, or 3 parameters, representing the
+  # line [ + file-line-index [ + entry ]]. If no block is given, an
+  # enumerator is returned.
+  #
+  # ==== Parameter Ordering
+  #
+  # The parameters may be expressed in any of the following permutations:
+  # - +searchable+
+  # - +search_root+, +patterns+, +flags+
+  # - +search_root+, +patterns+, +options+
+  #
+  # === Return
+  #
+  def self.foreach(*args, &block)
 
-			fs = Recls::FileSearch.new(args[0], args[1], args[2])
-		else
+    fs = nil
 
-			raise ArgumentError "Function requires single argument (#{Recls::FileSearch}) or three arguments (directory, patterns, flags)"
-		end
+    case args.length
+    when 1
 
-		if block_given?
+      raise ArgumentError "Single argument must be of type #{Recls::FileSearch}" unless args[0].kind_of? Recls::FileSearch
 
-			FileSearchLineEnumerator.new(fs).each(block)
+      fs = args[0]
+    when 3
 
-			return nil
-		else
+      fs = Recls::FileSearch.new(args[0], args[1], args[2])
+    else
 
-			return FileSearchLineEnumerator.new(fs)
-		end
-	end
+      raise ArgumentError "Function requires single argument (#{Recls::FileSearch}) or three arguments (directory, patterns, flags)"
+    end
+
+    if block_given?
+
+      FileSearchLineEnumerator.new(fs).each(block)
+
+      return nil
+    else
+
+      return FileSearchLineEnumerator.new(fs)
+    end
+  end
 end # module Recls
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

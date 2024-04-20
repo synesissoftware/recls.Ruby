@@ -1,14 +1,15 @@
-# ######################################################################### #
-# File:         recls.rb
+# ######################################################################## #
+# File:     recls.rb
 #
-# Purpose:      Top-level include for recls.Ruby library
+# Purpose:  Top-level include for recls.Ruby library
 #
-# Created:      13th January 2012
-# Updated:      27th August 2015
+# Created:  13th January 2012
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
-# Copyright (c) 2012-2015, Matthew Wilson and Synesis Software
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,11 +34,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/recls'
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

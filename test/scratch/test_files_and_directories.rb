@@ -12,15 +12,15 @@ puts
 
 Recls::FileSearch.new(nil, nil, Recls::FILES | Recls::DIRECTORIES | Recls::RECURSIVE).each do |fe|
 
-	path = fe.search_relative_path
+  path = fe.search_relative_path
 
-	if fe.directory?
+  if fe.directory?
 
-		puts path + '/'
-	else
+    puts path + '/'
+  else
 
-		puts path
-	end
+    puts path
+  end
 end
 
 puts
@@ -29,8 +29,8 @@ puts
 
 Recls::FileSearch.new(nil, nil, Recls::FILES | Recls::DIRECTORIES | Recls::RECURSIVE | Recls::MARK_DIRECTORIES).each do |fe|
 
-	path = fe.search_relative_path
+  path = fe.search_relative_path
 
-	puts path
+  puts path
 end
 

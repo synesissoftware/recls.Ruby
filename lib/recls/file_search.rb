@@ -1,13 +1,14 @@
-# ######################################################################### #
-# File:         recls/file_search.rb
+# ######################################################################## #
+# File:     recls/file_search.rb
 #
-# Purpose:      Defines the Recls::FileSearch class for the recls.Ruby library.
+# Purpose:  Defines the Recls::FileSearch class for the recls.Ruby library.
 #
-# Created:      24th July 2012
-# Updated:      14th April 2019
+# Created:  24th July 2012
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -33,12 +34,13 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/entry'
 require 'recls/flags'
 require 'recls/ximpl/os'
+
 
 =begin
 =end
@@ -47,281 +49,281 @@ class Object; end # :nodoc:
 
 module Recls
 
-	class FileSearch # :nodoc: all
+  class FileSearch # :nodoc: all
 
-		include Enumerable
+    include Enumerable
 
-		# Initialises a +FileSearch+ instance, which acts as an +Enumerable+
-		# of Recls::Entry
-		#
-		# === Signature
-		#
-		# * *Parameters:*
-		#   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
-		#   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed
-		#   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
-		#
-		# * *Options:*
-		#   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0, then FILES is assumed
-		#
-		# === Return
-		#  An instance of the class
-		#
-		def initialize(search_root, patterns, options={})
+    # Initialises a +FileSearch+ instance, which acts as an +Enumerable+
+    # of Recls::Entry
+    #
+    # === Signature
+    #
+    # * *Parameters:*
+    #   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
+    #   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed
+    #   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
+    #
+    # * *Options:*
+    #   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0, then FILES is assumed
+    #
+    # === Return
+    #  An instance of the class
+    #
+    def initialize(search_root, patterns, options={})
 
-			# for backwards compatibility, we allow for options to
-			# be a number
+      # for backwards compatibility, we allow for options to
+      # be a number
 
-			flags	=	0
+      flags = 0
 
-			case options
-			when ::NilClass
+      case options
+      when ::NilClass
 
-				options	=	{ flags: 0 }
-			when ::Integer
+        options = { flags: 0 }
+      when ::Integer
 
-				flags	=	options
-				options	=	{ flags: flags }
-			when ::Hash
+        flags   = options
+        options = { flags: flags }
+      when ::Hash
 
-				flags	=	options[:flags] || 0
-			else
+        flags = options[:flags] || 0
+      else
 
-				raise ArgumentError, "options parameter must a #{::Hash}, nil, or an integer specifying flags - an instance of #{options.class} given"
-			end
+        raise ArgumentError, "options parameter must a #{::Hash}, nil, or an integer specifying flags - an instance of #{options.class} given"
+      end
 
 
-			if not search_root
+      if not search_root
 
-				search_root = '.'
-			else
+        search_root = '.'
+      else
 
-				search_root = search_root.to_s
-			end
-			search_root = '.' if search_root.empty?
-			search_root = File.expand_path(search_root) if '~' == search_root[0]
+        search_root = search_root.to_s
+      end
+      search_root = '.' if search_root.empty?
+      search_root = File.expand_path(search_root) if '~' == search_root[0]
 
-			case	patterns
-			when	NilClass
+      case patterns
+      when NilClass
 
-				patterns = []
-			when	String
+        patterns = []
+      when String
 
-				patterns = patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/)
-			when	Array
-			else
+        patterns = patterns.split(/[|#{Recls::Ximpl::OS::PATH_SEPARATOR}]/)
+      when Array
+      else
 
-				patterns = patterns.to_a
-			end
+        patterns = patterns.to_a
+      end
 
-			patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
+      patterns = [ Recls::WILDCARDS_ALL ] if patterns.empty?
 
-			if(0 == (Recls::TYPEMASK & flags))
+      if(0 == (Recls::TYPEMASK & flags))
 
-				flags |= Recls::FILES
-			end
+        flags |= Recls::FILES
+      end
 
-			# now de-dup the patterns, to avoid duplicates in search
-			patterns		=	patterns.flatten
-			patterns		=	patterns.uniq
+      # now de-dup the patterns, to avoid duplicates in search
+      patterns      = patterns.flatten
+      patterns      = patterns.uniq
 
-			@search_root	=	search_root
-			@patterns		=	patterns
-			@flags			=	flags
-		end
+      @search_root  = search_root
+      @patterns     = patterns
+      @flags        = flags
+    end
 
-		# (String) The search root
-		attr_reader :search_root
-		# (String) The search patterns
-		attr_reader :patterns
-		# (Integer) The search flags
-		attr_reader :flags
+    # (String) The search root
+    attr_reader :search_root
+    # (String) The search patterns
+    attr_reader :patterns
+    # (Integer) The search flags
+    attr_reader :flags
 
-		# Calls the block once for each found file, passing a single
-		# parameter that is a Recls::Entry instance
-		#
-		# @!visibility private
-		def each(&blk) # :nodoc:
+    # Calls the block once for each found file, passing a single
+    # parameter that is a Recls::Entry instance
+    #
+    # @!visibility private
+    def each(&blk) # :nodoc:
 
-			search_root = @search_root
-			search_root = Recls::Ximpl::absolute_path search_root
+      search_root = @search_root
+      search_root = Recls::Ximpl::absolute_path search_root
 
-			search_root = search_root.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
+      search_root = search_root.gsub(/\\/, '/') if Recls::Ximpl::OS::OS_IS_WINDOWS
 
-			# set the (type part of the) flags to zero if we want
-			# everything, to facilitate later optimisation
+      # set the (type part of the) flags to zero if we want
+      # everything, to facilitate later optimisation
 
-			flags = @flags
+      flags = @flags
 
-			if(Recls::Ximpl::OS::OS_IS_WINDOWS)
+      if(Recls::Ximpl::OS::OS_IS_WINDOWS)
 
-				mask = (Recls::FILES | Recls::DIRECTORIES)
-			else
+        mask = (Recls::FILES | Recls::DIRECTORIES)
+      else
 
-				mask = (Recls::FILES | Recls::DIRECTORIES | Recls::LINKS | Recls::DEVICES)
-			end
+        mask = (Recls::FILES | Recls::DIRECTORIES | Recls::LINKS | Recls::DEVICES)
+      end
 
-			if(mask == (mask & flags))
+      if(mask == (mask & flags))
 
-				flags = flags & ~Recls::TYPEMASK
-			end
+        flags = flags & ~Recls::TYPEMASK
+      end
 
-			patterns = @patterns
+      patterns = @patterns
 
-			patterns = patterns.map do |pattern|
+      patterns = patterns.map do |pattern|
 
-				pattern = pattern.gsub(/\./, '\\.')
-				pattern = pattern.gsub(/\?/, '.')
-				pattern = pattern.gsub(/\*/, '.*')
-				pattern
-			end
+        pattern = pattern.gsub(/\./, '\\.')
+        pattern = pattern.gsub(/\?/, '.')
+        pattern = pattern.gsub(/\*/, '.*')
+        pattern
+      end
 
-			search_dir	=	search_root
-			search_root	=	Recls::Ximpl::Util.append_trailing_slash search_root
+      search_dir  = search_root
+      search_root = Recls::Ximpl::Util.append_trailing_slash search_root
 
-			FileSearch::search_directory_(search_root, search_dir, patterns, flags, &blk)
-		end
+      FileSearch::search_directory_(search_root, search_dir, patterns, flags, &blk)
+    end
 
-		private
-		# @!visibility private
-		def FileSearch.is_dots(name) # :nodoc:
+    private
+    # @!visibility private
+    def FileSearch.is_dots(name) # :nodoc:
 
-			case	name
-			when	'.', '..'
-				true
-			else
-				false
-			end
-		end
+      case name
+      when '.', '..'
+        true
+      else
+        false
+      end
+    end
 
-		# @!visibility private
-		def FileSearch.stat_or_nil_(path, flags) # :nodoc:
+    # @!visibility private
+    def FileSearch.stat_or_nil_(path, flags) # :nodoc:
 
-			begin
+      begin
 
-				Recls::Ximpl::FileStat.stat path
-			rescue Errno::ENOENT, Errno::ENXIO
+        Recls::Ximpl::FileStat.stat path
+      rescue Errno::ENOENT, Errno::ENXIO
 
-				nil
-			rescue SystemCallError => x
+        nil
+      rescue SystemCallError => x
 
-				# TODO this should be filtered up and/or logged
+        # TODO this should be filtered up and/or logged
 
-				if(0 != (STOP_ON_ACCESS_FAILURE & flags))
+        if(0 != (STOP_ON_ACCESS_FAILURE & flags))
 
-					raise
-				end
+          raise
+        end
 
-				nil
-			end
-		end
+        nil
+      end
+    end
 
-		# searches all entries - files, directories, links, devices
-		# - that match the given (patterns) in the given directory
-		# (dir) according to the given (flags), invoking the given
-		# block (blk). The search directory (search_root) is passed in
-		# order to allow calculation of search_relative_path in the
-		# entry.
+    # searches all entries - files, directories, links, devices
+    # - that match the given (patterns) in the given directory
+    # (dir) according to the given (flags), invoking the given
+    # block (blk). The search directory (search_root) is passed in
+    # order to allow calculation of search_relative_path in the
+    # entry.
 
-		# @!visibility private
-		def FileSearch.search_directory_(search_root, dir, patterns, flags, &blk) # :nodoc:
+    # @!visibility private
+    def FileSearch.search_directory_(search_root, dir, patterns, flags, &blk) # :nodoc:
 
-			# array of FileStat instances
-			entries = []
+      # array of FileStat instances
+      entries = []
 
-			patterns.each do |pattern|
+      patterns.each do |pattern|
 
-				Recls::Ximpl::dir_entries_maybe(dir, flags).each do |name|
+        Recls::Ximpl::dir_entries_maybe(dir, flags).each do |name|
 
-					next if is_dots(name)
+          next if is_dots(name)
 
-					if not name =~ /^#{pattern}$/
+          if not name =~ /^#{pattern}$/
 
-						next
-					end
+            next
+          end
 
-					entry_path = File::join(dir, name)
+          entry_path = File::join(dir, name)
 
-					fs = stat_or_nil_(entry_path, flags)
+          fs = stat_or_nil_(entry_path, flags)
 
-					entries << fs
-				end
-			end
+          entries << fs
+        end
+      end
 
-			# array of FileStat instances
-			subdirectories = []
+      # array of FileStat instances
+      subdirectories = []
 
-			Recls::Ximpl::dir_entries_maybe(dir, flags).each do |subdir|
+      Recls::Ximpl::dir_entries_maybe(dir, flags).each do |subdir|
 
-				next if is_dots(subdir)
+        next if is_dots(subdir)
 
-				subdir_path = File::join(dir, subdir)
+        subdir_path = File::join(dir, subdir)
 
-				fs = stat_or_nil_(subdir_path, flags)
+        fs = stat_or_nil_(subdir_path, flags)
 
-				next if not fs
+        next if not fs
 
-				next unless fs.directory?
+        next unless fs.directory?
 
-				subdirectories << fs
-			end
+        subdirectories << fs
+      end
 
 
-			# now filter the file-stat instances and send each
-			# remaining to the block in Entry instance
-			entries.each do |fs|
+      # now filter the file-stat instances and send each
+      # remaining to the block in Entry instance
+      entries.each do |fs|
 
-				next if not fs
+        next if not fs
 
-				if(0 == (Recls::SHOW_HIDDEN & flags))
+        if(0 == (Recls::SHOW_HIDDEN & flags))
 
-					if fs.hidden?
+          if fs.hidden?
 
-						next
-					end
-				end
+            next
+          end
+        end
 
-				match	=	false
+        match = false
 
-				match	||=	(0 == (Recls::TYPEMASK & flags))
+        match ||= (0 == (Recls::TYPEMASK & flags))
 
-				match	||=	(0 != (Recls::FILES & flags) && fs.file?)
-				match	||=	(0 != (Recls::DIRECTORIES & flags) && fs.directory?)
-				match	||=	(0 != (Recls::DEVICES & flags) && fs.blockdev?)
+        match ||= (0 != (Recls::FILES & flags) && fs.file?)
+        match ||= (0 != (Recls::DIRECTORIES & flags) && fs.directory?)
+        match ||= (0 != (Recls::DEVICES & flags) && fs.blockdev?)
 
-				next unless match
+        next unless match
 
-				blk.call Recls::Entry.new(fs.path, fs, search_root, flags)
-			end
+        blk.call Recls::Entry.new(fs.path, fs, search_root, flags)
+      end
 
-			# sub-directories
+      # sub-directories
 
-			return unless (0 != (Recls::RECURSIVE & flags))
+      return unless (0 != (Recls::RECURSIVE & flags))
 
-			subdirectories.each do |fs|
+      subdirectories.each do |fs|
 
-				if(0 == (Recls::SHOW_HIDDEN & flags))
+        if(0 == (Recls::SHOW_HIDDEN & flags))
 
-					if fs.hidden?
+          if fs.hidden?
 
-						next
-					end
-				end
+            next
+          end
+        end
 
-				if(0 == (Recls::SEARCH_THROUGH_LINKS & flags))
+        if(0 == (Recls::SEARCH_THROUGH_LINKS & flags))
 
-					if File.symlink? fs.path
+          if File.symlink? fs.path
 
-						next
-					end
-				end
+            next
+          end
+        end
 
-				FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
-			end
-		end
-	end # class FileSearch
+        FileSearch::search_directory_(search_root, fs.path, patterns, flags, &blk)
+      end
+    end
+  end # class FileSearch
 end # module Recls
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

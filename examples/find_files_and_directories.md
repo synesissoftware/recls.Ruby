@@ -39,39 +39,42 @@ attribute is used to display the relative path.
 
 ```
 files in current directory:
-	build_gem.cmd
-	build_gem.sh
-	CHANGES.md
-	EXAMPLES.md
-	generate_rdoc.sh
-	LICENSE
-	Rakefile
-	README.md
-	recls.gemspec
-	run_all_unit_tests.sh
+  build_gem.cmd
+  build_gem.sh
+  CHANGES.md
+  EXAMPLES.md
+  generate_rdoc.sh
+  LICENSE
+  Rakefile
+  README.md
+  recls.gemspec
+  run_all_unit_tests.sh
 
 directories in current directory:
-	doc
-	examples
-	lib
-	old-gems
-	test
+  doc
+  examples
+  lib
+  old-gems
+  test
 
 files and directories in current directory:
-	build_gem.cmd
-	build_gem.sh
-	CHANGES.md
-	doc
-	examples
-	EXAMPLES.md
-	generate_rdoc.sh
-	lib
-	LICENSE
-	old-gems
-	Rakefile
-	README.md
-	recls.gemspec
-	run_all_unit_tests.sh
-	test
+  build_gem.cmd
+  build_gem.sh
+  CHANGES.md
+  doc
+  examples
+  EXAMPLES.md
+  generate_rdoc.sh
+  lib
+  LICENSE
+  old-gems
+  Rakefile
+  README.md
+  recls.gemspec
+  run_all_unit_tests.sh
+  test
 ```
+
+
+<!-- ########################### end of file ########################### -->
 

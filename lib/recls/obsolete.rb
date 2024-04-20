@@ -1,13 +1,14 @@
-# ######################################################################### #
-# File:         recls/obsolete.rb
+# ######################################################################## #
+# File:     recls/obsolete.rb
 #
-# Purpose:      Obsolete elements
+# Purpose:  Obsolete elements
 #
-# Created:      19th July 2012
-# Updated:      14th April 2019
+# Created:  19th July 2012
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -33,87 +34,87 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 
-# ######################################################################### #
+# ######################################################################## #
 # Obsolete symbols
 
 if not defined? RECLS_NO_OBSOLETE
 
-	module Recls # :nodoc: all
+  module Recls # :nodoc: all
 
-		# @!visibility private
-		def self.pathNameSeparator
+    # @!visibility private
+    def self.pathNameSeparator
 
-			PATH_NAME_SEPARATOR
-		end
+      PATH_NAME_SEPARATOR
+    end
 
-		# @!visibility private
-		def self.pathSeparator
+    # @!visibility private
+    def self.pathSeparator
 
-			PATH_SEPARATOR
-		end
+      PATH_SEPARATOR
+    end
 
-		# @!visibility private
-		def self.wildcardsAll
+    # @!visibility private
+    def self.wildcardsAll
 
-			WILDCARDS_ALL
-		end
+      WILDCARDS_ALL
+    end
 
-		class FileSearch # :nodoc:
+    class FileSearch # :nodoc:
 
-			# @!visibility private
-			alias_method :searchRoot, :search_root
-			# @!visibility private
-			alias_method :pattern, :patterns
-		end
+      # @!visibility private
+      alias_method :searchRoot, :search_root
+      # @!visibility private
+      alias_method :pattern, :patterns
+    end
 
-		class Entry # :nodoc:
+    class Entry # :nodoc:
 
-			# @!visibility private
-			alias_method :uncDrive, :drive
-			# @!visibility private
-			alias_method :directoryPath, :directory_path
-			# @!visibility private
-			alias_method :directoryParts, :directory_parts
-			# @!visibility private
-			alias_method :file, :file_full_name
-			# @!visibility private
-			alias_method :shortFile, :file_short_name
-			# @!visibility private
-			alias_method :fileBaseName, :file_name_only
-			# @!visibility private
-			alias_method :fileName, :file_name_only
-			# @!visibility private
-			alias_method :fileExt, :file_extension
-			# @!visibility private
-			alias_method :searchDirectory, :search_directory
-			# @!visibility private
-			alias_method :searchRelativePath, :search_relative_path
+      # @!visibility private
+      alias_method :uncDrive, :drive
+      # @!visibility private
+      alias_method :directoryPath, :directory_path
+      # @!visibility private
+      alias_method :directoryParts, :directory_parts
+      # @!visibility private
+      alias_method :file, :file_full_name
+      # @!visibility private
+      alias_method :shortFile, :file_short_name
+      # @!visibility private
+      alias_method :fileBaseName, :file_name_only
+      # @!visibility private
+      alias_method :fileName, :file_name_only
+      # @!visibility private
+      alias_method :fileExt, :file_extension
+      # @!visibility private
+      alias_method :searchDirectory, :search_directory
+      # @!visibility private
+      alias_method :searchRelativePath, :search_relative_path
 
-			# @!visibility private
-			alias_method :isDirectory, :directory?
-			# @!visibility private
-			alias_method :isFile, :file?
-			#alias_method :isLink, :link?
-			# @!visibility private
-			alias_method :isReadOnly, :readonly?
-			# @!visibility private
-			def isUNC
+      # @!visibility private
+      alias_method :isDirectory, :directory?
+      # @!visibility private
+      alias_method :isFile, :file?
+      #alias_method :isLink, :link?
+      # @!visibility private
+      alias_method :isReadOnly, :readonly?
+      # @!visibility private
+      def isUNC
 
-				d = drive
+        d = drive
 
-				d and d.size > 2
-			end
+        d and d.size > 2
+      end
 
-			# @!visibility private
-			alias_method :creationTime, :modification_time
-		end
-	end # module Recls
+      # @!visibility private
+      alias_method :creationTime, :modification_time
+    end
+  end # module Recls
 end
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

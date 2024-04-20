@@ -1,13 +1,14 @@
-# ######################################################################### #
-# File:         recls/api.rb
+# ######################################################################## #
+# File:     recls/api.rb
 #
-# Purpose:      Defines Recls module search functions
+# Purpose:  Defines Recls module search functions
 #
-# Created:      9th June 2016
-# Updated:      14th April 2019
+# Created:  9th June 2016
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2016-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -33,11 +34,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/file_search'
 require 'recls/flags'
+
 
 =begin
 =end
@@ -46,73 +48,73 @@ class Object; end # :nodoc:
 
 module Recls
 
-	# [DEPRECATED] Use Recls::file_search()
-	def self.FileSearch(search_root, patterns, options = {})
+  # [DEPRECATED] Use Recls::file_search()
+  def self.FileSearch(search_root, patterns, options = {})
 
-		Recls::FileSearch.new(search_root, patterns, options)
-	end
+    Recls::FileSearch.new(search_root, patterns, options)
+  end
 
-	# Initialises a +FileSearch+ instance, which acts recursively, as an
-	# +Enumerable+ of Recls::Entry
-	#
-	# === Signature
-	#
-	# * *Parameters:*
-	#   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
-	#   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
-	#   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
-	#
-	# * *Options:*
-	#   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, etc. If the value modulo TYPEMASK is 0, then FILES is assumed. The value RECURSIVE is added by the function, and so need not be added by the caller; it cannot be removed
-	#
-	# === Return
-	# An instance of a class implementing ::Enumerable whose value type is
-	# Recls::Entry
-	def self.file_rsearch(search_root, patterns, options = {})
+  # Initialises a +FileSearch+ instance, which acts recursively, as an
+  # +Enumerable+ of Recls::Entry
+  #
+  # === Signature
+  #
+  # * *Parameters:*
+  #   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
+  #   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
+  #   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
+  #
+  # * *Options:*
+  #   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, etc. If the value modulo TYPEMASK is 0, then FILES is assumed. The value RECURSIVE is added by the function, and so need not be added by the caller; it cannot be removed
+  #
+  # === Return
+  # An instance of a class implementing ::Enumerable whose value type is
+  # Recls::Entry
+  def self.file_rsearch(search_root, patterns, options = {})
 
-		case options
-		when ::NilClass
+    case options
+    when ::NilClass
 
-			options	=	{ flags: RECURSIVE }
-		when ::Integer
+      options = { flags: RECURSIVE }
+    when ::Integer
 
-			options	|=	RECURSIVE
-		when ::Hash
+      options |= RECURSIVE
+    when ::Hash
 
-			flags	=	options[:flags] || 0
-			flags	|=	RECURSIVE
+      flags =   options[:flags] || 0
+      flags |=  RECURSIVE
 
-			options[:flags]	= flags
-		else
+      options[:flags] = flags
+    else
 
-			# this is handled by the FileSearch initialiser
-		end
+      # this is handled by the FileSearch initialiser
+    end
 
-		Recls::FileSearch.new(search_root, patterns, options)
-	end
+    Recls::FileSearch.new(search_root, patterns, options)
+  end
 
-	# Initialises a +FileSearch+ instance, which acts as an +Enumerable+
-	# of Recls::Entry
-	#
-	# === Signature
-	#
-	# * *Parameters:*
-	#   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
-	#   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
-	#   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
-	#
-	# * *Options:*
-	#   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0, then FILES is assumed
-	#
-	# === Return
-	# An instance of a class implementing ::Enumerable whose value type is
-	# Recls::Entry
-	def self.file_search(search_root, patterns, options = {})
+  # Initialises a +FileSearch+ instance, which acts as an +Enumerable+
+  # of Recls::Entry
+  #
+  # === Signature
+  #
+  # * *Parameters:*
+  #   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
+  #   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
+  #   - +options+ (Hash, Integer) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash
+  #
+  # * *Options:*
+  #   - +flags+ (Integer) Combination of flags - FILES, DIRECTORIES, RECURSIVE, etc. If the value modulo TYPEMASK is 0, then FILES is assumed
+  #
+  # === Return
+  # An instance of a class implementing ::Enumerable whose value type is
+  # Recls::Entry
+  def self.file_search(search_root, patterns, options = {})
 
-		Recls::FileSearch.new(search_root, patterns, options)
-	end
+    Recls::FileSearch.new(search_root, patterns, options)
+  end
 end # module Recls
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 

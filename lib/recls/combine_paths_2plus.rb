@@ -1,13 +1,14 @@
-# ######################################################################### #
-# File:         recls/compare_paths_2plus.rb
+# ######################################################################## #
+# File:     recls/compare_paths_2plus.rb
 #
-# Purpose:      Definition of Recls::compare_paths() for Ruby 2+
+# Purpose:  Definition of Recls::compare_paths() for Ruby 2+
 #
-# Created:      17th February 2014
-# Updated:      14th April 2019
+# Created:  17th February 2014
+# Updated:  20th April 2024
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2014-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -33,10 +34,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# ######################################################################### #
+# ######################################################################## #
 
 
 require 'recls/ximpl/util'
+
 
 =begin
 =end
@@ -45,32 +47,32 @@ class Object; end # :nodoc:
 
 module Recls
 
-	# Combines paths, optionally canonicalising them
-	#
-	# === Signature
-	#
-	# * *Parameters:*
-	#   - +paths+ ([ (::String, ::Recls::Entry) ]) Array of 1 or more path elements to be combined
-	#   - +options+ (::Hash) Options that moderate the combination
-	#
-	# * *Options:*
-	#   - +:canonicalise+ (boolean) Causes the evaluated path to be canonicalised - with +Recls.canonicalise_path+ - before it is returned
-	#   - +:clean+ (boolean) Causes the evaluated path to be cleaned (i.e. sent to +cleanpath+) before it is returned. Ignored if +:canonicalise+ is specified
-	#   - +:clean_path+ (boolean) Equivalent to +:clean+, but deprecated and may be removed in a future version
-	#
-	# === Return
-	# (String) The combined path
-	def self.combine_paths(*paths, **options)
+  # Combines paths, optionally canonicalising them
+  #
+  # === Signature
+  #
+  # * *Parameters:*
+  #   - +paths+ ([ (::String, ::Recls::Entry) ]) Array of 1 or more path elements to be combined
+  #   - +options+ (::Hash) Options that moderate the combination
+  #
+  # * *Options:*
+  #   - +:canonicalise+ (boolean) Causes the evaluated path to be canonicalised - with +Recls.canonicalise_path+ - before it is returned
+  #   - +:clean+ (boolean) Causes the evaluated path to be cleaned (i.e. sent to +cleanpath+) before it is returned. Ignored if +:canonicalise+ is specified
+  #   - +:clean_path+ (boolean) Equivalent to +:clean+, but deprecated and may be removed in a future version
+  #
+  # === Return
+  # (String) The combined path
+  def self.combine_paths(*paths, **options)
 
-		paths	=	paths.reject { |p| p.nil? }
-		paths	=	paths.map { |p| 'Recls::Entry' == p.class.to_s ? p.path : p }
+    paths = paths.reject { |p| p.nil? }
+    paths = paths.map { |p| 'Recls::Entry' == p.class.to_s ? p.path : p }
 
-		raise ArgumentError, 'must specify one or more path elements' if paths.empty?
+    raise ArgumentError, 'must specify one or more path elements' if paths.empty?
 
-		return Recls::Ximpl.combine_paths paths, options
-	end
+    return Recls::Ximpl.combine_paths paths, options
+  end
 end # module Recls
 
-# ############################## end of file ############################# #
 
+# ############################## end of file ############################# #
 
