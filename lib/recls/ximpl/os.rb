@@ -45,6 +45,7 @@ module Recls # :nodoc:
 
 # :stopdoc:
 
+  # @!visibility private
   module Ximpl # :nodoc: all
 
     module OS # :nodoc: all

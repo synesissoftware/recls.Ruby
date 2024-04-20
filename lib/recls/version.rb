@@ -46,13 +46,17 @@ class Object; end # :nodoc:
 module Recls
 
   # Current version of the recls.Ruby library
-  VERSION           = '2.11.0.2'
+  VERSION           = '2.11.0.3'
 
   private
+  # @!visibility private
   VERSION_PARTS_    = VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:
   public
+  # @!visibility private
   VERSION_MAJOR     = VERSION_PARTS_[0] # :nodoc:
+  # @!visibility private
   VERSION_MINOR     = VERSION_PARTS_[1] # :nodoc:
+  # @!visibility private
   VERSION_REVISION  = VERSION_PARTS_[2] # :nodoc:
 end # module Recls
 
