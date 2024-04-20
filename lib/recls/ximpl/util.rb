@@ -424,7 +424,6 @@ module Recls # :nodoc:
 								# leave as is
 							else
 
-								# 
 								newParts[-1] = '..'
 							end
 						end
