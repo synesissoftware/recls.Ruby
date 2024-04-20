@@ -37,16 +37,6 @@
 # ######################################################################## #
 
 
-require 'recls/version'
-
-require 'recls/api'
-require 'recls/entry'
-require 'recls/file_search'
-require 'recls/foreach'
-require 'recls/stat'
-require 'recls/util'
-require 'recls/ximpl/os'
-
 # The *recls* module
 #
 # == Significant Components
@@ -62,6 +52,21 @@ require 'recls/ximpl/os'
 # - Recls::file_search
 # - Recls::foreach
 # - Recls::stat
+module Recls
+end # module Recls
+
+
+require 'recls/version'
+
+require 'recls/api'
+require 'recls/entry'
+require 'recls/file_search'
+require 'recls/foreach'
+require 'recls/stat'
+require 'recls/util'
+require 'recls/ximpl/os'
+
+
 module Recls
 
   # The string sequence used to separate names in paths, e.g. "/" on UNIX
@@ -79,6 +84,7 @@ module Recls
     Recls::Ximpl::OS::OS_IS_WINDOWS
   end
 end # module Recls
+
 
 require 'recls/obsolete'
 
