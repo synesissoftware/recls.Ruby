@@ -41,16 +41,18 @@
 =begin
 =end
 
-module Recls # :nodoc:
-
 # :stopdoc:
 
+# @!visibility private
+module Recls # :nodoc:
+
+  # @!visibility private
   module Ximpl # :nodoc: all
 
     module OS # :nodoc: all
 
       # @!visibility private
-      OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(mswin|mingw|bccwin|wince)/i) ? true : false
+      OS_IS_WINDOWS = (RUBY_PLATFORM =~ /(bccwin|cygwin|mingw|mswin|wince)/i) ? true : false
 
       # @!visibility private
       PATH_NAME_SEPARATOR = OS_IS_WINDOWS ? '\\' : '/'
@@ -91,11 +93,9 @@ module Recls # :nodoc:
       end
     end # module OS
   end # module Ximpl
-
-# :startdoc:
-
 end # module Recls
 
+# :startdoc:
 
 # ############################## end of file ############################# #
 

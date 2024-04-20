@@ -46,10 +46,11 @@ require 'pathname'
 =begin
 =end
 
-module Recls # :nodoc:
-
 # :stopdoc:
 
+module Recls # :nodoc:
+
+  # @!visibility private
   module Ximpl # :nodoc: all
 
     module Util # :nodoc: all
@@ -874,10 +875,9 @@ module Recls # :nodoc:
       end
     end
   end # module Ximpl
+end # module Recls
 
 # :startdoc:
-
-end # module Recls
 
 
 # ############################## end of file ############################# #

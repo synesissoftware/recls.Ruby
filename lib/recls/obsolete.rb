@@ -43,6 +43,9 @@
 
 if not defined? RECLS_NO_OBSOLETE
 
+  # :stopdoc:
+
+  # @!visibility private
   module Recls # :nodoc: all
 
     # @!visibility private
@@ -113,6 +116,8 @@ if not defined? RECLS_NO_OBSOLETE
       alias_method :creationTime, :modification_time
     end
   end # module Recls
+
+  # :startdoc:
 end
 
 

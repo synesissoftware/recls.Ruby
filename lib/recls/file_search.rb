@@ -55,7 +55,7 @@ module Recls
     include Enumerable
 
     # Initialises a +FileSearch+ instance, which acts as an +Enumerable+
-    # of Recls::Entry
+    # of +Recls::Entry+
     #
     # === Signature
     #

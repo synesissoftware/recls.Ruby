@@ -1,5 +1,21 @@
 # **recls.Ruby** Changes
 
+## 2.13.0 - 20th April 2024
+
+* full support for `Recls::Entry` to "act as" a `String` (via its extant attribute `#to_str`), particularly to enable instances to be used in unit-test assertion statements
+
+
+## 2.12.0.1 - 20th April 2024
+
+* added module methods `Recls.windows?`
+* compatibility with **cygwin**
+
+
+## 2.11.0.3 - 20th April 2024
+
+* documentation improvements
+
+
 ## 2.11.0.2 - 20th April 2024
 
 * more canonicalisation of code
