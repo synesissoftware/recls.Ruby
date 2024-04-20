@@ -43,6 +43,7 @@ require 'recls/ximpl/util'
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls
@@ -52,16 +53,16 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +paths+ ([ (::String, ::Recls::Entry) ]) Array of 1 or more path elements to be combined
-  #   - +options+ (::Hash) Options that moderate the combination
+  #   - +paths+ (+[ String, Recls::Entry ]+) Array of 1 or more path elements to be combined;
+  #   - +options+ (+Hash+) Options that moderate the combination;
   #
   # * *Options:*
-  #   - +:canonicalise+ (boolean) Causes the evaluated path to be canonicalised - with +Recls.canonicalise_path+ - before it is returned
-  #   - +:clean+ (boolean) Causes the evaluated path to be cleaned (i.e. sent to +cleanpath+) before it is returned. Ignored if +:canonicalise+ is specified
-  #   - +:clean_path+ (boolean) Equivalent to +:clean+, but deprecated and may be removed in a future version
+  #   - +:canonicalise+ (boolean) Causes the evaluated path to be canonicalised - with +Recls.canonicalise_path+ - before it is returned;
+  #   - +:clean+ (boolean) Causes the evaluated path to be cleaned (i.e. sent to +cleanpath+) before it is returned. Ignored if +:canonicalise+ is specified;
+  #   - +:clean_path+ (boolean) Equivalent to +:clean+, but deprecated and may be removed in a future version;
   #
   # === Return
-  # (String) The combined path
+  # (+String+) The combined path.
   def self.combine_paths(*paths, **options)
 
     paths = paths.reject { |p| p.nil? }

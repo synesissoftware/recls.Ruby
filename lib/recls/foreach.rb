@@ -39,9 +39,11 @@
 
 require 'recls/file_search'
 
+
 =begin
 =end
 
+# @!visibility private
 class Object; end # :nodoc:
 
 module Recls
@@ -91,11 +93,11 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +searchable+ A searchable instance obtained from Recls::file_search() or Recls::file_rsearch()
-  #   - +search_root+ (String, Recls::Entry) The root directory of the search. May be +nil+, in which case the current directory is assumed
-  #   - +patterns+ (String, Array) The pattern(s) for which to search. May be +nil+, in which case Recls::WILDCARDS_ALL is assumed
-  #   - +options+ (Hash) An options hash
-  #   - +flags+ (Integer) Combination of flags (with behaviour as described below for the +flags+ option)
+  #   - +searchable+ A searchable instance obtained from +Recls::file_search()+ or +Recls::file_rsearch()+;
+  #   - +search_root+ (+String+, +Recls::Entry+) The root directory of the search. May be +nil+, in which case the current directory is assumed;
+  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed;
+  #   - +options+ (+Hash+) An options hash;
+  #   - +flags+ (+Integer+) Combination of flags (with behaviour as described below for the +flags+ option);
   #
   # * *Block:*
   # An optional block that will be executed once for each line in each file
@@ -111,7 +113,7 @@ module Recls
   # - +search_root+, +patterns+, +options+
   #
   # === Return
-  #
+  # +nil+ if a block is given; otherwise, an instance of the +FileSearchLineEnumerator+.
   def self.foreach(*args, &block)
 
     fs = nil
