@@ -1,5 +1,10 @@
 # **recls.Ruby** Changes
 
+## 2.11.0.3 - 20th April 2024
+
+* documentation improvements
+
+
 ## 2.11.0.2 - 20th April 2024
 
 * more canonicalisation of code
