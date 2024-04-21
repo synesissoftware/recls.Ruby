@@ -5,7 +5,7 @@
 #           recls library.
 #
 # Created:  16th February 2014
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -41,14 +41,12 @@
 =begin
 =end
 
-# :stopdoc:
-
-# @!visibility private
-module Recls # :nodoc:
+module Recls
 
   # @!visibility private
   module Ximpl # :nodoc: all
 
+    # @!visibility private
     module OS # :nodoc: all
 
       # @!visibility private
@@ -95,7 +93,6 @@ module Recls # :nodoc:
   end # module Ximpl
 end # module Recls
 
-# :startdoc:
 
 # ############################## end of file ############################# #
 

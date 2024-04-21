@@ -4,7 +4,7 @@
 # Purpose:  Utility module functions for recls library
 #
 # Created:  17th February 2014
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -45,9 +45,6 @@ require 'recls/ximpl/os'
 =begin
 =end
 
-# @!visibility private
-class Object; end # :nodoc:
-
 module Recls
 
   # Obtains the absolute form of the given path
@@ -55,7 +52,7 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+) The path;
+  #   - +path+ (+String+, {Recls::Entry}) The path;
   #
   # === Return
   # (+String+) The absolute form of the path.
@@ -64,13 +61,13 @@ module Recls
     Recls::Ximpl.absolute_path path
   end
 
-  # Canonicalises the given path, by removing dots ('.' and '..')
-  # directories
+  # Canonicalises the given path, by removing dots directories,
+  # i.e. +'.'+ and +'..'+
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+) The path;
+  #   - +path+ (+String+, {Recls::Entry}) The path;
   #
   # === Return
   # (+String+) The canonical form of the path.
@@ -87,8 +84,8 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +origin+ (+String+, +Recls::Entry+) The path against which +path+ will be evaluated;
-  #   - +path+ (+String+, +Recls::Entry+) The path to evaluate;
+  #   - +origin+ (+String+, {Recls::Entry}) The path against which +path+ will be evaluated;
+  #   - +path+ (+String+, {Recls::Entry}) The path to evaluate;
   #
   # === Return
   # (+String+) The relative form of the path.
@@ -108,16 +105,16 @@ end
 
 module Recls
 
-  # Indicates whether the given path exists, obtaining a Recls::Entry
+  # Indicates whether the given path exists, obtaining a {Recls::Entry}
   # instance if so
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+) The path;
+  #   - +path+ (+String+, {Recls::Entry}) The path;
   #
   # === Return
-  # (+Recls::Entry+, +nil+) The entry if +path+ exists; +nil+ otherwise.
+  # ({Recls::Entry}, +nil+) The entry if +path+ exists; +nil+ otherwise.
   def self.exist?(path)
 
     return nil if path.nil?
@@ -130,7 +127,7 @@ module Recls
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+, +nil+) The path to be evaluated;
+  #   - +path+ (+String+, {Recls::Entry}, +nil+) The path to be evaluated;
   #
   # === Return
   # (boolean) +true+ if +path+ is absolute; +false+ otherwise.

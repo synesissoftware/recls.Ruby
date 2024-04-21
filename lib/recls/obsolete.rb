@@ -4,7 +4,7 @@
 # Purpose:  Obsolete elements
 #
 # Created:  19th July 2012
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -43,10 +43,7 @@
 
 if not defined? RECLS_NO_OBSOLETE
 
-  # :stopdoc:
-
-  # @!visibility private
-  module Recls # :nodoc: all
+  module Recls
 
     # @!visibility private
     def self.pathNameSeparator
@@ -116,8 +113,6 @@ if not defined? RECLS_NO_OBSOLETE
       alias_method :creationTime, :modification_time
     end
   end # module Recls
-
-  # :startdoc:
 end
 
 

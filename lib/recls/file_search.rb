@@ -4,7 +4,7 @@
 # Purpose:  Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:  24th July 2012
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -45,27 +45,25 @@ require 'recls/ximpl/os'
 =begin
 =end
 
-# @!visibility private
-class Object; end # :nodoc:
-
 module Recls
 
+  # @!visibility private
   class FileSearch # :nodoc: all
 
     include Enumerable
 
     # Initialises a +FileSearch+ instance, which acts as an +Enumerable+
-    # of +Recls::Entry+
+    # of {Recls::Entry}
     #
     # === Signature
     #
     # * *Parameters:*
-    #   - +search_root+ (+String+, +Recls::Entry+) The root directory of the search. May be +nil+, in which case the current directory is assumed;
-    #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed;
+    #   - +search_root+ (+String+, {Recls::Entry}) The root directory of the search. May be +nil+, in which case the current directory is assumed;
+    #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case {Recls::WILDCARDS_ALL} is assumed;
     #   - +options+ (+Hash+, +Integer+) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash;
     #
     # * *Options:*
-    #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, +Recls::RECURSIVE+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed;
+    #   - +flags+ (+Integer+) Combination of flags - {Recls::FILES}, {Recls::DIRECTORIES}, {Recls::RECURSIVE}, etc. If the value modulo {Recls::TYPEMASK} is 0, then {Recls::FILES} is assumed;
     #
     # === Return
     # An instance of the class.
@@ -140,7 +138,7 @@ module Recls
     attr_reader :flags
 
     # Calls the block once for each found file, passing a single
-    # parameter that is a Recls::Entry instance
+    # parameter that is a {Recls::Entry} instance
     #
     # @!visibility private
     def each(&blk) # :nodoc:

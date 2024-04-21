@@ -1,5 +1,10 @@
 # **recls.Ruby** Changes
 
+## 2.13.01 - 21st April 2024
+
+* substantial documentation improvements
+
+
 ## 2.13.0 - 20th April 2024
 
 * full support for `Recls::Entry` to "act as" a `String` (via its extant attribute `#to_str`), particularly to enable instances to be used in unit-test assertion statements

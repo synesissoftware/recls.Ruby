@@ -4,7 +4,7 @@
 # Purpose:  Main source file for recls library
 #
 # Created:  19th July 2012
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -37,21 +37,22 @@
 # ######################################################################## #
 
 
-# The *recls* module
+# The main *recls* module
 #
-# == Significant Components
-# - Recls::Entry
-# - Recls::absolute_path
-# - Recls::absolute_path?
-# - Recls::canonicalise_path
-# - Recls::derive_relative_path
-# - Recls::directory?
-# - Recls::exist?
-# - Recls::file?
-# - Recls::file_rsearch
-# - Recls::file_search
-# - Recls::foreach
-# - Recls::stat
+# === Significant Components
+# - {Recls::Entry} - a file-system entry
+# - {Recls.absolute_path} - converts a path to absolute;
+# - {Recls.absolute_path?} - determines whether a path is absolute;
+# - {Recls.canonicalise_path} - canonicalises a path;
+# - {Recls.combine_paths} - combines a number of path elements;
+# - {Recls.derive_relative_path} - derives a relative path, with respect to a given origin;
+# - {Recls.directory?} - obtains an {Recls::Entry} for the path if it exists and is a directory, or +nil+ otherwise;
+# - {Recls.exist?} - obtains an {Recls::Entry} for the path if it exists, or +nil+ otherwise;
+# - {Recls.file?} - obtains an {Recls::Entry} for the path if it exists and is a file, or +nil+ otherwise;
+# - {Recls.foreach} - performs an optionally-recursive search and enumerates the lines of all files found
+# - {Recls.rsearch} - conducts a recursive search under a given search-directory for entries matching given pattern(s);
+# - {Recls.search} - conducts a non-recursive search under a given search-directory for entries matching given pattern(s);
+# - {Recls.stat} - attempts to obtain an {Recls::Entry} for the given path, or +nil+ if it fails to do so;
 module Recls
 end # module Recls
 

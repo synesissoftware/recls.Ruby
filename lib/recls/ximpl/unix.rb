@@ -4,7 +4,7 @@
 # Purpose:  UNIX-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -43,9 +43,7 @@ require 'recls/ximpl/util'
 =begin
 =end
 
-# :stopdoc:
-
-module Recls # :nodoc:
+module Recls
 
   # @!visibility private
   module Ximpl # :nodoc: all
@@ -54,8 +52,7 @@ module Recls # :nodoc:
     class FileStat < File::Stat # :nodoc:
 
       private
-      # @!visibility private
-      def initialize(path) # :nodoc:
+      def initialize(path)
 
         @path = path
 
@@ -63,11 +60,9 @@ module Recls # :nodoc:
       end
 
       public
-      # @!visibility private
-      attr_reader :path # :nodoc:
+      attr_reader :path
 
-      # @!visibility private
-      def hidden? # :nodoc:
+      def hidden?
 
         basename = File.basename @path
 
@@ -80,17 +75,13 @@ module Recls # :nodoc:
       end
 
       public
-      # @!visibility private
-      def FileStat.stat(path) # :nodoc:
+      def FileStat.stat(path)
 
         Recls::Ximpl::FileStat.new(path)
-
       end
     end # class FileStat
   end # module Ximpl
 end # module Recls
-
-# :startdoc:
 
 
 # ############################## end of file ############################# #

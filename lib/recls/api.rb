@@ -4,7 +4,7 @@
 # Purpose:  Defines Recls module search functions
 #
 # Created:  9th June 2016
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -44,34 +44,44 @@ require 'recls/flags'
 =begin
 =end
 
-# @!visibility private
-class Object; end # :nodoc:
-
 module Recls
 
-  # [DEPRECATED] Use +Recls::file_search()+
+  # (*DEPRECATED*) Use {Recls.search}
   def self.FileSearch(search_root, patterns, options = {})
 
-    Recls::FileSearch.new(search_root, patterns, options)
+    self.search(search_root, patterns, options)
   end
 
+  # (*DEPRECATED*) Use {Recls.rsearch}
+  def self.file_rsearch(search_root, patterns, options = {})
+
+    self.rsearch(search_root, patterns, options)
+  end
+
+  # (*DEPRECATED*) Use {Recls.search}
+  def self.file_search(search_root, patterns, options = {})
+
+    self.search(search_root, patterns, options)
+  end
+
+
   # Initialises a +FileSearch+ instance, which acts recursively, as an
-  # +Enumerable+ of +Recls::Entry+
+  # +Enumerable+ of {Recls::Entry}
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +search_root+ (+String+, +Recls::Entry+) The root directory of the search. May be +nil+, in which case the current directory is assumed;
-  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed;
+  #   - +search_root+ (+String+, {Recls::Entry}) The root directory of the search. May be +nil+, in which case the current directory is assumed;
+  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case {Recls::WILDCARDS_ALL} is assumed;
   #   - +options+ (+Hash+, +Integer+) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash;
   #
   # * *Options:*
-  #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed. The value +Recls::RECURSIVE+ is added by the function, and so need not be added by the caller; it cannot be removed;
+  #   - +flags+ (+Integer+) Combination of flags - {Recls::FILES}, {Recls::DIRECTORIES}, etc. If the value modulo {Recls::TYPEMASK} is 0, then {Recls::FILES} is assumed. The value {Recls::RECURSIVE} is added by the function, and so need not be added by the caller; it cannot be removed;
   #
   # === Return
   # An instance of a class implementing +Enumerable+ whose value type is
-  # +Recls::Entry+.
-  def self.file_rsearch(search_root, patterns, options = {})
+  # {Recls::Entry}.
+  def self.rsearch(search_root, patterns, options = {})
 
     case options
     when ::NilClass
@@ -95,22 +105,22 @@ module Recls
   end
 
   # Initialises a +FileSearch+ instance, which acts as an +Enumerable+
-  # of +Recls::Entry+
+  # of {Recls::Entry}
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +search_root+ (+String+, +Recls::Entry+) The root directory of the search. May be +nil+, in which case the current directory is assumed;
-  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed;
+  #   - +search_root+ (+String+, {Recls::Entry}) The root directory of the search. May be +nil+, in which case the current directory is assumed;
+  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case {Recls::WILDCARDS_ALL} is assumed;
   #   - +options+ (+Hash+, +Integer+) Combination of flags (with behaviour as described below for the +flags+ option), or an options hash;
   #
   # * *Options:*
-  #   - +flags+ (+Integer+) Combination of flags - +Recls::FILES+, +Recls::DIRECTORIES+, +Recls::RECURSIVE+, etc. If the value modulo +Recls::TYPEMASK+ is 0, then +Recls::FILES+ is assumed;
+  #   - +flags+ (+Integer+) Combination of flags - {Recls::FILES}, {Recls::DIRECTORIES}, {Recls::RECURSIVE}, etc. If the value modulo {Recls::TYPEMASK} is 0, then {Recls::FILES} is assumed;
   #
   # === Return
   # An instance of a class implementing +Enumerable+ whose value type is
-  # +Recls::Entry+.
-  def self.file_search(search_root, patterns, options = {})
+  # {Recls::Entry}.
+  def self.search(search_root, patterns, options = {})
 
     Recls::FileSearch.new(search_root, patterns, options)
   end

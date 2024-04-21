@@ -4,7 +4,7 @@
 # Purpose:  Windows-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -43,9 +43,7 @@ require 'Win32API'
 =begin
 =end
 
-# :stopdoc:
-
-module Recls # :nodoc:
+module Recls
 
   # @!visibility private
   module Ximpl # :nodoc: all
@@ -224,8 +222,6 @@ module Recls # :nodoc:
     end # class FileStat
   end # module Ximpl
 end # module Recls
-
-# :startdoc:
 
 
 # ############################## end of file ############################# #

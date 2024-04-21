@@ -4,7 +4,7 @@
 # Purpose:  Internal implementation constructs for the recls library.
 #
 # Created:  24th July 2012
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -46,13 +46,12 @@ require 'pathname'
 =begin
 =end
 
-# :stopdoc:
-
-module Recls # :nodoc:
+module Recls
 
   # @!visibility private
   module Ximpl # :nodoc: all
 
+    # @!visibility private
     module Util # :nodoc: all
 
       # @!visibility private
@@ -832,8 +831,7 @@ module Recls # :nodoc:
     #
     # Some known conditions:
     #
-    # * (Mac OSX) /dev/fd/<N> - some of these stat() as directories but
-    #    Dir.new fails with ENOTDIR
+    # * (Mac OSX) /dev/fd/<N> - some of these +stat()+ as directories but +Dir.new+ fails with +ENOTDIR+;
     #
     # @!visibility private
     def self.dir_entries_maybe(dir, flags) # :nodoc:
@@ -876,8 +874,6 @@ module Recls # :nodoc:
     end
   end # module Ximpl
 end # module Recls
-
-# :startdoc:
 
 
 # ############################## end of file ############################# #

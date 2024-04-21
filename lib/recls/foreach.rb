@@ -4,7 +4,7 @@
 # Purpose:  Definition of Recls::foreach() utility function
 #
 # Created:  22nd October 2014
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -42,9 +42,6 @@ require 'recls/file_search'
 
 =begin
 =end
-
-# @!visibility private
-class Object; end # :nodoc:
 
 module Recls
 
@@ -87,22 +84,22 @@ module Recls
   end # class FileSearchLineEnumerator
   public
 
-  # Performs a recursive search and enumerates the lines of all files
-  # found
+  # Performs an optionally-recursive search and enumerates the lines of all
+  # files found
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +searchable+ A searchable instance obtained from +Recls::file_search()+ or +Recls::file_rsearch()+;
-  #   - +search_root+ (+String+, +Recls::Entry+) The root directory of the search. May be +nil+, in which case the current directory is assumed;
-  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case +Recls::WILDCARDS_ALL+ is assumed;
+  #   - +searchable+ A searchable instance obtained from {Recls::search} or {Recls::rsearch};
+  #   - +search_root+ (+String+, {Recls::Entry}) The root directory of the search. May be +nil+, in which case the current directory is assumed;
+  #   - +patterns+ (+String+, +Array+) The pattern(s) for which to search. May be +nil+, in which case {Recls::WILDCARDS_ALL} is assumed;
   #   - +options+ (+Hash+) An options hash;
   #   - +flags+ (+Integer+) Combination of flags (with behaviour as described below for the +flags+ option);
   #
   # * *Block:*
   # An optional block that will be executed once for each line in each file
   # found, where the block must take 1, 2, or 3 parameters, representing the
-  # line [ + file-line-index [ + entry ]]. If no block is given, an
+  # +line+ [, +file_line_index+ [, +entry+ ]]. If no block is given, an
   # enumerator is returned.
   #
   # ==== Parameter Ordering

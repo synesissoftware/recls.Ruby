@@ -14,22 +14,22 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'recls'
 
 puts "files in current directory:"
-Recls.file_search(nil, nil, Recls::FILES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.search(nil, nil, Recls::FILES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 
 puts "directories in current directory:"
-Recls.file_search(nil, nil, Recls::DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.search(nil, nil, Recls::DIRECTORIES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 
 puts "files and directories in current directory:"
-Recls.file_search(nil, nil, Recls::DIRECTORIES | Recls::FILES).each { |fe| puts "\t#{fe.search_relative_path}" }
+Recls.search(nil, nil, Recls::DIRECTORIES | Recls::FILES).each { |fe| puts "\t#{fe.search_relative_path}" }
 puts
 ```
 
 ## Discussion
 
 The code is pretty self-explanatory, in that there are three searches using
-the ```Recls.file_search()``` module method, passing FILES, DIRECTORIES, and
+the ```Recls.search()``` module method, passing FILES, DIRECTORIES, and
 FILES|DIRECTORIES, respectively. For each search, a simple block is
 presented, which takes a single-parameter of the file-entry (of type
 ``Recls::Entry``) from which the ``#search_relative_path`` instance

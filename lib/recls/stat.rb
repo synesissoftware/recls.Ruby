@@ -4,7 +4,7 @@
 # Purpose:  Defines the Recls.stat() method for the recls.Ruby library.
 #
 # Created:  24th July 2012
-# Updated:  20th April 2024
+# Updated:  21st April 2024
 #
 # Author:   Matthew Wilson
 #
@@ -44,25 +44,22 @@ require 'recls/flags'
 =begin
 =end
 
-# @!visibility private
-class Object; end # :nodoc:
-
 module Recls
 
-  # Equivalent to a Recls::stat() but only returns (a non-+nil+ value) if the
+  # Equivalent to {Recls.stat} but only returns (a non-+nil+ value) if the
   # path exists _and_ represents a directory
   #
   # This has two advantages over +File.directory?+: it obtains a
-  # Recls::Entry in the case where the path represents a directory; and
-  # it does '~' interpretation
+  # {Recls::Entry} in the case where the path represents a directory; and
+  # it does +'~'+ interpretation
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+) The path;
+  #   - +path+ (+String+, {Recls::Entry}) The path;
   #
   # === Return
-  # (+Recls::Entry+, +nil+) The entry if +path+ exists and is a directory; +nil+ otherwise.
+  # ({Recls::Entry}, +nil+) The entry if +path+ exists and is a directory; +nil+ otherwise.
   def self.directory?(path, *args)
 
     fe = self.stat(path, *args)
@@ -75,20 +72,20 @@ module Recls
     fe
   end
 
-  # Equivalent to a Recls::stat() but only returns (a non-+nil+ value) if the
+  # Equivalent to {Recls.stat} but only returns (a non-+nil+ value) if the
   # path exists _and_ represents a file
   #
   # This has two advantages over +File.file?+: it obtains a
-  # Recls::Entry in the case where the path represents a file; and
-  # it does '~' interpretation
+  # {Recls::Entry} in the case where the path represents a file; and
+  # it does +'~'+ interpretation
   #
   # === Signature
   #
   # * *Parameters:*
-  #   - +path+ (+String+, +Recls::Entry+) The path;
+  #   - +path+ (+String+, {Recls::Entry}) The path;
   #
   # === Return
-  # (+Recls::Entry+, +nil+) The entry if +path+ exists and is a file; +nil+ otherwise.
+  # ({Recls::Entry}, +nil+) The entry if +path+ exists and is a file; +nil+ otherwise.
   def self.file?(path, *args)
 
     fe = self.stat(path, *args)
@@ -101,7 +98,7 @@ module Recls
     fe
   end
 
-  # Obtains a single Recls::Entry instance from a path, according to the
+  # Obtains a single {Recls::Entry} instance from a path, according to the
   # given arguments, which can be any combination of search-root and
   # flags, as discussed below
   #
@@ -109,8 +106,8 @@ module Recls
   #
   # * *Parameters:*
   #   - +path+ (+String+) A path to evaluate. May not be +nil+;
-  #   - +search_root+ (+String+, +Recls::Entry+) A directory from which the returned +Entry+ instance's search-relative attributes are evaluated;
-  #   - +flags+ (+Integer+) A bit-combined set of flags (such as +Recls::DIRECTORIES+, +Recls::FILES+, +Recls::RECURSIVE+, +Recls::DETAILS_LATER+, and so on);
+  #   - +search_root+ (+String+, {Recls::Entry}) A directory from which the returned +Entry+ instance's search-relative attributes are evaluated;
+  #   - +flags+ (+Integer+) A bit-combined set of flags (such as {Recls::DIRECTORIES}, {Recls::FILES}, {Recls::RECURSIVE}, {Recls::DETAILS_LATER}, and so on);
   #
   # ==== Parameter Ordering
   #
@@ -122,9 +119,9 @@ module Recls
   # - +path+, +search_root+, +flags+
   #
   # === Return
-  # (+Recls::Entry+) An entry representing the path on the file-system, or
+  # ({Recls::Entry}) An entry representing the path on the file-system, or
   # +nil+ if the path does not refer to an existing entity. If the
-  # +Recls::DETAILS_LATER+ flag is included, then an entry is returned
+  # {Recls::DETAILS_LATER} flag is included, then an entry is returned
   # regardless of its existence.
   def self.stat(path, *args)
 
