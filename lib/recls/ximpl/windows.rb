@@ -37,7 +37,14 @@
 # ######################################################################## #
 
 
-require 'Win32API'
+if RUBY_VERSION >= '2'
+
+  require 'fiddle'
+  require 'fiddle/import'
+else
+
+  require 'Win32API'
+end
 
 
 =begin
@@ -51,71 +58,158 @@ module Recls
     # @!visibility private
     module Kernel32
 
-      INVALID_HANDLE_VALUE        = 0xFFFFFFFF
-      MAX_PATH                    = 260
-      NULL                        = 0x00000000
-      OPEN_EXISTING               = 0x00000003
+      MAX_PATH              = 260
+      NULL                  = 0x00000000
+      OPEN_EXISTING         = 0x00000003
     end # module Kernel32
 
-    module Kernel32
+    if RUBY_VERSION >= '2'
 
-      CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
-      CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
-      GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
-      GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
-      GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
+      module Kernel32
+        extend Fiddle::Importer
 
-      BHFI_pack_string            = 'LQQQLLLLLL'
-    end # module Kernel32
+        dlload 'kernel32.dll'
 
-    module Kernel32
-      def self.get_file_attributes(path)
+        typealias 'BOOL', 'int'
+        typealias 'DWORD', 'unsigned long'
+        typealias 'HANDLE', 'void*'
 
-        attributes = GetFileAttributes.call(path)
+        BY_HANDLE_FILE_INFORMATION = struct [
+          'DWORD dwFileAttributes',
+          'DWORD ftCreationTime_0',
+          'DWORD ftCreationTime_1',
+          'DWORD ftLastAccessTime_0',
+          'DWORD ftLastAccessTime_1',
+          'DWORD ftLastWriteTime_0',
+          'DWORD ftLastWriteTime_1',
+          'DWORD dwVolumeSerialNumber',
+          'DWORD nFileSizeHigh',
+          'DWORD nFileSizeLow',
+          'DWORD nNumberOfLinks',
+          'DWORD nFileIndexHigh',
+          'DWORD nFileIndexLow',
+        ]
 
-        (0xffffffff == attributes) ? 0 : attributes
-      end
+        extern 'BOOL CloseHandle(HANDLE)'
+        extern 'HANDLE CreateFileA(const char*, DWORD, DWORD, void*, DWORD, DWORD, HANDLE)'
+        extern 'DWORD GetFileAttributesA(const char*)'
+        extern 'BOOL GetFileInformationByHandle(HANDLE, BY_HANDLE_FILE_INFORMATION*)'
+        extern 'DWORD GetShortPathNameA(const char*, char*, DWORD)'
 
-      def self.get_short_path_name(path)
+        INVALID_HANDLE_VALUE  = Fiddle::Pointer[-1]
+      end # module Kernel32
 
-        buff = ' ' * MAX_PATH
+      module Kernel32
+        def self.get_file_attributes(path)
 
-        n = GetShortPathName.call(path, buff, buff.length)
+          attributes = GetFileAttributesA(path)
 
-        (0 == n) ? nil : buff[0...n]
-      end
-
-      def self.get_stat_shared(path)
-
-        volume_id   = 0
-        file_index  = 0
-        num_links   = 0
-
-        hFile = CreateFile.call(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL)
-        if INVALID_HANDLE_VALUE != hFile
-
-          begin
-            bhfi  = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-            bhfi  = bhfi.pack(BHFI_pack_string)
-
-            if GetFileInformationByHandle.call(hFile, bhfi)
-
-              bhfi = bhfi.unpack(BHFI_pack_string)
-
-              volume_id   = bhfi[4]
-              file_index  = (bhfi[8] << 32) | bhfi[9]
-              num_links   = bhfi[7]
-            else
-            end
-          ensure
-
-            CloseHandle.call(hFile)
-          end
+          (0xFFFFFFFF == attributes) ? 0 : attributes
         end
 
-        [ volume_id, file_index, num_links ]
-      end
-    end # module Kernel32
+        def self.get_short_path_name(path)
+
+          buff = ' ' * MAX_PATH
+
+          buf = Fiddle::Pointer[buff]
+
+          n = GetShortPathNameA(path, buf, buf.size)
+
+          (0 == n) ? nil : buff[0...n]
+        end
+
+        def self.get_stat_shared(path)
+
+          volume_id   = 0
+          file_index  = 0
+          num_links   = 0
+
+          hFile = CreateFileA(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL)
+
+          if INVALID_HANDLE_VALUE != hFile
+
+            begin
+              bhfi = BY_HANDLE_FILE_INFORMATION.malloc
+
+              if GetFileInformationByHandle(hFile, bhfi)
+
+                volume_id   = bhfi.dwVolumeSerialNumber
+                file_index  = (bhfi.nFileIndexHigh << 32) | bhfi.nFileIndexLow
+                num_links   = bhfi.nNumberOfLinks
+              end
+            ensure
+
+              CloseHandle(hFile)
+            end
+          end
+
+          [ volume_id, file_index, num_links ]
+        end
+      end # module Kernel32
+    else
+
+      module Kernel32
+
+        CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
+        CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
+        GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
+        GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
+        GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
+
+        INVALID_HANDLE_VALUE        = -1
+
+        BHFI_pack_string            = 'LQQQLLLLLL'
+      end # module Kernel32
+
+      module Kernel32
+        def self.get_file_attributes(path)
+
+          attributes = GetFileAttributes.call(path)
+
+          (0xFFFFFFFF == attributes) ? 0 : attributes
+        end
+
+        def self.get_short_path_name(path)
+
+          buff = ' ' * MAX_PATH
+
+          n = GetShortPathName.call(path, buff, buff.length)
+
+          (0 == n) ? nil : buff[0...n]
+        end
+
+        def self.get_stat_shared(path)
+
+          volume_id   = 0
+          file_index  = 0
+          num_links   = 0
+
+          hFile = CreateFile.call(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL)
+
+          if INVALID_HANDLE_VALUE != hFile
+
+            begin
+              bhfi  = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+              bhfi  = bhfi.pack(BHFI_pack_string)
+
+              if GetFileInformationByHandle.call(hFile, bhfi)
+
+                bhfi = bhfi.unpack(BHFI_pack_string)
+
+                volume_id   = bhfi[4]
+                file_index  = (bhfi[8] << 32) | bhfi[9]
+                num_links   = bhfi[7]
+              end
+            ensure
+
+              CloseHandle.call(hFile)
+            end
+          end
+
+          [ volume_id, file_index, num_links ]
+        end
+      end # module Kernel32
+    end
 
     # @!visibility private
     class FileStat < File::Stat # :nodoc:
