@@ -1,6 +1,11 @@
 # **recls.Ruby** Changes
 
-## 2.13.01 - 21st April 2024
+## 2.13.1 - 2nd June 2024
+
+* Windows-specific functionality now compatible with Ruby v2+
+
+
+## 2.13.0.1 - 21st April 2024
 
 * substantial documentation improvements
 
