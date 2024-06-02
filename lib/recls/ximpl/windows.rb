@@ -171,7 +171,7 @@ module Recls
       # @!visibility private
       def hidden? # :nodoc:
 
-        0 != (FILE_ATTRIBUTE_HIDDEN & @attributes)
+        has_attribute_? FILE_ATTRIBUTE_HIDDEN
       end
 
       # Windows-specific attributes
@@ -221,7 +221,7 @@ module Recls
 
       public
       # @!visibility private
-      def FileStat.stat(path) # :nodoc:
+      def self.stat(path) # :nodoc:
 
         Recls::Ximpl::FileStat.new(path)
       end
