@@ -4,7 +4,7 @@
 # Purpose:  Version for recls library
 #
 # Created:  14th February 2014
-# Updated:  2nd April 2024
+# Updated:  2nd June 2024
 #
 # Author:   Matthew Wilson
 #
@@ -43,7 +43,7 @@
 module Recls
 
   # Current version of the recls.Ruby library
-  VERSION           = '2.13.1'
+  VERSION           = '2.13.1.1'
 
   private
   # @!visibility private
