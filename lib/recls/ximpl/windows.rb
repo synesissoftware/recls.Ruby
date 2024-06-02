@@ -92,8 +92,7 @@ module Recls
           @file_index = 0
           @num_links  = 0
 
-          # for some reason not forcing this new string causes 'can't modify frozen string (TypeError)' (in Ruby 1.8.x)
-          hFile = Kernel32::CreateFile.call("#{path}", 0, 0, NULL, OPEN_EXISTING, 0, NULL);
+          hFile = Kernel32::CreateFile.call(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL);
           if INVALID_HANDLE_VALUE != hFile
 
             begin
@@ -135,10 +134,11 @@ module Recls
       # @!visibility private
       def initialize(path) # :nodoc:
 
+        path = path.to_str
+
         @path = path
 
-        # for some reason not forcing this new string causes 'can't modify frozen string (TypeError)'
-        attributes = Kernel32::GetFileAttributes.call("#{path}")
+        attributes = Kernel32::GetFileAttributes.call(path)
 
         if 0xffffffff == attributes
 
@@ -153,8 +153,8 @@ module Recls
         @by_handle_information = ByHandleInformation.new(path)
 
         buff = ' ' * MAX_PATH
-        # not forcing this new string causes 'can't modify frozen string (TypeError)'
-        n = Kernel32::GetShortPathName.call("#{path}", buff, buff.length)
+
+        n = Kernel32::GetShortPathName.call(path, buff, buff.length)
         @short_path = (0 == n) ? nil : buff[0...n]
       end
 
