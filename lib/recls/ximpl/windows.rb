@@ -51,13 +51,6 @@ module Recls
     # @!visibility private
     module Kernel32
 
-      CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
-      CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
-      GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
-      GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
-      GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
-
-      BHFI_pack_string            = 'LQQQLLLLLL'
       INVALID_HANDLE_VALUE        = 0xFFFFFFFF
       MAX_PATH                    = 260
       NULL                        = 0x00000000
@@ -65,26 +58,22 @@ module Recls
     end # module Kernel32
 
     module Kernel32
-      def self.close_handle(hFile)
 
-        CloseHandle.call(hFile)
-      end
+      CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
+      CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
+      GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
+      GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
+      GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
 
-      def self.create_file(path, desired_access, share_mode, sa, creation_disposition, flags_and_attributes, hTemplateFile)
+      BHFI_pack_string            = 'LQQQLLLLLL'
+    end # module Kernel32
 
-        CreateFile.call(path, desired_access, share_mode, sa, creation_disposition, flags_and_attributes, hTemplateFile)
-      end
-
+    module Kernel32
       def self.get_file_attributes(path)
 
         attributes = GetFileAttributes.call(path)
 
         (0xffffffff == attributes) ? 0 : attributes
-      end
-
-      def self.get_file_information_by_handle(hFile, bhfi)
-
-        GetFileInformationByHandle.call(hFile, bhfi)
       end
 
       def self.get_short_path_name(path)
@@ -102,14 +91,14 @@ module Recls
         file_index  = 0
         num_links   = 0
 
-        hFile = self.create_file(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL)
+        hFile = CreateFile.call(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL)
         if INVALID_HANDLE_VALUE != hFile
 
           begin
             bhfi  = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
             bhfi  = bhfi.pack(BHFI_pack_string)
 
-            if self.get_file_information_by_handle(hFile, bhfi)
+            if GetFileInformationByHandle.call(hFile, bhfi)
 
               bhfi = bhfi.unpack(BHFI_pack_string)
 
@@ -120,7 +109,7 @@ module Recls
             end
           ensure
 
-            self.close_handle(hFile)
+            CloseHandle.call(hFile)
           end
         end
 
