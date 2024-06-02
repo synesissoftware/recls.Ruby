@@ -4,7 +4,7 @@
 # Purpose:  Windows-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  21st April 2024
+# Updated:  2nd June 2024
 #
 # Author:   Matthew Wilson
 #
@@ -49,14 +49,19 @@ module Recls
   module Ximpl # :nodoc: all
 
     # @!visibility private
-    class FileStat < File::Stat # :nodoc:
+    module Kernel32
 
-      private
       GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
       GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
       GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
       CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
       CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
+    end # module Kernel32
+
+    # @!visibility private
+    class FileStat < File::Stat # :nodoc:
+
+      private
       FILE_ATTRIBUTE_READONLY     = 0x00000001
       FILE_ATTRIBUTE_HIDDEN       = 0x00000002
       FILE_ATTRIBUTE_SYSTEM       = 0x00000004
@@ -88,14 +93,14 @@ module Recls
           @num_links  = 0
 
           # for some reason not forcing this new string causes 'can't modify frozen string (TypeError)' (in Ruby 1.8.x)
-          hFile = CreateFile.call("#{path}", 0, 0, NULL, OPEN_EXISTING, 0, NULL);
+          hFile = Kernel32::CreateFile.call("#{path}", 0, 0, NULL, OPEN_EXISTING, 0, NULL);
           if INVALID_HANDLE_VALUE != hFile
 
             begin
               bhfi  = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
               bhfi  = bhfi.pack(BHFI_pack_string)
 
-              if GetFileInformationByHandle.call(hFile, bhfi)
+              if Kernel32::GetFileInformationByHandle.call(hFile, bhfi)
 
                 bhfi = bhfi.unpack(BHFI_pack_string)
 
@@ -105,7 +110,8 @@ module Recls
               else
               end
             ensure
-              CloseHandle.call(hFile)
+
+              Kernel32::CloseHandle.call(hFile)
             end
           end
         end
@@ -132,7 +138,7 @@ module Recls
         @path = path
 
         # for some reason not forcing this new string causes 'can't modify frozen string (TypeError)'
-        attributes = GetFileAttributes.call("#{path}")
+        attributes = Kernel32::GetFileAttributes.call("#{path}")
 
         if 0xffffffff == attributes
 
@@ -148,7 +154,7 @@ module Recls
 
         buff = ' ' * MAX_PATH
         # not forcing this new string causes 'can't modify frozen string (TypeError)'
-        n = GetShortPathName.call("#{path}", buff, buff.length)
+        n = Kernel32::GetShortPathName.call("#{path}", buff, buff.length)
         @short_path = (0 == n) ? nil : buff[0...n]
       end
 
