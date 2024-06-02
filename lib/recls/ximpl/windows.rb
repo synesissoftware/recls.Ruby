@@ -51,11 +51,11 @@ module Recls
     # @!visibility private
     module Kernel32
 
+      CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
+      CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
       GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
       GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
       GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
-      CreateFile                  = Win32API.new('kernel32', 'CreateFile', [ 'P', 'L', 'L', 'L', 'L', 'L', 'L' ], 'L')
-      CloseHandle                 = Win32API.new('kernel32', 'CloseHandle', [ 'L' ], 'L')
     end # module Kernel32
 
     # @!visibility private
