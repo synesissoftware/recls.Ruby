@@ -56,6 +56,76 @@ module Recls
       GetFileAttributes           = Win32API.new('kernel32', 'GetFileAttributes', [ 'P' ], 'I')
       GetFileInformationByHandle  = Win32API.new('kernel32', 'GetFileInformationByHandle', [ 'L', 'P' ], 'I')
       GetShortPathName            = Win32API.new('kernel32', 'GetShortPathName', [ 'P', 'P', 'L' ], 'L')
+
+      BHFI_pack_string            = 'LQQQLLLLLL'
+      INVALID_HANDLE_VALUE        = 0xFFFFFFFF
+      MAX_PATH                    = 260
+      NULL                        = 0x00000000
+      OPEN_EXISTING               = 0x00000003
+    end # module Kernel32
+
+    module Kernel32
+      def self.close_handle(hFile)
+
+        CloseHandle.call(hFile)
+      end
+
+      def self.create_file(path, desired_access, share_mode, sa, creation_disposition, flags_and_attributes, hTemplateFile)
+
+        CreateFile.call(path, desired_access, share_mode, sa, creation_disposition, flags_and_attributes, hTemplateFile)
+      end
+
+      def self.get_file_attributes(path)
+
+        attributes = GetFileAttributes.call(path)
+
+        (0xffffffff == attributes) ? 0 : attributes
+      end
+
+      def self.get_file_information_by_handle(hFile, bhfi)
+
+        GetFileInformationByHandle.call(hFile, bhfi)
+      end
+
+      def self.get_short_path_name(path)
+
+        buff = ' ' * MAX_PATH
+
+        n = GetShortPathName.call(path, buff, buff.length)
+
+        (0 == n) ? nil : buff[0...n]
+      end
+
+      def self.get_stat_shared(path)
+
+        volume_id   = 0
+        file_index  = 0
+        num_links   = 0
+
+        hFile = self.create_file(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL)
+        if INVALID_HANDLE_VALUE != hFile
+
+          begin
+            bhfi  = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            bhfi  = bhfi.pack(BHFI_pack_string)
+
+            if self.get_file_information_by_handle(hFile, bhfi)
+
+              bhfi = bhfi.unpack(BHFI_pack_string)
+
+              volume_id   = bhfi[4]
+              file_index  = (bhfi[8] << 32) | bhfi[9]
+              num_links   = bhfi[7]
+            else
+            end
+          ensure
+
+            self.close_handle(hFile)
+          end
+        end
+
+        [ volume_id, file_index, num_links ]
+      end
     end # module Kernel32
 
     # @!visibility private
@@ -73,46 +143,13 @@ module Recls
       FILE_ATTRIBUTE_COMPRESSED   = 0x00000800
       FILE_ATTRIBUTE_ENCRYPTED    = 0x00004000
 
-      OPEN_EXISTING               = 0x00000003
-      FILE_FLAG_OVERLAPPED        = 0x40000000
-      NULL                        = 0x00000000
-      INVALID_HANDLE_VALUE        = 0xFFFFFFFF
-
-      MAX_PATH                    = 260
-
-      BHFI_pack_string            = 'LQQQLLLLLL'
-
       # @!visibility private
       class ByHandleInformation # :nodoc:
 
         # @!visibility private
         def initialize(path) # :nodoc:
 
-          @volume_id  = 0
-          @file_index = 0
-          @num_links  = 0
-
-          hFile = Kernel32::CreateFile.call(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL);
-          if INVALID_HANDLE_VALUE != hFile
-
-            begin
-              bhfi  = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-              bhfi  = bhfi.pack(BHFI_pack_string)
-
-              if Kernel32::GetFileInformationByHandle.call(hFile, bhfi)
-
-                bhfi = bhfi.unpack(BHFI_pack_string)
-
-                @volume_id  = bhfi[4]
-                @file_index = (bhfi[8] << 32) | bhfi[9]
-                @num_links  = bhfi[7]
-              else
-              end
-            ensure
-
-              Kernel32::CloseHandle.call(hFile)
-            end
-          end
+          @volume_id, @file_index, @num_links = Kernel32.get_stat_shared(path)
         end
 
         # @!visibility private
@@ -138,24 +175,14 @@ module Recls
 
         @path = path
 
-        attributes = Kernel32::GetFileAttributes.call(path)
-
-        if 0xffffffff == attributes
-
-          @attributes = 0
-        else
-
-          @attributes = attributes
-        end
+        @attributes = Kernel32.get_file_attributes(path)
 
         super(path)
 
         @by_handle_information = ByHandleInformation.new(path)
 
-        buff = ' ' * MAX_PATH
+        @short_path = Kernel32.get_short_path_name(path)
 
-        n = Kernel32::GetShortPathName.call(path, buff, buff.length)
-        @short_path = (0 == n) ? nil : buff[0...n]
       end
 
       public
