@@ -4,11 +4,11 @@
 # Purpose:  Definition of Recls::compare_paths() for Ruby 2+
 #
 # Created:  17th February 2014
-# Updated:  21st April 2024
+# Updated:  9th January 2025
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2025, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2014-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -45,7 +45,16 @@ require 'recls/ximpl/util'
 
 module Recls
 
-  # Combines paths, optionally canonicalising them
+  # Combines paths, optionally canonicalising them.
+  #
+  # Unlike `File::join()`, this method takes account of relative vs absolute
+  # elements in the sequence. Specifically, the rightmost non-relative
+  # element, if it exists, anchors the combination, such that any arguments
+  # to the left are ignored. Furthermore, any entries (of type
+  # `Recls::Entry`) in the sequence are given special treatment as follows:
+  # - a rightmost `#file?` or `#device?` is returned as the complete result;
+  # - a rightmost `#directory?` causes all prior elements to be ignored and
+  #   may be combined with subsequent elements;
   #
   # === Signature
   #
@@ -66,7 +75,22 @@ module Recls
 
     raise ArgumentError, 'must specify one or more path elements' if paths.empty?
 
-    ix_last_entry = paths.rindex { |path| ::Recls::Entry === path } and return paths[ix_last_entry]
+    ix_last_entry = paths.rindex { |path| ::Recls::Entry === path }
+
+    if ix_last_entry
+
+      fe = paths[ix_last_entry]
+
+      if fe.directory?
+
+        paths = paths[ix_last_entry..]
+      else
+
+        return fe
+      end
+    end
+
+    paths = paths.map { |path| path.to_str }
 
     return Recls::Ximpl.combine_paths paths, options
   end
