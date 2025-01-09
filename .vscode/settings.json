@@ -1,10 +1,18 @@
 {
-  "[ruby]": {
-      "editor.tabSize": 2,
-  },
-  "cmake.configureOnOpen": false,
-  "editor.detectIndentation": false,
-  "editor.insertSpaces": true,
-  "editor.tabSize": 2,
-  "files.trimTrailingWhitespace": true,
+	"[ruby]": {
+		"editor.insertSpaces": true,
+		"editor.rulers": [ 60, 76 ],
+		"editor.tabSize": 2,
+	},
+	"cmake.configureOnOpen": false,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"files.associations": {
+	},
+	"editor.renderWhitespace" : "all",
+	"editor.rulers": [ 76 ],
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	"git.mergeEditor": false,
 }
