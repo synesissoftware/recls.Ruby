@@ -2,7 +2,8 @@
 
 ## Summary
 
-Illustrates finding of FILES, then DIRECTORIES, then both
+Illustrates non-recursive finding of FILES, then DIRECTORIES, then both.
+
 
 ## Source
 

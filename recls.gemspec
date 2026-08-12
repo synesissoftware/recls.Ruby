@@ -4,36 +4,51 @@
 # Purpose:  Gemspec for recls.Ruby library
 #
 # Created:  14th February 2014
-# Updated:  20th April 2024
+# Updated:  13th August 2026
 #
 # ######################################################################## #
 
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
-require 'recls'
-
-require 'date'
+require 'recls/version'
 
 
 Gem::Specification.new do |spec|
 
   spec.name         = 'recls-ruby'
-  spec.version      = Recls::VERSION
-  spec.date         = Date.today.to_s
   spec.summary      = 'recls.Ruby'
+  spec.version      = Recls::VERSION
   spec.description  = <<END_DESC
 RECursive LS for Ruby
 END_DESC
   spec.authors      = [ 'Matt Wilson' ]
   spec.email        = 'matthew@synesis.com.au'
-  spec.homepage     = 'http://github.com/synesissoftware/recls.Ruby'
+  spec.homepage     = 'https://github.com/synesissoftware/recls.Ruby'
   spec.license      = 'BSD-3-Clause'
-  spec.files        = Dir[ 'Rakefile', '{bin,examples,lib,man,spec,test}/**/*', 'README*', 'LICENSE*' ] & `git ls-files -z`.split("\0")
 
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = [ '>= 1.9.3' ]
 
   spec.add_development_dependency 'xqsr3', [ '~> 0.31' ]
+
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/synesissoftware/recls.Ruby/issues',
+    'changelog_uri' => 'https://github.com/synesissoftware/recls.Ruby/blob/master/CHANGES.md',
+    'homepage_uri' => 'https://github.com/synesissoftware/recls.Ruby',
+    'source_code_uri' => 'https://github.com/synesissoftware/recls.Ruby',
+  }
+
+  spec.files = Dir[
+    'Rakefile',
+    '{bin,examples,lib,man,spec,test}/**/*',
+    'AUTHORS*',
+    'CHANGES*',
+    'EXAMPLES*',
+    'LICENSE*',
+    'NEWS*',
+    'README*',
+    'TODO*',
+  ] & `git ls-files -z`.split("\0")
 end
 
 

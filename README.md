@@ -2,14 +2,11 @@
 
 **rec**-ursive **ls**, for Ruby
 
+![Language](https://img.shields.io/badge/Ruby-CC342D?style=flat&logo=ruby&logoColor=white)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Gem Version](https://badge.fury.io/rb/recls-ruby.svg)](https://badge.fury.io/rb/recls-ruby)
-
-
-## Introduction
-
-**recls** stands for **rec**-ursive **ls**. The first recls library was a C
-library with a C++ wrapper. There have been several implementations in other
-languages. **recls.Ruby** is the Ruby version.
+[![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/recls.Ruby)](https://github.com/synesissoftware/recls.Ruby/commits/master)
+[![Ruby](https://github.com/synesissoftware/recls.Ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/synesissoftware/recls.Ruby/actions/workflows/ruby.yml)
 
 
 ## Table of Contents <!-- omit in toc -->
@@ -24,16 +21,33 @@ languages. **recls.Ruby** is the Ruby version.
   - [Where to get help](#where-to-get-help)
   - [Contribution guidelines](#contribution-guidelines)
   - [Dependencies](#dependencies)
-  - [Development dependencies](#development-dependencies)
-  - [Dependents](#dependents)
+    - [Efferent (fan-out)](#efferent-fan-out)
+      - [Runtime Dependencies (aka "Normal Dependencies")](#runtime-dependencies-aka-normal-dependencies)
+      - [Development Dependencies](#development-dependencies)
+    - [Afferent (fan-in)](#afferent-fan-in)
+      - [Runtime dependents](#runtime-dependents)
+      - [Development dependents](#development-dependents)
   - [Related projects](#related-projects)
   - [License](#license)
   - [Compatibility](#compatibility)
 
 
+## Introduction
+
+**recls** stands for **rec**-ursive **ls**. The first recls library was a C
+library with a C++ wrapper. There have been several implementations in other
+languages. **recls.Ruby** is the Ruby version.
+
+
 ## Installation
 
-Install using `gem install recls-ruby` or add it to your `Gemfile`.
+Install via **gem** as in:
+
+```
+gem install recls-ruby
+```
+
+or add it to your `Gemfile`.
 
 
 ## Components
@@ -41,12 +55,18 @@ Install using `gem install recls-ruby` or add it to your `Gemfile`.
 The main components of **recls.Ruby** are:
 
 * the ``Recls`` module; and
-* the ``Recls::Entry`` class
+* the ``Recls::Entry`` class.
 
 
 ### The ``Recls`` module
 
-T.B.C.
+The ``Recls`` module is the primary API surface. Significant facilities include:
+
+* path utilities — `Recls.absolute_path`, `Recls.absolute_path?`, `Recls.canonicalise_path`, `Recls.combine_paths`, `Recls.derive_relative_path`;
+* existence / type probes — `Recls.directory?`, `Recls.exist?`, `Recls.file?`, `Recls.stat`;
+* search — `Recls.search` (non-recursive) and `Recls.rsearch` (recursive), returning enumerables of ``Recls::Entry``;
+* line-oriented search — `Recls.foreach`;
+* ambient OS helpers — `Recls.windows?`, plus constants such as `Recls::PATH_NAME_SEPARATOR`, `Recls::PATH_SEPARATOR`, and `Recls::WILDCARDS_ALL`.
 
 
 ### The ``Recls::Entry`` class
@@ -261,11 +281,6 @@ module Recls
     end
   end # class Entry
 end # module Recls
-
-
-# ############################## end of file ############################# #
-
-
 ```
 
 
@@ -289,25 +304,45 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 ### Dependencies
 
-None
+
+#### Efferent (fan-out)
+
+Libraries upon which **recls.Ruby** depends:
 
 
-### Development dependencies
+##### Runtime Dependencies (aka "Normal Dependencies")
 
-None
+* \<none>;
 
 
-### Dependents
+##### Development Dependencies
 
-**recls.Ruby** is used in the **[libCLImate.Ruby](https://github.com/synesissoftware/libCLImate.Ruby)** library.
+* [**rake**](https://rubygems.org/gems/rake);
+* [**test-unit**](https://rubygems.org/gems/test-unit);
+* [**xqsr3**](https://rubygems.org/gems/xqsr3);
+
+
+#### Afferent (fan-in)
+
+Projects that depend on **recls.Ruby**:
+
+
+##### Runtime dependents
+
+* [**libCLImate.Ruby**](https://github.com/synesissoftware/libCLImate.Ruby);
+
+
+##### Development dependents
+
+* \<none>;
 
 
 ### Related projects
 
-* [**recls**](https://github.com/synesissoftware/recls/)
-* [**recls.Go**](https://github.com/synesissoftware/recls.Go/)
-* [**recls.NET**](https://github.com/synesissoftware/recls.NET/)
-* [**recls.Python**](https://github.com/synesissoftware/recls.Python/)
+* [**recls**](https://github.com/synesissoftware/recls/);
+* [**recls.Go**](https://github.com/synesissoftware/recls.Go/);
+* [**recls.NET**](https://github.com/synesissoftware/recls.NET/);
+* [**recls.Python**](https://github.com/synesissoftware/recls.Python/);
 
 
 ### License
@@ -317,9 +352,7 @@ None
 
 ### Compatibility
 
-For v2.8.x onwards, recls.Ruby is compatible only with Ruby 2.0+; all other
-past and current versions work with Ruby 1.9.3+.
+**recls.Ruby** requires Ruby **1.9.3+** (as declared in **recls.gemspec**).
 
 
 <!-- ########################### end of file ########################### -->
-
