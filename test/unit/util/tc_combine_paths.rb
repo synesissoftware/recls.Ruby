@@ -113,7 +113,6 @@ class Test_combine_paths < Test::Unit::TestCase
 
     f_g = Recls.stat('/f/g', Recls::DETAILS_LATER | Recls::DIRECTORIES)
     b = Recls.stat('b', Recls::DETAILS_LATER | Recls::DIRECTORIES)
-    root_b = Recls.stat('/b', Recls::DETAILS_LATER | Recls::DIRECTORIES)
 
     assert_equal '/a/b/c/d/e/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', 'f/g')
     assert_equal '/f/g', Recls.combine_paths('/', 'a', 'b', 'c', 'd/e', '/f/g')
