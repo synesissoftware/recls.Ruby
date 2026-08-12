@@ -352,8 +352,7 @@ Projects that depend on **recls.Ruby**:
 
 ### Compatibility
 
-For v2.8.x onwards, **recls.Ruby** is compatible only with Ruby 2.0+; all other
-past and current versions work with Ruby 1.9.3+.
+**recls.Ruby** requires Ruby **1.9.3+** (as declared in **recls.gemspec**).
 
 
 <!-- ########################### end of file ########################### -->

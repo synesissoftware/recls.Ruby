@@ -5,6 +5,9 @@
 
 * documentation and project-boilerplate modernisation;
 * added **AUTHORS.md**, **NEWS.md**, and **TODO.md**;
+* completed **.github/workflows/ruby.yml** (OS × Ruby matrix, gem smoke, warnings job);
+* implemented **Rakefile** `test` / `default` tasks;
+* fixed **recls.gemspec** homepage/metadata to **recls.Ruby** (HTTPS);
 
 
 ## 2.13.2 - 25th April 2025

@@ -24,7 +24,7 @@ RECursive LS for Ruby
 END_DESC
   spec.authors      = [ 'Matt Wilson' ]
   spec.email        = 'matthew@synesis.com.au'
-  spec.homepage     = 'http://github.com/synesissoftware/recls.Ruby'
+  spec.homepage     = 'https://github.com/synesissoftware/recls.Ruby'
   spec.license      = 'BSD-3-Clause'
 
   spec.required_ruby_version = [ '>= 1.9.3' ]
@@ -32,10 +32,10 @@ END_DESC
   spec.add_development_dependency 'xqsr3', [ '~> 0.31' ]
 
   spec.metadata = {
-    'bug_tracker_uri' => 'https://github.com/synesissoftware/recls/issues',
-    'changelog_uri' => 'https://github.com/synesissoftware/recls/blob/master/CHANGES.md',
-    'homepage_uri' => 'https://github.com/synesissoftware/recls',
-    'source_code_uri' => 'https://github.com/synesissoftware/recls',
+    'bug_tracker_uri' => 'https://github.com/synesissoftware/recls.Ruby/issues',
+    'changelog_uri' => 'https://github.com/synesissoftware/recls.Ruby/blob/master/CHANGES.md',
+    'homepage_uri' => 'https://github.com/synesissoftware/recls.Ruby',
+    'source_code_uri' => 'https://github.com/synesissoftware/recls.Ruby',
   }
 
   spec.files = Dir[
