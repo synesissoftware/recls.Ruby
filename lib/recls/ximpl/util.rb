@@ -780,7 +780,7 @@ module Recls
       raise ArgumentError, "`paths` must be an instance of `::Array`" if $DEBUG && !paths.is_a?(::Array)
       raise ArgumentError, "`paths` elements must be instances of `::String`" if $DEBUG && paths.any? { |s| !s.is_a?(::String) }
 
-      abs_ix  = 0
+      abs_ix = 0
 
       paths = paths.map { |path| '~' == path[0].to_s ? File.expand_path(path) : path }
 

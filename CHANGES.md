@@ -15,6 +15,11 @@
 * fixed `Recls.combine_paths` for combining `Recls::Entry` instance(s) that may be directories;
 
 
+## 2.13.2 - 25th April 2025
+
+* Fixed `Recls.combine_paths()` such that passing a `Recls::Entry` that represents a directory is not taken to be the complete result, as is (and should be) the case for a file;
+
+
 ## 2.13.1 - 2nd June 2024
 
 * Windows-specific functionality now compatible with Ruby v2+;

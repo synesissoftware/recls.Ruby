@@ -4,11 +4,11 @@
 # Purpose:  Defines the Recls::Entry class for the recls.Ruby library.
 #
 # Created:  24th July 2012
-# Updated:  21st April 2024
+# Updated:  9th January 2025
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2025, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -64,6 +64,7 @@ module Recls
     def initialize(path, file_stat, search_dir, flags)
 
       @file_stat    = file_stat
+      @flags        = flags
 
       @path         = Recls::Ximpl.absolute_path path
       @short_path   = nil
@@ -104,6 +105,8 @@ module Recls
         @short_path       = @file_stat.short_path
         @file_short_name  = Recls::Ximpl::Util.split_path(@short_path)[2]
       else
+
+        ;
       end
     end
 
@@ -237,9 +240,13 @@ module Recls
     # indicates whether the given entry represents a directory
     def directory?
 
-      return false if @file_stat.nil?
+      if @file_stat.nil?
 
-      @file_stat.directory?
+        (Recls::DETAILS_LATER | Recls::DIRECTORIES) == ((Recls::DETAILS_LATER | Recls::DIRECTORIES) & @flags)
+      else
+
+        @file_stat.directory?
+      end
     end
 
     alias_method :dir?, :directory?
@@ -247,9 +254,13 @@ module Recls
     # indicates whether the given entry represents a file
     def file?
 
-      return false if @file_stat.nil?
+      if @file_stat.nil?
 
-      @file_stat.file?
+        (Recls::DETAILS_LATER | Recls::FILES) == ((Recls::DETAILS_LATER | Recls::FILES) & @flags)
+      else
+
+        @file_stat.file?
+      end
     end
 
     # indicates whether the given entry represents a link
