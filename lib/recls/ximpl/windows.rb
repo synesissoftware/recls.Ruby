@@ -218,8 +218,12 @@ module Recls
       end # module Kernel32
     end
 
+    # File::Stat cannot reliably be subclassed on all Rubies (notably some
+    # Ruby 4 / MinGW builds raise TypeError: wrong instance allocation).
+    # Compose instead and forward File::Stat APIs via method_missing.
+    #
     # @!visibility private
-    class FileStat < File::Stat # :nodoc:
+    class FileStat # :nodoc:
 
       private
       FILE_ATTRIBUTE_READONLY     = 0x00000001
@@ -267,7 +271,7 @@ module Recls
 
         @attributes = Kernel32.get_file_attributes(path)
 
-        super(path)
+        @stat = ::File::Stat.new(path)
 
         @by_handle_information = ByHandleInformation.new(path)
 
@@ -335,6 +339,17 @@ module Recls
         has_attribute_? FILE_ATTRIBUTE_ENCRYPTED
       end
 
+      # @!visibility private
+      def method_missing(name, *args, &block) # :nodoc:
+
+        @stat.__send__(name, *args, &block)
+      end
+
+      # @!visibility private
+      def respond_to_missing?(name, include_all = false) # :nodoc:
+
+        @stat.respond_to?(name, include_all) || super
+      end
 
       public
       # @!visibility private

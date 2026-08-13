@@ -12,6 +12,7 @@
 * warnings CI job now runs via `bundle exec` so development gems (e.g. **xqsr3**) are loadable;
 * Ruby 4+ (incl. MinGW): pull in **fiddle** from the **Gemfile** (no longer a default gem; still required on Windows);
 * documented the Ruby 4+ Windows **fiddle** requirement in **README.md** (**Installation** and **Dependencies**);
+* Ruby 4+ (incl. MinGW): `Recls::Ximpl::FileStat` no longer subclasses `File::Stat` (avoids `TypeError: wrong instance allocation`);
 
 
 ## 2.13.2 - 25th April 2025
