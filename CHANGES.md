@@ -10,6 +10,8 @@
 * fixed **recls.gemspec** homepage/metadata to **recls.Ruby** (HTTPS);
 * fixed `Recls.combine_paths` array slice to remain compatible with Ruby 1.9.3–2.5 (no endless ranges);
 * warnings CI job now runs via `bundle exec` so development gems (e.g. **xqsr3**) are loadable;
+* Ruby 4+ (incl. MinGW): pull in **fiddle** from the **Gemfile** (no longer a default gem; still required on Windows);
+* documented the Ruby 4+ Windows **fiddle** requirement in **README.md** (**Installation** and **Dependencies**);
 
 
 ## 2.13.2 - 25th April 2025

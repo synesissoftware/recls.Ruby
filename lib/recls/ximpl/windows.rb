@@ -4,11 +4,11 @@
 # Purpose:  Windows-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  2nd June 2024
+# Updated:  13th August 2026
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2026, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -39,8 +39,15 @@
 
 if RUBY_VERSION >= '2'
 
-  require 'fiddle'
-  require 'fiddle/import'
+  begin
+
+    require 'fiddle'
+    require 'fiddle/import'
+  rescue LoadError => e
+
+    # Ruby 4+ no longer ships fiddle as a default gem.
+    raise LoadError, "#{e.message}; on Ruby 4+ Windows, add the 'fiddle' gem (see the project Gemfile)"
+  end
 else
 
   require 'Win32API'
