@@ -4,7 +4,7 @@
 # Purpose:  Gemspec for recls.Ruby library
 #
 # Created:  14th February 2014
-# Updated:  13th August 2026
+# Updated:  15th August 2026
 #
 # ######################################################################## #
 
@@ -22,14 +22,19 @@ Gem::Specification.new do |spec|
   spec.description  = <<END_DESC
 RECursive LS for Ruby
 END_DESC
-  spec.authors      = [ 'Matt Wilson' ]
-  spec.email        = 'matthew@synesis.com.au'
+
+  spec.authors      = [
+    'Matt Wilson',
+  ]
+  spec.email        = [
+    'matthew@synesis.com.au',
+  ]
   spec.homepage     = 'https://github.com/synesissoftware/recls.Ruby'
   spec.license      = 'BSD-3-Clause'
 
   spec.required_ruby_version = [ '>= 1.9.3' ]
 
-  spec.add_development_dependency 'xqsr3', [ '~> 0.31' ]
+  spec.add_development_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
 
   spec.metadata = {
     'bug_tracker_uri' => 'https://github.com/synesissoftware/recls.Ruby/issues',
@@ -53,4 +58,3 @@ end
 
 
 # ############################## end of file ############################# #
-
