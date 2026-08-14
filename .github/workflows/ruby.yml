@@ -114,4 +114,4 @@ jobs:
       run: ruby -v
 
     - name: Run unit tests with warnings
-      run: bundle exec ./run_all_unit_tests.sh --lib --warnings
+      run: ./run_all_unit_tests.sh --lib --warnings
