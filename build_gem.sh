@@ -6,10 +6,8 @@
 # Purpose:  Builds the gem
 #
 # Created:  9th June 2016
-# Updated:  20th April 2024
+# Updated:  14th August 2026
 #
 #############################################################################
 
-
-gem build recls.gemspec $*
-
+gem build *.gemspec $*

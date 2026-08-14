@@ -1,15 +1,13 @@
 @ECHO OFF
 
-REM #########################################################################
+REM ########################################################################
 REM File:     build_gem.cmd
 REM
 REM Purpose:  Builds the gem
 REM
 REM Created:  11th July 2016
-REM Updated:  20th April 2024
+REM Updated:  14th August 2026
 REM
-REM #########################################################################
+REM ########################################################################
 
-
-gem build recls.gemspec %*
-
+FOR %%f IN (*.gemspec) DO gem build "%%f" %*
