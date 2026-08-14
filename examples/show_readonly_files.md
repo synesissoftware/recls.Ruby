@@ -2,7 +2,8 @@
 
 ## Summary
 
-TBC
+Illustrates recursive searching for read-only files by filtering with `Recls::Entry#readonly?`.
+
 
 ## Source
 
@@ -22,9 +23,13 @@ Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES).each do |fe|
 end
 ```
 
+
 ## Discussion
 
-TBC
+Unlike hidden entries, read-only files are returned by a normal files search;
+filtering is done solely via `#readonly?`. (The older `Recls.file_rsearch` name
+is retained for compatibility; `Recls.rsearch` is preferred.)
+
 
 ## Example results
 
@@ -35,4 +40,3 @@ TBC
 
 
 <!-- ########################### end of file ########################### -->
-

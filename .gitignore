@@ -6,6 +6,7 @@
 /.svn/
 /.yardoc/
 
+/_build/
 /_yardoc/
 
 /InstalledFiles/
@@ -23,7 +24,9 @@
 /tmp/
 /vendor/bundle/
 
+
 # directories (by pattern)
+
 
 # files (by name)
 
@@ -32,7 +35,10 @@
 .ruby-version
 .rvmrc
 
+Gemfile.lock
+
 /spec/examples.txt
+
 
 # files (by pattern)
 

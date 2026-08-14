@@ -2,7 +2,8 @@
 
 ## Summary
 
-Illustrates recursive finding of FILES, then DIRECTORIES, then both
+Illustrates recursive finding of FILES, then DIRECTORIES, then both.
+
 
 ## Source
 
