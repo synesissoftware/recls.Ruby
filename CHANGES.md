@@ -3,6 +3,7 @@
 
 ## 2.13.3 - 13th August 2026
 
+* added `# frozen_string_literal: true` to all **lib/** sources;
 * documentation and project-boilerplate modernisation;
 * added **AUTHORS.md**, **NEWS.md**, and **TODO.md**;
 * completed **.github/workflows/ruby.yml** (OS × Ruby matrix, gem smoke, warnings job);

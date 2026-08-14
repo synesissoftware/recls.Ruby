@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/ximpl/windows.rb
 #
 # Purpose:  Windows-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  13th August 2026
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #

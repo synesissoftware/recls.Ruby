@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/file_search.rb
 #
 # Purpose:  Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:  24th July 2012
-# Updated:  13th August 2026
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #

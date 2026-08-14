@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/compare_paths_2plus.rb
 #
 # Purpose:  Definition of Recls::compare_paths() for Ruby 2+
 #
 # Created:  17th February 2014
-# Updated:  13th August 2026
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #

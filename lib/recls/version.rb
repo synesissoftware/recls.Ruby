@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/version.rb
 #
 # Purpose:  Version for recls library
 #
 # Created:  14th February 2014
-# Updated:  13th August 2026
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #
