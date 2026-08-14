@@ -1,12 +1,15 @@
-# Rakefile for recls
+# frozen_string_literal: true
+
+# Rakefile for recls.Ruby
 
 require 'rake/testtask'
 
 
 Rake::TestTask.new do |tt|
 
-  tt.libs << "lib"
-  tt.name = "test"
+  tt.libs << 'lib'
+  tt.libs << 'test'
+  tt.name = 'test'
   tt.test_files = FileList['test/**/tc_*.rb']
   tt.verbose = true
 end
