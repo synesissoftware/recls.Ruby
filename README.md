@@ -49,6 +49,8 @@ gem install recls-ruby
 
 or add it to your `Gemfile`.
 
+> **NOTE**: On **Windows** with **Ruby 4+**, also install [**fiddle**](https://rubygems.org/gems/fiddle) (`gem install fiddle`, or `gem 'fiddle'` in your Gemfile). See [Runtime Dependencies](#runtime-dependencies-aka-normal-dependencies).
+
 
 ## Components
 
@@ -312,7 +314,9 @@ Libraries upon which **recls.Ruby** depends:
 
 ##### Runtime Dependencies (aka "Normal Dependencies")
 
-* \<none>;
+* \<none> declared in **recls.gemspec**;
+
+> **NOTE**: On **Windows** with **Ruby 4+**, **fiddle** is required at runtime (`lib/recls/ximpl/windows.rb`) but is no longer a default gem and is not listed in **recls.gemspec** (so older Rubies in the `[1.9.3, 4)` range still resolve). Install it explicitly, e.g. `gem install fiddle`, or add `gem 'fiddle'` to your Gemfile. This repository’s **Gemfile** pulls it in when `RUBY_VERSION >= '4'`.
 
 
 ##### Development Dependencies

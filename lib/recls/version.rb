@@ -43,7 +43,7 @@
 module Recls
 
   # Current version of the recls.Ruby library
-  VERSION           = '2.13.2.1'
+  VERSION           = '2.13.3'
 
   private
   # @!visibility private

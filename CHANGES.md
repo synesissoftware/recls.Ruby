@@ -1,23 +1,23 @@
 # **recls.Ruby** Changes <!-- omit in toc -->
 
 
-## 2.13.2.1 - 13th August 2026
+## 2.13.3 - 13th August 2026
 
 * documentation and project-boilerplate modernisation;
 * added **AUTHORS.md**, **NEWS.md**, and **TODO.md**;
 * completed **.github/workflows/ruby.yml** (OS × Ruby matrix, gem smoke, warnings job);
 * implemented **Rakefile** `test` / `default` tasks;
 * fixed **recls.gemspec** homepage/metadata to **recls.Ruby** (HTTPS);
+* fixed `Recls.combine_paths` array slice to remain compatible with Ruby 1.9.3–2.5 (no endless ranges);
+* warnings CI job now runs via `bundle exec` so development gems (e.g. **xqsr3**) are loadable;
+* Ruby 4+ (incl. MinGW): pull in **fiddle** from the **Gemfile** (no longer a default gem; still required on Windows);
+* documented the Ruby 4+ Windows **fiddle** requirement in **README.md** (**Installation** and **Dependencies**);
+* Ruby 4+ (incl. MinGW): `Recls::Ximpl::FileStat` no longer subclasses `File::Stat` (avoids `TypeError: wrong instance allocation`);
 
 
 ## 2.13.2 - 25th April 2025
 
 * fixed `Recls.combine_paths` for combining `Recls::Entry` instance(s) that may be directories;
-
-
-## 2.13.2 - 25th April 2025
-
-* Fixed `Recls.combine_paths()` such that passing a `Recls::Entry` that represents a directory is not taken to be the complete result, as is (and should be) the case for a file;
 
 
 ## 2.13.1 - 2nd June 2024
