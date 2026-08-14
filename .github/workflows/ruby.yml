@@ -7,7 +7,7 @@
 
 #
 # Created: 13th August 2026
-# Updated: 13th August 2026
+# Updated: 15th August 2026
 #
 
 name: Ruby
@@ -19,15 +19,24 @@ on:
       - dev
       - boilerplate
       - idiomatic
+      - rc1
+      - rc2
+      - rc3
   pull_request:
 
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
 
     strategy:
+      fail-fast: false
+
       matrix:
         os:
           - macos-latest
@@ -53,8 +62,6 @@ jobs:
             ruby-version: '2.0'
           - os: windows-latest
             ruby-version: mingw
-          # - os: windows-latest
-          #   ruby-version: ucrt
 
     runs-on: ${{ matrix.os }}
 
