@@ -82,4 +82,119 @@
 * wholesale documentation markup improvements;
 
 
+## 2.9.3 - 29th October 2018
+
+* Recls.derive_relative_path() : ~ fix to defect when '.' is source;
+
+
+## 2.9.2 - 19th October 2018
+
+* warnings;
+
+
+## 2.9.1 - 11th April 2019
+
+* various tidyings;
+
+
+## 2.9.0 - 21st March 2019
+
+* compatibility with Ruby versions 1.9.3+;
+
+
+## 2.8.5 - 28th January 2019
+
+* capturing more of the extant behaviour in tests;
+
+
+## 2.8.4 - 21st January 2019
+
+* sorting out dependencies;
+
+
+## 2.8.3 - 9th July 2018
+
+* ensuring utility methods - absolute_path(), canonicalise_path(), combine_paths() - work correctly if passed Recls::Entry arguments;
+
+
+## 2.8.2 - 5th February 2018
+
+* merge;
+
+
+## 2.8.1 - 27th January 2018
+
+* Recls.combine_paths() now takes multiple path part parameters;
+
+
+## 2.7.6 - 23rd January 2018
+
+* version;
+
+
+## 2.7.5 - 22nd June 2017
+
+* fixed debug-visible warnings;
+
+
+## 2.7.4 - 30th October 2016
+
+* merge;
+
+
+## 2.7.3 - 11th July 2016
+
+* Recls::Entry properties now work, and return falsy-ish values, when executed on DETAILS_LATER non-existent entry;
+
+
+## 2.7.2 - 18th June 2016
+
+* fixed frozen string problem;
+
+
+## 2.7.1 - 13th June 2016
+
+* gem now 'recls-ruby' (rather than 'recls');
+
+
+## 2.6.5 - 9th June 2016
+
+* build_gem.sh;
+
+
+## 2.6.4 - 31st May 2016
+
+* fixed gemspec details;
+
+
+## 2.6.3 - 18th April 2016
+
+* merge;
+
+
+## 2.6.2 - 29th December 2015
+
+* implemented Recls::Entry.file_short_name and added Recls::Entry.short_path;
+
+
+## 2.3.8 - 5th February 2018
+
+* tagged release;
+
+
+## 2.3.7 - 1st November 2015
+
+* removed bodgy catch-all;
+
+
+## 2.3.1 - 27th August 2015
+
+* v2.3 : + added Recls::Entry.nlink attribute, and implemented dev and ino for Windows;
+
+
+## 0.8.3 - 9th July 2018
+
+* ensuring utility methods - absolute_path(), canonicalise_path(), combine_paths() - work correctly if passed Recls::Entry arguments;
+
+
 <!-- ########################### end of file ########################### -->
