@@ -16,6 +16,7 @@
 * [x] ~~~complete **.github/workflows/ruby.yml** (matrix, gem smoke, warnings job) to match **xqsr3**~~~;
 * [x] ~~~implement **Rakefile** `test` / `default` tasks for `bundle exec rake test`~~~;
 * [x] ~~~fix **recls.gemspec** metadata URIs and homepage to **recls.Ruby** (HTTPS)~~~;
+* [ ] Rename gemspec so the filename stem matches `spec.name` (`recls.gemspec` → **recls-ruby.gemspec**);
 
 
 <!-- ########################### end of file ########################### -->
