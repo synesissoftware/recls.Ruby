@@ -69,6 +69,9 @@ jobs:
     - name: Checking out code
       uses: actions/checkout@v4
 
+    - name: Remove Gemfile.lock
+      run: rm -f Gemfile.lock
+
     - name: Set up Ruby v${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
       with:
@@ -97,6 +100,9 @@ jobs:
     steps:
     - name: Checking out code
       uses: actions/checkout@v4
+
+    - name: Remove Gemfile.lock
+      run: rm -f Gemfile.lock
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
