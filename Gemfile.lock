@@ -20,7 +20,7 @@ DEPENDENCIES
   rake (~> 13.0)
   recls-ruby!
   test-unit (~> 3.0)
-  xqsr3 (~> 0.39)
+  xqsr3 (>= 0.39.5, < 1.0)
 
 BUNDLED WITH
    2.6.9
