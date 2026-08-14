@@ -6,9 +6,8 @@
 # Purpose:  Builds the gem
 #
 # Created:  9th June 2016
-# Updated:  11th December 2023
+# Updated:  14th August 2026
 #
 #############################################################################
 
 gem build *.gemspec $*
-

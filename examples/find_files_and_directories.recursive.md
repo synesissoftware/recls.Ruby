@@ -1,4 +1,4 @@
-# recls.Ruby Example - **find_files_and_directories.recursive**
+# recls.Ruby - Example - **find_files_and_directories.recursive**
 
 ## Summary
 

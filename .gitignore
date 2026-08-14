@@ -1,12 +1,9 @@
-
 # directories (by name)
 
-/.bundle/
 /.bzr/
+/.bundle/
 /.config/
-/.git/
 /.svn/
-/.vscode/
 /.yardoc/
 
 /_build/
@@ -34,8 +31,6 @@
 # files (by name)
 
 .DS_Store
-.bundle
-.config
 .repl_history
 .ruby-version
 .rvmrc
@@ -51,6 +46,7 @@ Gemfile.lock
 *.*~
 .dat*
 *.b64
+*.bridgesupport
 *.gem
 *.rbc
 *.scc
@@ -58,4 +54,3 @@ Gemfile.lock
 *.swp
 *.tmp
 *.zip
-

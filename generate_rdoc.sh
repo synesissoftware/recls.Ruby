@@ -5,35 +5,27 @@
 #
 # Purpose:  Generates documentation
 #
-# Created:  14th April 2019
-# Updated:  20th April 2024
+# Created:  11th June 2016
+# Updated:  14th August 2026
 #
 #############################################################################
-
 
 rm -rfd doc
 rdoc \
   -x build_gem.cmd \
   -x build_gem.sh \
+  -x generate_rdoc.cmd \
   -x generate_rdoc.sh \
   -x run_all_unit_tests.sh \
-  -x test_all_separately.cmd \
-  -x test_all_separately.sh \
-  -x recls.gemspec \
-  -x Rakefile \
+  -x *.gemspec \
   \
   -x doc/ \
   -x gems/ \
   -x old-gems/ \
+  -x test/performance/ \
   -x test/scratch/ \
   \
-  -x obsolete.rb \
-  \
-  -x ts_all.rb \
   -x tc_.*\.rb \
+  -x ts_all.rb \
   \
   $*
-
-
-# ############################## end of file ############################# #
-
