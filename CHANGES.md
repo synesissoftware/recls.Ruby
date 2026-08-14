@@ -1,4 +1,4 @@
-# **recls.Ruby** Changes
+# recls.Ruby - Changes <!-- omit in toc -->
 
 ## 2.13.2 - 25th April 2025
 
