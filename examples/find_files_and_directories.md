@@ -1,4 +1,4 @@
-# recls.Ruby Example - **find_files_and_directories**
+# recls.Ruby - Example - **find_files_and_directories**
 
 ## Summary
 

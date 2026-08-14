@@ -1,4 +1,4 @@
-# recls.Ruby Example - **show_hidden_files**
+# recls.Ruby - Example - **show_hidden_files**
 
 ## Summary
 
