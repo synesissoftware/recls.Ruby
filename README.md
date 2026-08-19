@@ -52,6 +52,12 @@ or add it to your `Gemfile`.
 
 **recls.Ruby** requires Ruby **1.9.3+**.
 
+Use is via ``require``, as in:
+
+```Ruby
+require 'recls'
+```
+
 > **NOTE**: On **Windows** with **Ruby 4+**, also install [**fiddle**](https://rubygems.org/gems/fiddle) (`gem install fiddle`, or `gem 'fiddle'` in your Gemfile). See [Runtime Dependencies](#runtime-dependencies-aka-normal-dependencies).
 
 
@@ -347,7 +353,7 @@ Projects that depend on **recls.Ruby**:
 
 ### Related projects
 
-* [**recls**](https://github.com/synesissoftware/recls/);
+* [**recls**](https://github.com/synesissoftware/recls/) — C library with a C++ wrapper;
 * [**recls-helpers.Ruby**](https://github.com/synesissoftware/recls-helpers.Ruby/);
 * [**recls.Go**](https://github.com/synesissoftware/recls.Go/);
 * [**recls.NET**](https://github.com/synesissoftware/recls.NET/);

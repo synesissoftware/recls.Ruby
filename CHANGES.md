@@ -14,6 +14,7 @@
 * bumped **VERSION** to **2.13.4**;
 * **README.md** afferent runtime dependents now include **oss-src-tools**;
 * TODO: CI `on.push.branches` is the canonical seven names (dropped **bp-2**);
+* **README.md** Installation now shows `require 'recls'`; **recls-ruby.gemspec** `add_development_dependency` follows `spec.files`;
 
 
 ## 2.13.3 - 13th August 2026 (internal release only)

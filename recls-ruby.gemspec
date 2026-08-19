@@ -41,8 +41,6 @@ END_DESC
 
   spec.required_ruby_version = [ '>= 1.9.3' ]
 
-  spec.add_development_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
-
   spec.metadata = {
     'bug_tracker_uri' => 'https://github.com/synesissoftware/recls.Ruby/issues',
     'changelog_uri' => 'https://github.com/synesissoftware/recls.Ruby/blob/master/CHANGES.md',
@@ -69,6 +67,8 @@ END_DESC
     '.ruby-version',
     'Gemfile.lock',
   ]
+
+  spec.add_development_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
 end
 
 
