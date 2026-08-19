@@ -1,9 +1,10 @@
 # directories (by name)
 
-/.bzr/
 /.bundle/
+/.bzr/
 /.config/
 /.svn/
+/.vscode/
 /.yardoc/
 
 /_build/

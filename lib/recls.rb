@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls.rb
 #
 # Purpose:  Top-level include for recls.Ruby library
 #
 # Created:  13th January 2012
-# Updated:  20th April 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #

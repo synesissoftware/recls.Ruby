@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/ximpl/os.rb
 #
@@ -5,7 +6,7 @@
 #           recls library.
 #
 # Created:  16th February 2014
-# Updated:  21st April 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #

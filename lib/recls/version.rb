@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/version.rb
 #
 # Purpose:  Version for recls library
 #
 # Created:  14th February 2014
-# Updated:  13th August 2026
+# Updated:  20th August 2026
 #
 # Author:   Matthew Wilson
 #
@@ -43,7 +44,7 @@
 module Recls
 
   # Current version of the recls.Ruby library
-  VERSION           = '2.13.3'
+  VERSION           = '2.13.4'
 
   private
   # @!visibility private

@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/flags.rb
 #
 # Purpose:  Defines the Recls::Flags module for the recls.Ruby library.
 #
 # Created:  24th July 2012
-# Updated:  21st April 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #

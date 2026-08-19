@@ -7,7 +7,7 @@
 
 #
 # Created: 13th August 2026
-# Updated: 13th August 2026
+# Updated: 19th August 2026
 #
 
 name: Ruby
@@ -18,16 +18,26 @@ on:
       - master
       - dev
       - boilerplate
+      - bp-2
       - idiomatic
+      - rc1
+      - rc2
+      - rc3
   pull_request:
 
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
 
     strategy:
+      fail-fast: false
+
       matrix:
         os:
           - macos-latest
@@ -53,8 +63,6 @@ jobs:
             ruby-version: '2.0'
           - os: windows-latest
             ruby-version: mingw
-          # - os: windows-latest
-          #   ruby-version: ucrt
 
     runs-on: ${{ matrix.os }}
 
@@ -62,11 +70,21 @@ jobs:
     - name: Checking out code
       uses: actions/checkout@v4
 
+    - name: Remove Gemfile.lock
+      shell: bash
+      run: rm -f Gemfile.lock
+
     - name: Set up Ruby v${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        # Bundler 4 honours Gemfile `lockfile false`, so no Gemfile.lock
+        # is written. bundler-cache cats that file after `bundle lock`
+        # and fails on Windows 3.2+ (setup-ruby installs Bundler ~> 4).
+        bundler-cache: false
+
+    - name: Install gems
+      run: bundle install
 
     - name: Show Ruby version
       run: ruby -v
@@ -77,7 +95,7 @@ jobs:
     - name: Gem build and install smoke
       shell: bash
       run: |
-        gem build recls.gemspec
+        gem build recls-ruby.gemspec
         gem install --local recls-ruby-*.gem
         ruby -e "require 'recls/version'; abort('VERSION missing') unless defined?(Recls::VERSION); puts Recls::VERSION"
 
@@ -91,14 +109,21 @@ jobs:
     - name: Checking out code
       uses: actions/checkout@v4
 
+    - name: Remove Gemfile.lock
+      shell: bash
+      run: rm -f Gemfile.lock
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.3'
-        bundler-cache: true
+        ruby-version: '3.4'
+        bundler-cache: false
+
+    - name: Install gems
+      run: bundle install
 
     - name: Show Ruby version
       run: ruby -v
 
     - name: Run unit tests with warnings
-      run: bundle exec ./run_all_unit_tests.sh --lib --warnings
+      run: ./run_all_unit_tests.sh --lib --warnings

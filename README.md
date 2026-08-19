@@ -1,6 +1,6 @@
 # recls.Ruby <!-- omit in toc -->
 
-**rec**-ursive **ls**, for Ruby
+The platform-independent recursive file-system search library, for Ruby.
 
 ![Language](https://img.shields.io/badge/Ruby-CC342D?style=flat&logo=ruby&logoColor=white)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
@@ -29,14 +29,15 @@
       - [Development dependents](#development-dependents)
   - [Related projects](#related-projects)
   - [License](#license)
-  - [Compatibility](#compatibility)
 
 
 ## Introduction
 
-**recls** stands for **rec**-ursive **ls**. The first recls library was a C
-library with a C++ wrapper. There have been several implementations in other
-languages. **recls.Ruby** is the Ruby version.
+**recls.Ruby** searches the file system from Ruby and returns each hit as a rich **Recls::Entry** — not just a path string. Use it to list files and directories in one directory (`Recls.search`) or recursively (`Recls.rsearch`), optionally filtered by wildcards and type flags (files, directories, hidden, read-only, and so on). Each entry exposes path components (drive, directory parts, stem, extension), nature (`file?`, `directory?`, `link?`, …), size, and timestamps, including Windows-only attributes where they exist.
+
+It also provides path utilities (`Recls.absolute_path`, `Recls.combine_paths`, `Recls.canonicalise_path`, `Recls.derive_relative_path`) and existence/type probes (`Recls.exist?`, `Recls.file?`, `Recls.directory?`, `Recls.stat`) so client code can stay on one API rather than mixing `Dir`, `File`, `Find`, and `Pathname`.
+
+**recls** stands for **rec**-ursive **ls**. The original library was C with a C++ wrapper; this gem is the Ruby implementation. Other language ports are listed under [Related projects](#related-projects).
 
 
 ## Installation
@@ -48,6 +49,8 @@ gem install recls-ruby
 ```
 
 or add it to your `Gemfile`.
+
+**recls.Ruby** requires Ruby **1.9.3+**.
 
 > **NOTE**: On **Windows** with **Ruby 4+**, also install [**fiddle**](https://rubygems.org/gems/fiddle) (`gem install fiddle`, or `gem 'fiddle'` in your Gemfile). See [Runtime Dependencies](#runtime-dependencies-aka-normal-dependencies).
 
@@ -314,16 +317,16 @@ Libraries upon which **recls.Ruby** depends:
 
 ##### Runtime Dependencies (aka "Normal Dependencies")
 
-* \<none> declared in **recls.gemspec**;
+* \<none> declared in **recls-ruby.gemspec**;
 
-> **NOTE**: On **Windows** with **Ruby 4+**, **fiddle** is required at runtime (`lib/recls/ximpl/windows.rb`) but is no longer a default gem and is not listed in **recls.gemspec** (so older Rubies in the `[1.9.3, 4)` range still resolve). Install it explicitly, e.g. `gem install fiddle`, or add `gem 'fiddle'` to your Gemfile. This repository’s **Gemfile** pulls it in when `RUBY_VERSION >= '4'`.
+> **NOTE**: On **Windows** with **Ruby 4+**, **fiddle** is required at runtime (`lib/recls/ximpl/windows.rb`) but is no longer a default gem and is not listed in **recls-ruby.gemspec** (so older Rubies in the `[1.9.3, 4)` range still resolve). Install it explicitly, e.g. `gem install fiddle`, or add `gem 'fiddle'` to your Gemfile. This repository’s **Gemfile** pulls it in when `RUBY_VERSION >= '4'`.
 
 
 ##### Development Dependencies
 
 * [**rake**](https://rubygems.org/gems/rake);
 * [**test-unit**](https://rubygems.org/gems/test-unit);
-* [**xqsr3**](https://rubygems.org/gems/xqsr3);
+* [**xqsr3**](https://github.com/synesissoftware/xqsr3);
 
 
 #### Afferent (fan-in)
@@ -333,7 +336,8 @@ Projects that depend on **recls.Ruby**:
 
 ##### Runtime dependents
 
-* [**libCLImate.Ruby**](https://github.com/synesissoftware/libCLImate.Ruby);
+* [**oss-src-tools**](https://github.com/mwsis/oss-src-tools);
+* [**recls-helpers.Ruby**](https://github.com/synesissoftware/recls-helpers.Ruby/);
 
 
 ##### Development dependents
@@ -344,19 +348,16 @@ Projects that depend on **recls.Ruby**:
 ### Related projects
 
 * [**recls**](https://github.com/synesissoftware/recls/);
+* [**recls-helpers.Ruby**](https://github.com/synesissoftware/recls-helpers.Ruby/);
 * [**recls.Go**](https://github.com/synesissoftware/recls.Go/);
 * [**recls.NET**](https://github.com/synesissoftware/recls.NET/);
 * [**recls.Python**](https://github.com/synesissoftware/recls.Python/);
+* [**recls.Rust**](https://github.com/synesissoftware/recls.Rust/);
 
 
 ### License
 
 **recls.Ruby** is released under the 3-clause BSD license. See [LICENSE](./LICENSE) for details.
-
-
-### Compatibility
-
-**recls.Ruby** requires Ruby **1.9.3+** (as declared in **recls.gemspec**).
 
 
 <!-- ########################### end of file ########################### -->
