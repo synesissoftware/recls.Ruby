@@ -11,6 +11,9 @@
 * **EXAMPLES.md** example links are repo-relative (`./examples/…`);
 * updated **README.md** afferent dependents and related-project lists;
 * expanded **README.md** tagline/introduction and **recls-ruby.gemspec** summary/description so the library is understandable without prior knowledge of **recls**;
+* bumped **VERSION** to **2.13.4**;
+* **README.md** afferent runtime dependents now include **oss-src-tools**;
+* TODO: CI `on.push.branches` is the canonical seven names (dropped **bp-2**);
 
 
 ## 2.13.3 - 13th August 2026

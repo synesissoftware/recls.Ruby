@@ -326,7 +326,7 @@ Libraries upon which **recls.Ruby** depends:
 
 * [**rake**](https://rubygems.org/gems/rake);
 * [**test-unit**](https://rubygems.org/gems/test-unit);
-* [**xqsr3**](https://rubygems.org/gems/xqsr3);
+* [**xqsr3**](https://github.com/synesissoftware/xqsr3);
 
 
 #### Afferent (fan-in)
@@ -336,6 +336,7 @@ Projects that depend on **recls.Ruby**:
 
 ##### Runtime dependents
 
+* [**oss-src-tools**](https://github.com/mwsis/oss-src-tools);
 * [**recls-helpers.Ruby**](https://github.com/synesissoftware/recls-helpers.Ruby/);
 
 
