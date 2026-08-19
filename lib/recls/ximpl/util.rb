@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/ximpl/util.rb
 #
 # Purpose:  Internal implementation constructs for the recls library.
 #
 # Created:  24th July 2012
-# Updated:  21st April 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2026, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -501,7 +502,12 @@ module Recls
 
       f1_windows_root, f2_directory, dummy1, dummy2, dummy3, dummy4, dummy5 = Util.split_path(path)
 
-      dummy1 = dummy2 = dummy3 = dummy4 = dummy5 = nil
+      # suppress unused warnings
+      dummy1 = dummy1
+      dummy2 = dummy2
+      dummy3 = dummy3
+      dummy4 = dummy4
+      dummy5 = dummy5
 
       unless f1_windows_root
 

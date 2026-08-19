@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/ximpl/unix.rb
 #
 # Purpose:  UNIX-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  21st April 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2026, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -48,15 +49,19 @@ module Recls
   # @!visibility private
   module Ximpl # :nodoc: all
 
+    # File::Stat cannot reliably be subclassed on all Rubies (notably some
+    # Ruby 4 / MinGW builds raise TypeError: wrong instance allocation).
+    # Compose instead and forward File::Stat APIs via method_missing.
+    #
     # @!visibility private
-    class FileStat < File::Stat # :nodoc:
+    class FileStat # :nodoc:
 
       private
       def initialize(path)
 
         @path = path
 
-        super(path)
+        @stat = ::File::Stat.new(path)
       end
 
       public
@@ -72,6 +77,16 @@ module Recls
         return false if ?. != basename[0]
 
         return true
+      end
+
+      def method_missing(name, *args, &block)
+
+        @stat.__send__(name, *args, &block)
+      end
+
+      def respond_to_missing?(name, include_all = false)
+
+        @stat.respond_to?(name, include_all) || super
       end
 
       public

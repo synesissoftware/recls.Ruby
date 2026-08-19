@@ -1,8 +1,9 @@
-# recls.Ruby Example - **show_hidden_files**
+# recls.Ruby - Example - **show_hidden_files**
 
 ## Summary
 
-TBC
+Illustrates recursive searching for hidden files via `Recls::SHOW_HIDDEN` and filtering with `Recls::Entry#hidden?`.
+
 
 ## Source
 
@@ -23,9 +24,14 @@ Recls.file_rsearch('.', Recls::WILDCARDS_ALL, Recls::FILES | Recls::SHOW_HIDDEN)
 end
 ```
 
+
 ## Discussion
 
-TBC
+By default, searches omit hidden entries. Including `Recls::SHOW_HIDDEN` causes
+them to be returned; the example then keeps only those for which `#hidden?` is
+true. (The older `Recls.file_rsearch` name is retained for compatibility;
+`Recls.rsearch` is preferred.)
+
 
 ## Example results
 
@@ -39,4 +45,3 @@ TBC
 
 
 <!-- ########################### end of file ########################### -->
-

@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/ximpl/windows.rb
 #
 # Purpose:  Windows-specific constructs for the recls library.
 #
 # Created:  19th February 2014
-# Updated:  2nd June 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2026, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -39,8 +40,15 @@
 
 if RUBY_VERSION >= '2'
 
-  require 'fiddle'
-  require 'fiddle/import'
+  begin
+
+    require 'fiddle'
+    require 'fiddle/import'
+  rescue LoadError => e
+
+    # Ruby 4+ no longer ships fiddle as a default gem.
+    raise LoadError, "#{e.message}; on Ruby 4+ Windows, add the 'fiddle' gem (see the project Gemfile)"
+  end
 else
 
   require 'Win32API'
@@ -211,8 +219,12 @@ module Recls
       end # module Kernel32
     end
 
+    # File::Stat cannot reliably be subclassed on all Rubies (notably some
+    # Ruby 4 / MinGW builds raise TypeError: wrong instance allocation).
+    # Compose instead and forward File::Stat APIs via method_missing.
+    #
     # @!visibility private
-    class FileStat < File::Stat # :nodoc:
+    class FileStat # :nodoc:
 
       private
       FILE_ATTRIBUTE_READONLY     = 0x00000001
@@ -260,7 +272,7 @@ module Recls
 
         @attributes = Kernel32.get_file_attributes(path)
 
-        super(path)
+        @stat = ::File::Stat.new(path)
 
         @by_handle_information = ByHandleInformation.new(path)
 
@@ -328,6 +340,17 @@ module Recls
         has_attribute_? FILE_ATTRIBUTE_ENCRYPTED
       end
 
+      # @!visibility private
+      def method_missing(name, *args, &block) # :nodoc:
+
+        @stat.__send__(name, *args, &block)
+      end
+
+      # @!visibility private
+      def respond_to_missing?(name, include_all = false) # :nodoc:
+
+        @stat.respond_to?(name, include_all) || super
+      end
 
       public
       # @!visibility private

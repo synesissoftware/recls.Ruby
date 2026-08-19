@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/compare_paths_2plus.rb
 #
 # Purpose:  Definition of Recls::compare_paths() for Ruby 2+
 #
 # Created:  17th February 2014
-# Updated:  9th January 2025
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #
@@ -83,7 +84,7 @@ module Recls
 
       if fe.directory?
 
-        paths = paths[ix_last_entry..]
+        paths = paths[ix_last_entry..-1]
       else
 
         return fe

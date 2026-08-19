@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/file_search.rb
 #
 # Purpose:  Defines the Recls::FileSearch class for the recls.Ruby library.
 #
 # Created:  24th July 2012
-# Updated:  21st April 2024
+# Updated:  15th August 2026
 #
 # Author:   Matthew Wilson
 #
@@ -203,7 +204,7 @@ module Recls
       rescue Errno::ENOENT, Errno::ENXIO
 
         nil
-      rescue SystemCallError => x
+      rescue SystemCallError
 
         # TODO this should be filtered up and/or logged
 

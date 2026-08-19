@@ -1,8 +1,9 @@
-# recls.Ruby Example - **find_files_and_directories.recursive**
+# recls.Ruby - Example - **find_files_and_directories.recursive**
 
 ## Summary
 
-Illustrates recursive finding of FILES, then DIRECTORIES, then both
+Illustrates recursive finding of FILES, then DIRECTORIES, then both.
+
 
 ## Source
 

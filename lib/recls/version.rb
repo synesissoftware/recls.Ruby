@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     recls/version.rb
 #
 # Purpose:  Version for recls library
 #
 # Created:  14th February 2014
-# Updated:  24th April 2025
+# Updated:  20th August 2026
 #
 # Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2025, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2012-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -43,7 +44,7 @@
 module Recls
 
   # Current version of the recls.Ruby library
-  VERSION           = '2.13.2'
+  VERSION           = '2.13.4'
 
   private
   # @!visibility private
