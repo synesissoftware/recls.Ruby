@@ -1,10 +1,10 @@
 # ######################################################################## #
-# File:     recls.gemspec
+# File:     recls-ruby.gemspec
 #
 # Purpose:  Gemspec for recls.Ruby library
 #
 # Created:  14th February 2014
-# Updated:  15th August 2026
+# Updated:  19th August 2026
 #
 # ######################################################################## #
 
@@ -17,10 +17,17 @@ require 'recls/version'
 Gem::Specification.new do |spec|
 
   spec.name         = 'recls-ruby'
-  spec.summary      = 'recls.Ruby'
+  spec.summary      = 'The platform-independent recursive file-system search library, for Ruby'
   spec.version      = Recls::VERSION
   spec.description  = <<END_DESC
-RECursive LS for Ruby
+recls.Ruby is a platform-independent recursive file-system search library
+for Ruby. It enumerates files and directories (recursively or not),
+optionally filtered by wildcards and type flags, and returns each hit as a
+rich entry object with path components, type, size, and timestamps
+(including Windows-specific attributes where they exist). Path-combination
+and existence helpers are included so client code can stay on one API.
+The name stands for rec-ursive ls; this gem is the Ruby implementation of
+the recls family (also available for C/C++, Go, .NET, Python, and Rust).
 END_DESC
 
   spec.authors      = [
@@ -48,12 +55,20 @@ END_DESC
     '{bin,examples,lib,man,spec,test}/**/*',
     'AUTHORS*',
     'CHANGES*',
+    'CONTRIBUTING*',
     'EXAMPLES*',
+    'FAQ*',
+    'INSTALL*',
     'LICENSE*',
     'NEWS*',
     'README*',
+    'SECURITY*',
     'TODO*',
   ] & `git ls-files -z`.split("\0")
+  spec.files -= [
+    '.ruby-version',
+    'Gemfile.lock',
+  ]
 end
 
 

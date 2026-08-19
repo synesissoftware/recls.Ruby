@@ -1,6 +1,18 @@
 # recls.Ruby - Changes <!-- omit in toc -->
 
 
+## 2.13.4 - 19th August 2026
+
+* renamed **recls.gemspec** to **recls-ruby.gemspec** so the filename stem matches `spec.name`;
+* expanded **recls-ruby.gemspec** `spec.summary` to the README tagline; packaged **CONTRIBUTING**, **FAQ**, **INSTALL**, and **SECURITY**; **Gemfile.lock** and **.ruby-version** excluded from `spec.files`;
+* **Gemfile** sets `lockfile false` when Bundler supports it; stop tracking **Gemfile.lock** (already gitignored);
+* CI uses `bundler-cache: false` then `bundle install` because Bundler 4 writes no lockfile and **ruby/setup-ruby** cache cats **Gemfile.lock**; **Warnings** job now runs on Ruby **3.4**;
+* updated **run_all_unit_tests.sh** (from https://github.com/synesissoftware/misc-dev-scripts) to skip **tput** when **$TERM** is unset or stdout is not a TTY;
+* **EXAMPLES.md** example links are repo-relative (`./examples/…`);
+* updated **README.md** afferent dependents and related-project lists;
+* expanded **README.md** tagline/introduction and **recls-ruby.gemspec** summary/description so the library is understandable without prior knowledge of **recls**;
+
+
 ## 2.13.3 - 13th August 2026
 
 * added `# frozen_string_literal: true` to all **lib/** sources;
