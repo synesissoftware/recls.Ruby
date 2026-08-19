@@ -16,7 +16,7 @@
 * TODO: CI `on.push.branches` is the canonical seven names (dropped **bp-2**);
 
 
-## 2.13.3 - 13th August 2026
+## 2.13.3 - 13th August 2026 (internal release only)
 
 * added `# frozen_string_literal: true` to all **lib/** sources;
 * documentation and project-boilerplate modernisation;
