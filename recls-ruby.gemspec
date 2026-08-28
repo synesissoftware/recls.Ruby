@@ -4,7 +4,7 @@
 # Purpose:  Gemspec for recls.Ruby library
 #
 # Created:  14th February 2014
-# Updated:  19th August 2026
+# Updated:  28th August 2026
 #
 # ######################################################################## #
 
@@ -12,6 +12,9 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'recls/version'
+
+
+PROJECT_URL = 'https://github.com/synesissoftware/recls.Ruby'
 
 
 Gem::Specification.new do |spec|
@@ -36,16 +39,16 @@ END_DESC
   spec.email        = [
     'matthew@synesis.com.au',
   ]
-  spec.homepage     = 'https://github.com/synesissoftware/recls.Ruby'
+  spec.homepage     = PROJECT_URL
   spec.license      = 'BSD-3-Clause'
 
   spec.required_ruby_version = [ '>= 1.9.3' ]
 
   spec.metadata = {
-    'bug_tracker_uri' => 'https://github.com/synesissoftware/recls.Ruby/issues',
-    'changelog_uri' => 'https://github.com/synesissoftware/recls.Ruby/blob/master/CHANGES.md',
-    'homepage_uri' => 'https://github.com/synesissoftware/recls.Ruby',
-    'source_code_uri' => 'https://github.com/synesissoftware/recls.Ruby',
+    'bug_tracker_uri' => "#{PROJECT_URL}/issues",
+    'changelog_uri' => "#{PROJECT_URL}/blob/master/CHANGES.md",
+    'homepage_uri' => PROJECT_URL,
+    'source_code_uri' => PROJECT_URL,
   }
 
   spec.files = Dir[
