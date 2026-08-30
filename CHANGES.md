@@ -1,6 +1,12 @@
 # recls.Ruby - Changes <!-- omit in toc -->
 
 
+## 2.13.5 - 30th August 2026
+
+* updated GitHub Actions checkout references to **v7**;
+* corrected shared project URL metadata in **recls-ruby.gemspec**;
+
+
 ## 2.13.4 - 19th August 2026
 
 * renamed **recls.gemspec** to **recls-ruby.gemspec** so the filename stem matches `spec.name`;
