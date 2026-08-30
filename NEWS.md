@@ -2,6 +2,7 @@
 
 | Date               | News Item                                                                                      |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
+| 30th August 2026   | [**recls.Ruby** 2.13.5](https://github.com/synesissoftware/recls.Ruby/releases/tag/2.13.5)     |
 | 19th August 2026   | [**recls.Ruby** 2.13.4](https://github.com/synesissoftware/recls.Ruby/releases/tag/2.13.4)     |
 | 25th April 2025    | [**recls.Ruby** 2.13.2](https://github.com/synesissoftware/recls.Ruby/releases/tag/2.13.2)     |
 | 2nd June 2024      | [**recls.Ruby** 2.13.1](https://github.com/synesissoftware/recls.Ruby/releases/tag/2.13.1)     |
