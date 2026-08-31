@@ -166,7 +166,7 @@
 
 ## 2.7.3 - 11th July 2016
 
-* Recls::Entry properties now work, and return falsy-ish values, when executed on DETAILS_LATER non-existent entry;
+* Recls::Entry properties now work, and return falsey-ish values, when executed on DETAILS_LATER non-existent entry;
 
 
 ## 2.7.2 - 18th June 2016
